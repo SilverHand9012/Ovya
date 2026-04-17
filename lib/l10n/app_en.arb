@@ -1,0 +1,50 @@
+{
+  "@@locale": "en",
+  "appTitle": "Ovya",
+  "logSymptoms": "Log Symptoms",
+  "howAreYouFeeling": "How are you feeling today?",
+  "irregularCycle": "Irregular Cycle",
+  "acne": "Acne",
+  "weightGain": "Weight Gain",
+  "excessHairGrowth": "Excess Hair Growth",
+  "moodIssues": "Mood Issues",
+  "notesOptional": "Notes (optional)",
+  "notesHint": "Any additional details...",
+  "logSymptomsButton": "Log Symptoms",
+  "symptomsLoggedSuccess": "Symptoms logged successfully!",
+  "history": "History",
+  "noSymptoms": "No symptoms",
+  "riskLevel": "Risk Level: {level}",
+  "@riskLevel": {
+    "placeholders": {
+      "level": { "type": "String" }
+    }
+  },
+  "score": "Score: {value}",
+  "@score": {
+    "placeholders": {
+      "value": { "type": "int" }
+    }
+  },
+  "recommendations": "Recommendations",
+  "aiInsights": "AI Insights",
+  "generateInsight": "Generate Insight",
+  "noInsightsYet": "No insights yet",
+  "noInsightsDescription": "Log your symptoms first, then tap\n\"Generate Insight\" for personalised advice.",
+  "latestInsight": "Latest Insight",
+  "cached": "Cached",
+  "aiGenerated": "AI Generated",
+  "previousInsights": "Previous Insights",
+  "disclaimer": "This is informational only and not a medical diagnosis. Please consult a healthcare professional.",
+  "clearCache": "Clear cache",
+  "viewInsights": "View Insights",
+  "offlineModeActive": "Offline mode active",
+  "syncingData": "Syncing data…",
+  "syncedSuccessfully": "Synced successfully",
+  "fetchingInsights": "Fetching new insights…",
+  "usingLastSaved": "Using last saved insights",
+  "offlineShowingLast": "We're offline. Showing your last insights.",
+  "failedToLoad": "Failed to load",
+  "failedToAdd": "Failed to add",
+  "failedToGenerate": "Failed to generate"
+}
