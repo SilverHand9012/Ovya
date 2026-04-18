@@ -125,4 +125,36 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get failedToGenerate => 'Failed to generate';
+
+  @override
+  String get rec_track_regularly =>
+      'Continue tracking your symptoms regularly for early detection.';
+
+  @override
+  String get rec_balanced_diet =>
+      'Maintain a balanced diet and consistent exercise routine.';
+
+  @override
+  String get rec_schedule_checkup =>
+      'Consider scheduling a check-up with your healthcare provider.';
+
+  @override
+  String get rec_monitor_cycle =>
+      'Monitor your menstrual cycle closely and note any irregularities.';
+
+  @override
+  String get rec_stress_management =>
+      'Incorporate stress-management techniques like yoga or meditation.';
+
+  @override
+  String get rec_consult_gynecologist =>
+      'Please consult a gynecologist or endocrinologist as soon as possible.';
+
+  @override
+  String get rec_request_bloodwork =>
+      'Request blood work including hormone panel and insulin levels.';
+
+  @override
+  String get rec_symptom_diary =>
+      'Keep a detailed symptom diary to share with your doctor.';
 }

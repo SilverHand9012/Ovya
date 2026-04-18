@@ -325,6 +325,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to generate'**
   String get failedToGenerate;
+
+  /// No description provided for @rec_track_regularly.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue tracking your symptoms regularly for early detection.'**
+  String get rec_track_regularly;
+
+  /// No description provided for @rec_balanced_diet.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintain a balanced diet and consistent exercise routine.'**
+  String get rec_balanced_diet;
+
+  /// No description provided for @rec_schedule_checkup.
+  ///
+  /// In en, this message translates to:
+  /// **'Consider scheduling a check-up with your healthcare provider.'**
+  String get rec_schedule_checkup;
+
+  /// No description provided for @rec_monitor_cycle.
+  ///
+  /// In en, this message translates to:
+  /// **'Monitor your menstrual cycle closely and note any irregularities.'**
+  String get rec_monitor_cycle;
+
+  /// No description provided for @rec_stress_management.
+  ///
+  /// In en, this message translates to:
+  /// **'Incorporate stress-management techniques like yoga or meditation.'**
+  String get rec_stress_management;
+
+  /// No description provided for @rec_consult_gynecologist.
+  ///
+  /// In en, this message translates to:
+  /// **'Please consult a gynecologist or endocrinologist as soon as possible.'**
+  String get rec_consult_gynecologist;
+
+  /// No description provided for @rec_request_bloodwork.
+  ///
+  /// In en, this message translates to:
+  /// **'Request blood work including hormone panel and insulin levels.'**
+  String get rec_request_bloodwork;
+
+  /// No description provided for @rec_symptom_diary.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep a detailed symptom diary to share with your doctor.'**
+  String get rec_symptom_diary;
 }
 
 class _AppLocalizationsDelegate

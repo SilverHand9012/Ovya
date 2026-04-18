@@ -13,11 +13,21 @@ class SymptomLog {
   @Index()
   late DateTime timestamp;
 
+  // ── Original symptoms ───────────────────────────────────────
   late bool irregularCycle;
   late bool acne;
   late bool weightGain;
   late bool hairGrowth;
   late bool moodIssues;
+
+  // ── Extended symptoms ───────────────────────────────────────
+  late bool hairThinning;
+  late bool skinDarkening;
+  late bool fatigue;
+  late bool sleepProblems;
+  late bool bloating;
+  late bool familyHistory;
+  late bool difficultyConceiving;
 
   String? notes;
 
@@ -31,6 +41,13 @@ class SymptomLog {
       'weightGain': weightGain,
       'hairGrowth': hairGrowth,
       'moodIssues': moodIssues,
+      'hairThinning': hairThinning,
+      'skinDarkening': skinDarkening,
+      'fatigue': fatigue,
+      'sleepProblems': sleepProblems,
+      'bloating': bloating,
+      'familyHistory': familyHistory,
+      'difficultyConceiving': difficultyConceiving,
       'notes': notes,
     };
   }

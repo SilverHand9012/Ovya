@@ -46,5 +46,13 @@
   "offlineShowingLast": "We're offline. Showing your last insights.",
   "failedToLoad": "Failed to load",
   "failedToAdd": "Failed to add",
-  "failedToGenerate": "Failed to generate"
+  "failedToGenerate": "Failed to generate",
+  "rec_track_regularly": "Continue tracking your symptoms regularly for early detection.",
+  "rec_balanced_diet": "Maintain a balanced diet and consistent exercise routine.",
+  "rec_schedule_checkup": "Consider scheduling a check-up with your healthcare provider.",
+  "rec_monitor_cycle": "Monitor your menstrual cycle closely and note any irregularities.",
+  "rec_stress_management": "Incorporate stress-management techniques like yoga or meditation.",
+  "rec_consult_gynecologist": "Please consult a gynecologist or endocrinologist as soon as possible.",
+  "rec_request_bloodwork": "Request blood work including hormone panel and insulin levels.",
+  "rec_symptom_diary": "Keep a detailed symptom diary to share with your doctor."
 }

@@ -126,4 +126,36 @@ class AppLocalizationsTe extends AppLocalizations {
 
   @override
   String get failedToGenerate => 'సృష్టించడం విఫలమైంది';
+
+  @override
+  String get rec_track_regularly =>
+      'ముందస్తు గుర్తింపు కోసం మీ లక్షణాలను క్రమం తప్పకుండా నమోదు చేస్తూ ఉండండి.';
+
+  @override
+  String get rec_balanced_diet =>
+      'సమతుల్య ఆహారం తీసుకోండి మరియు క్రమం తప్పకుండా వ్యాయామం చేయండి.';
+
+  @override
+  String get rec_schedule_checkup =>
+      'మీ వైద్యునితో తనిఖీ కోసం సమయం తీసుకోవడం గురించి ఆలోచించండి.';
+
+  @override
+  String get rec_monitor_cycle =>
+      'మీ ఋతుచక్రాన్ని దగ్గరగా గమనించండి మరియు ఏవైనా అసక్రమతలను నమోదు చేయండి.';
+
+  @override
+  String get rec_stress_management =>
+      'యోగా లేదా ధ్యానం వంటి ఒత్తిడి నిర్వహణ పద్ధతులను అనుసరించండి.';
+
+  @override
+  String get rec_consult_gynecologist =>
+      'దయచేసి వీలైనంత త్వరగా స్త్రీ వైద్య నిపుణులను సంప్రదించండి.';
+
+  @override
+  String get rec_request_bloodwork =>
+      'హార్మోన్ ప్యానెల్ మరియు ఇన్సులిన్ స్థాయిలతో సహా రక్త పరీక్ష చేయించుకోండి.';
+
+  @override
+  String get rec_symptom_diary =>
+      'మీ వైద్యునికి చూపించడానికి వివరమైన లక్షణాల డైరీ ఉంచండి.';
 }

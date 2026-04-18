@@ -125,4 +125,35 @@ class AppLocalizationsMr extends AppLocalizations {
 
   @override
   String get failedToGenerate => 'तयार करण्यात अयशस्वी';
+
+  @override
+  String get rec_track_regularly =>
+      'लवकर ओळखण्यासाठी तुमची लक्षणे नियमितपणे नोंदवत राहा.';
+
+  @override
+  String get rec_balanced_diet => 'संतुलित आहार घ्या आणि नियमित व्यायाम करा.';
+
+  @override
+  String get rec_schedule_checkup =>
+      'तुमच्या डॉक्टरांकडे तपासणीसाठी भेट घेण्याचा विचार करा.';
+
+  @override
+  String get rec_monitor_cycle =>
+      'तुमच्या मासिक पाळीवर बारकाईने लक्ष ठेवा आणि कोणतीही अनियमितता नोंदवा.';
+
+  @override
+  String get rec_stress_management =>
+      'योग किंवा ध्यान यासारख्या तणाव व्यवस्थापन पद्धती अवलंबा.';
+
+  @override
+  String get rec_consult_gynecologist =>
+      'कृपया शक्य तितक्या लवकर स्त्रीरोगतज्ञांचा सल्ला घ्या.';
+
+  @override
+  String get rec_request_bloodwork =>
+      'हार्मोन पॅनल आणि इन्सुलिन पातळीसह रक्त तपासणी करा.';
+
+  @override
+  String get rec_symptom_diary =>
+      'तुमच्या डॉक्टरांना दाखवण्यासाठी लक्षणांची सविस्तर डायरी ठेवा.';
 }

@@ -100,6 +100,13 @@ class GeminiService {
     if (symptom.weightGain) activeSymptoms.add('Unexplained weight gain');
     if (symptom.hairGrowth) activeSymptoms.add('Excess hair growth');
     if (symptom.moodIssues) activeSymptoms.add('Mood swings / anxiety');
+    if (symptom.hairThinning) activeSymptoms.add('Hair thinning or loss');
+    if (symptom.skinDarkening) activeSymptoms.add('Dark patches on skin');
+    if (symptom.fatigue) activeSymptoms.add('Chronic fatigue');
+    if (symptom.sleepProblems) activeSymptoms.add('Poor sleep quality');
+    if (symptom.bloating) activeSymptoms.add('Abdominal bloating');
+    if (symptom.familyHistory) activeSymptoms.add('Family history of PCOS');
+    if (symptom.difficultyConceiving) activeSymptoms.add('Difficulty conceiving');
 
     final symptomList = activeSymptoms.isEmpty
         ? 'No active symptoms reported.'

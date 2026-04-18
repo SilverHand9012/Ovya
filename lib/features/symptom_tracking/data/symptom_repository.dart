@@ -170,6 +170,13 @@ class SymptomRepositoryImpl implements SymptomRepository {
       ..weightGain = entity.weightGain
       ..hairGrowth = entity.hairGrowth
       ..moodIssues = entity.moodIssues
+      ..hairThinning = entity.hairThinning
+      ..skinDarkening = entity.skinDarkening
+      ..fatigue = entity.fatigue
+      ..sleepProblems = entity.sleepProblems
+      ..bloating = entity.bloating
+      ..familyHistory = entity.familyHistory
+      ..difficultyConceiving = entity.difficultyConceiving
       ..notes = entity.notes
       ..synced = false;
   }
@@ -184,6 +191,13 @@ class SymptomRepositoryImpl implements SymptomRepository {
       weightGain: log.weightGain,
       hairGrowth: log.hairGrowth,
       moodIssues: log.moodIssues,
+      hairThinning: log.hairThinning,
+      skinDarkening: log.skinDarkening,
+      fatigue: log.fatigue,
+      sleepProblems: log.sleepProblems,
+      bloating: log.bloating,
+      familyHistory: log.familyHistory,
+      difficultyConceiving: log.difficultyConceiving,
       notes: log.notes,
     );
   }

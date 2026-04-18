@@ -125,4 +125,36 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get failedToGenerate => 'ಉತ್ಪಾದಿಸಲು ವಿಫಲ';
+
+  @override
+  String get rec_track_regularly =>
+      'ಮುಂಚಿತವಾಗಿ ಗುರುತಿಸಲು ನಿಮ್ಮ ರೋಗಲಕ್ಷಣಗಳನ್ನು ನಿಯಮಿತವಾಗಿ ದಾಖಲಿಸುತ್ತಿರಿ.';
+
+  @override
+  String get rec_balanced_diet =>
+      'ಸಮತೋಲಿತ ಆಹಾರ ಮತ್ತು ನಿಯಮಿತ ವ್ಯಾಯಾಮವನ್ನು ಅನುಸರಿಸಿ.';
+
+  @override
+  String get rec_schedule_checkup =>
+      'ನಿಮ್ಮ ವೈದ್ಯರೊಂದಿಗೆ ತಪಾಸಣೆಗೆ ಸಮಯ ನಿಗದಿಪಡಿಸಲು ಪರಿಗಣಿಸಿ.';
+
+  @override
+  String get rec_monitor_cycle =>
+      'ನಿಮ್ಮ ಋತುಚಕ್ರವನ್ನು ಹತ್ತಿರದಿಂದ ಗಮನಿಸಿ ಮತ್ತು ಯಾವುದೇ ಅನಿಯಮಿತತೆಯನ್ನು ಗಮನಿಸಿ.';
+
+  @override
+  String get rec_stress_management =>
+      'ಯೋಗ ಅಥವಾ ಧ್ಯಾನದಂತಹ ಒತ್ತಡ ನಿರ್ವಹಣೆ ತಂತ್ರಗಳನ್ನು ಅಳವಡಿಸಿಕೊಳ್ಳಿ.';
+
+  @override
+  String get rec_consult_gynecologist =>
+      'ದಯವಿಟ್ಟು ಸಾಧ್ಯವಾದಷ್ಟು ಬೇಗ ಸ್ತ್ರೀರೋಗ ತಜ್ಞರನ್ನು ಸಂಪರ್ಕಿಸಿ.';
+
+  @override
+  String get rec_request_bloodwork =>
+      'ಹಾರ್ಮೋನ್ ಪ್ಯಾನಲ್ ಮತ್ತು ಇನ್ಸುಲಿನ್ ಮಟ್ಟಗಳ ರಕ್ತ ಪರೀಕ್ಷೆ ಮಾಡಿಸಿ.';
+
+  @override
+  String get rec_symptom_diary =>
+      'ನಿಮ್ಮ ವೈದ್ಯರೊಂದಿಗೆ ಹಂಚಿಕೊಳ್ಳಲು ವಿವರವಾದ ರೋಗಲಕ್ಷಣ ಡೈರಿ ಇಡಿ.';
 }

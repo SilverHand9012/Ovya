@@ -22,38 +22,73 @@ const SymptomLogSchema = CollectionSchema(
       name: r'acne',
       type: IsarType.bool,
     ),
-    r'hairGrowth': PropertySchema(
+    r'bloating': PropertySchema(
       id: 1,
+      name: r'bloating',
+      type: IsarType.bool,
+    ),
+    r'difficultyConceiving': PropertySchema(
+      id: 2,
+      name: r'difficultyConceiving',
+      type: IsarType.bool,
+    ),
+    r'familyHistory': PropertySchema(
+      id: 3,
+      name: r'familyHistory',
+      type: IsarType.bool,
+    ),
+    r'fatigue': PropertySchema(
+      id: 4,
+      name: r'fatigue',
+      type: IsarType.bool,
+    ),
+    r'hairGrowth': PropertySchema(
+      id: 5,
       name: r'hairGrowth',
       type: IsarType.bool,
     ),
+    r'hairThinning': PropertySchema(
+      id: 6,
+      name: r'hairThinning',
+      type: IsarType.bool,
+    ),
     r'irregularCycle': PropertySchema(
-      id: 2,
+      id: 7,
       name: r'irregularCycle',
       type: IsarType.bool,
     ),
     r'moodIssues': PropertySchema(
-      id: 3,
+      id: 8,
       name: r'moodIssues',
       type: IsarType.bool,
     ),
     r'notes': PropertySchema(
-      id: 4,
+      id: 9,
       name: r'notes',
       type: IsarType.string,
     ),
+    r'skinDarkening': PropertySchema(
+      id: 10,
+      name: r'skinDarkening',
+      type: IsarType.bool,
+    ),
+    r'sleepProblems': PropertySchema(
+      id: 11,
+      name: r'sleepProblems',
+      type: IsarType.bool,
+    ),
     r'synced': PropertySchema(
-      id: 5,
+      id: 12,
       name: r'synced',
       type: IsarType.bool,
     ),
     r'timestamp': PropertySchema(
-      id: 6,
+      id: 13,
       name: r'timestamp',
       type: IsarType.dateTime,
     ),
     r'weightGain': PropertySchema(
-      id: 7,
+      id: 14,
       name: r'weightGain',
       type: IsarType.bool,
     )
@@ -108,13 +143,20 @@ void _symptomLogSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeBool(offsets[0], object.acne);
-  writer.writeBool(offsets[1], object.hairGrowth);
-  writer.writeBool(offsets[2], object.irregularCycle);
-  writer.writeBool(offsets[3], object.moodIssues);
-  writer.writeString(offsets[4], object.notes);
-  writer.writeBool(offsets[5], object.synced);
-  writer.writeDateTime(offsets[6], object.timestamp);
-  writer.writeBool(offsets[7], object.weightGain);
+  writer.writeBool(offsets[1], object.bloating);
+  writer.writeBool(offsets[2], object.difficultyConceiving);
+  writer.writeBool(offsets[3], object.familyHistory);
+  writer.writeBool(offsets[4], object.fatigue);
+  writer.writeBool(offsets[5], object.hairGrowth);
+  writer.writeBool(offsets[6], object.hairThinning);
+  writer.writeBool(offsets[7], object.irregularCycle);
+  writer.writeBool(offsets[8], object.moodIssues);
+  writer.writeString(offsets[9], object.notes);
+  writer.writeBool(offsets[10], object.skinDarkening);
+  writer.writeBool(offsets[11], object.sleepProblems);
+  writer.writeBool(offsets[12], object.synced);
+  writer.writeDateTime(offsets[13], object.timestamp);
+  writer.writeBool(offsets[14], object.weightGain);
 }
 
 SymptomLog _symptomLogDeserialize(
@@ -125,14 +167,21 @@ SymptomLog _symptomLogDeserialize(
 ) {
   final object = SymptomLog();
   object.acne = reader.readBool(offsets[0]);
-  object.hairGrowth = reader.readBool(offsets[1]);
+  object.bloating = reader.readBool(offsets[1]);
+  object.difficultyConceiving = reader.readBool(offsets[2]);
+  object.familyHistory = reader.readBool(offsets[3]);
+  object.fatigue = reader.readBool(offsets[4]);
+  object.hairGrowth = reader.readBool(offsets[5]);
+  object.hairThinning = reader.readBool(offsets[6]);
   object.id = id;
-  object.irregularCycle = reader.readBool(offsets[2]);
-  object.moodIssues = reader.readBool(offsets[3]);
-  object.notes = reader.readStringOrNull(offsets[4]);
-  object.synced = reader.readBool(offsets[5]);
-  object.timestamp = reader.readDateTime(offsets[6]);
-  object.weightGain = reader.readBool(offsets[7]);
+  object.irregularCycle = reader.readBool(offsets[7]);
+  object.moodIssues = reader.readBool(offsets[8]);
+  object.notes = reader.readStringOrNull(offsets[9]);
+  object.skinDarkening = reader.readBool(offsets[10]);
+  object.sleepProblems = reader.readBool(offsets[11]);
+  object.synced = reader.readBool(offsets[12]);
+  object.timestamp = reader.readDateTime(offsets[13]);
+  object.weightGain = reader.readBool(offsets[14]);
   return object;
 }
 
@@ -152,12 +201,26 @@ P _symptomLogDeserializeProp<P>(
     case 3:
       return (reader.readBool(offset)) as P;
     case 4:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 5:
       return (reader.readBool(offset)) as P;
     case 6:
-      return (reader.readDateTime(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 7:
+      return (reader.readBool(offset)) as P;
+    case 8:
+      return (reader.readBool(offset)) as P;
+    case 9:
+      return (reader.readStringOrNull(offset)) as P;
+    case 10:
+      return (reader.readBool(offset)) as P;
+    case 11:
+      return (reader.readBool(offset)) as P;
+    case 12:
+      return (reader.readBool(offset)) as P;
+    case 13:
+      return (reader.readDateTime(offset)) as P;
+    case 14:
       return (reader.readBool(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -363,11 +426,61 @@ extension SymptomLogQueryFilter
     });
   }
 
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> bloatingEqualTo(
+      bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'bloating',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition>
+      difficultyConceivingEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'difficultyConceiving',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition>
+      familyHistoryEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'familyHistory',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> fatigueEqualTo(
+      bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'fatigue',
+        value: value,
+      ));
+    });
+  }
+
   QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> hairGrowthEqualTo(
       bool value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'hairGrowth',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition>
+      hairThinningEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'hairThinning',
         value: value,
       ));
     });
@@ -593,6 +706,26 @@ extension SymptomLogQueryFilter
     });
   }
 
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition>
+      skinDarkeningEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'skinDarkening',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition>
+      sleepProblemsEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'sleepProblems',
+        value: value,
+      ));
+    });
+  }
+
   QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> syncedEqualTo(
       bool value) {
     return QueryBuilder.apply(this, (query) {
@@ -688,6 +821,56 @@ extension SymptomLogQuerySortBy
     });
   }
 
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortByBloating() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'bloating', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortByBloatingDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'bloating', Sort.desc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy>
+      sortByDifficultyConceiving() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'difficultyConceiving', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy>
+      sortByDifficultyConceivingDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'difficultyConceiving', Sort.desc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortByFamilyHistory() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'familyHistory', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortByFamilyHistoryDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'familyHistory', Sort.desc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortByFatigue() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'fatigue', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortByFatigueDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'fatigue', Sort.desc);
+    });
+  }
+
   QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortByHairGrowth() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'hairGrowth', Sort.asc);
@@ -697,6 +880,18 @@ extension SymptomLogQuerySortBy
   QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortByHairGrowthDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'hairGrowth', Sort.desc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortByHairThinning() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hairThinning', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortByHairThinningDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hairThinning', Sort.desc);
     });
   }
 
@@ -734,6 +929,30 @@ extension SymptomLogQuerySortBy
   QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortByNotesDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'notes', Sort.desc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortBySkinDarkening() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'skinDarkening', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortBySkinDarkeningDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'skinDarkening', Sort.desc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortBySleepProblems() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'sleepProblems', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortBySleepProblemsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'sleepProblems', Sort.desc);
     });
   }
 
@@ -788,6 +1007,56 @@ extension SymptomLogQuerySortThenBy
     });
   }
 
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenByBloating() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'bloating', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenByBloatingDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'bloating', Sort.desc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy>
+      thenByDifficultyConceiving() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'difficultyConceiving', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy>
+      thenByDifficultyConceivingDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'difficultyConceiving', Sort.desc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenByFamilyHistory() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'familyHistory', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenByFamilyHistoryDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'familyHistory', Sort.desc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenByFatigue() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'fatigue', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenByFatigueDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'fatigue', Sort.desc);
+    });
+  }
+
   QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenByHairGrowth() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'hairGrowth', Sort.asc);
@@ -797,6 +1066,18 @@ extension SymptomLogQuerySortThenBy
   QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenByHairGrowthDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'hairGrowth', Sort.desc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenByHairThinning() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hairThinning', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenByHairThinningDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hairThinning', Sort.desc);
     });
   }
 
@@ -849,6 +1130,30 @@ extension SymptomLogQuerySortThenBy
     });
   }
 
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenBySkinDarkening() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'skinDarkening', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenBySkinDarkeningDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'skinDarkening', Sort.desc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenBySleepProblems() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'sleepProblems', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenBySleepProblemsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'sleepProblems', Sort.desc);
+    });
+  }
+
   QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenBySynced() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'synced', Sort.asc);
@@ -894,9 +1199,40 @@ extension SymptomLogQueryWhereDistinct
     });
   }
 
+  QueryBuilder<SymptomLog, SymptomLog, QDistinct> distinctByBloating() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'bloating');
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QDistinct>
+      distinctByDifficultyConceiving() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'difficultyConceiving');
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QDistinct> distinctByFamilyHistory() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'familyHistory');
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QDistinct> distinctByFatigue() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'fatigue');
+    });
+  }
+
   QueryBuilder<SymptomLog, SymptomLog, QDistinct> distinctByHairGrowth() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'hairGrowth');
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QDistinct> distinctByHairThinning() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'hairThinning');
     });
   }
 
@@ -916,6 +1252,18 @@ extension SymptomLogQueryWhereDistinct
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'notes', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QDistinct> distinctBySkinDarkening() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'skinDarkening');
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QDistinct> distinctBySleepProblems() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'sleepProblems');
     });
   }
 
@@ -952,9 +1300,40 @@ extension SymptomLogQueryProperty
     });
   }
 
+  QueryBuilder<SymptomLog, bool, QQueryOperations> bloatingProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'bloating');
+    });
+  }
+
+  QueryBuilder<SymptomLog, bool, QQueryOperations>
+      difficultyConceivingProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'difficultyConceiving');
+    });
+  }
+
+  QueryBuilder<SymptomLog, bool, QQueryOperations> familyHistoryProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'familyHistory');
+    });
+  }
+
+  QueryBuilder<SymptomLog, bool, QQueryOperations> fatigueProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'fatigue');
+    });
+  }
+
   QueryBuilder<SymptomLog, bool, QQueryOperations> hairGrowthProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'hairGrowth');
+    });
+  }
+
+  QueryBuilder<SymptomLog, bool, QQueryOperations> hairThinningProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'hairThinning');
     });
   }
 
@@ -973,6 +1352,18 @@ extension SymptomLogQueryProperty
   QueryBuilder<SymptomLog, String?, QQueryOperations> notesProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'notes');
+    });
+  }
+
+  QueryBuilder<SymptomLog, bool, QQueryOperations> skinDarkeningProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'skinDarkening');
+    });
+  }
+
+  QueryBuilder<SymptomLog, bool, QQueryOperations> sleepProblemsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'sleepProblems');
     });
   }
 

@@ -13,16 +13,24 @@ class RiskResult {
   final String explanation;
   final List<String> recommendations;
 
+  /// Optional PCOS sub-type hint inferred from symptom patterns.
+  ///
+  /// Possible values: `'Insulin-resistant'`, `'Androgenic'`,
+  /// `'Adrenal'`, or `null` (not enough signal).
+  final String? pcosTypeHint;
+
   const RiskResult({
     required this.score,
     required this.level,
     required this.explanation,
     required this.recommendations,
+    this.pcosTypeHint,
   });
 
   @override
   String toString() =>
-      'RiskResult(score: $score, level: $level, explanation: $explanation)';
+      'RiskResult(score: $score, level: $level, '
+      'pcosTypeHint: $pcosTypeHint, explanation: $explanation)';
 }
 
 // ──────────────────────────────────────────────────────────────
@@ -45,34 +53,56 @@ enum _RiskLevel {
 /// A deterministic, rule-based PCOS risk detection engine that
 /// works fully offline without any external dependencies.
 ///
-/// ### Scoring weights
-/// | Symptom          | Points |
-/// |------------------|--------|
-/// | Irregular cycle  | +3     |
-/// | Acne             | +2     |
-/// | Weight gain      | +2     |
-/// | Excess hair      | +3     |
-/// | Mood issues      | +1     |
+/// ### Scoring weights (12 symptoms, max = 23)
+/// | Symptom                   | Points |
+/// |---------------------------|--------|
+/// | Irregular cycle           | +3     |
+/// | Excess hair growth        | +3     |
+/// | Family history of PCOS    | +3     |
+/// | Hair thinning/loss        | +2     |
+/// | Weight gain               | +2     |
+/// | Acne                      | +2     |
+/// | Skin darkening            | +2     |
+/// | Difficulty conceiving     | +2     |
+/// | Fatigue                   | +1     |
+/// | Mood issues               | +1     |
+/// | Sleep problems            | +1     |
+/// | Bloating                  | +1     |
 ///
 /// ### Risk classification
 /// | Score range | Level  |
 /// |-------------|--------|
-/// | 0 – 3       | Low    |
-/// | 4 – 6       | Medium |
-/// | 7 +         | High   |
+/// | 0 – 5       | Low    |
+/// | 6 – 12      | Medium |
+/// | 13 +        | High   |
+///
+/// ### PCOS type inference
+/// | Pattern                                              | Hint              |
+/// |------------------------------------------------------|-------------------|
+/// | Irregular cycle + Weight gain + Skin darkening       | Insulin-resistant |
+/// | Excess hair growth + Acne                            | Androgenic        |
+/// | Fatigue + Mood issues                                | Adrenal           |
+/// | Otherwise                                            | null              |
 class DetectionEngine {
   /// Symptom names mapped to their scoring weight.
   static const Map<String, int> _weights = {
     'Irregular cycle': 3,
-    'Acne': 2,
-    'Weight gain': 2,
     'Excess hair growth': 3,
+    'Family history of PCOS': 3,
+    'Hair thinning/loss': 2,
+    'Weight gain': 2,
+    'Acne': 2,
+    'Skin darkening': 2,
+    'Difficulty conceiving': 2,
+    'Fatigue': 1,
     'Mood issues': 1,
+    'Sleep problems': 1,
+    'Bloating': 1,
   };
 
   /// Evaluates a [SymptomEntity] and returns a [RiskResult] containing
-  /// the total score, risk level, a human-readable explanation, and
-  /// actionable recommendations.
+  /// the total score, risk level, a human-readable explanation,
+  /// localization-key recommendations, and optional PCOS type hint.
   RiskResult evaluate(SymptomEntity symptom) {
     // 1. Build a list of active symptoms and accumulate the score.
     final List<String> activeSymptoms = [];
@@ -81,24 +111,31 @@ class DetectionEngine {
     void check(bool present, String name) {
       if (present) {
         activeSymptoms.add(name);
-        score += _weights[name]!;
+        score += _weights[name] ?? 0;
       }
     }
 
     check(symptom.irregularCycle, 'Irregular cycle');
-    check(symptom.acne, 'Acne');
-    check(symptom.weightGain, 'Weight gain');
     check(symptom.hairGrowth, 'Excess hair growth');
+    check(symptom.familyHistory, 'Family history of PCOS');
+    check(symptom.hairThinning, 'Hair thinning/loss');
+    check(symptom.weightGain, 'Weight gain');
+    check(symptom.acne, 'Acne');
+    check(symptom.skinDarkening, 'Skin darkening');
+    check(symptom.difficultyConceiving, 'Difficulty conceiving');
+    check(symptom.fatigue, 'Fatigue');
     check(symptom.moodIssues, 'Mood issues');
+    check(symptom.sleepProblems, 'Sleep problems');
+    check(symptom.bloating, 'Bloating');
 
     debugPrint('[Detection] Active symptoms: $activeSymptoms');
     debugPrint('[Detection] Score: $score');
 
     // 2. Classify the risk level.
     final _RiskLevel risk;
-    if (score >= 7) {
+    if (score >= 13) {
       risk = _RiskLevel.high;
-    } else if (score >= 4) {
+    } else if (score >= 6) {
       risk = _RiskLevel.medium;
     } else {
       risk = _RiskLevel.low;
@@ -109,14 +146,20 @@ class DetectionEngine {
     // 3. Generate explanation.
     final String explanation = _buildExplanation(activeSymptoms, risk);
 
-    // 4. Generate recommendations.
+    // 4. Generate recommendation keys (resolved to localized strings in UI).
     final List<String> recommendations = _buildRecommendations(risk);
+
+    // 5. Infer PCOS sub-type hint.
+    final String? typeHint = _inferType(activeSymptoms);
+
+    debugPrint('[Detection] PCOS type hint: $typeHint');
 
     return RiskResult(
       score: score,
       level: risk.label,
       explanation: explanation,
       recommendations: recommendations,
+      pcosTypeHint: typeHint,
     );
   }
 
@@ -137,27 +180,54 @@ class DetectionEngine {
         'your estimated PCOS risk level is ${risk.label}.';
   }
 
-  /// Returns 2-3 actionable suggestions tailored to the risk level.
+  /// Returns localization keys for actionable suggestions
+  /// tailored to the risk level.
+  ///
+  /// Keys are resolved to user-facing strings in the UI layer
+  /// via [AppLocalizations], enabling multilingual recommendations.
   List<String> _buildRecommendations(_RiskLevel risk) {
     switch (risk) {
       case _RiskLevel.low:
         return const [
-          'Continue tracking your symptoms regularly for early detection.',
-          'Maintain a balanced diet and consistent exercise routine.',
+          'rec_track_regularly',
+          'rec_balanced_diet',
         ];
       case _RiskLevel.medium:
         return const [
-          'Consider scheduling a check-up with your healthcare provider.',
-          'Monitor your menstrual cycle closely and note any irregularities.',
-          'Incorporate stress-management techniques like yoga or meditation.',
+          'rec_schedule_checkup',
+          'rec_monitor_cycle',
+          'rec_stress_management',
         ];
       case _RiskLevel.high:
         return const [
-          'Please consult a gynecologist or endocrinologist as soon as possible.',
-          'Request blood work including hormone panel and insulin levels.',
-          'Keep a detailed symptom diary to share with your doctor.',
+          'rec_consult_gynecologist',
+          'rec_request_bloodwork',
+          'rec_symptom_diary',
         ];
     }
+  }
+
+  /// Infers a possible PCOS sub-type from the active symptom pattern.
+  ///
+  /// Returns `null` when there is not enough signal to classify.
+  String? _inferType(List<String> activeSymptoms) {
+    final has = activeSymptoms.contains;
+
+    if (has('Irregular cycle') &&
+        has('Weight gain') &&
+        has('Skin darkening')) {
+      return 'Insulin-resistant';
+    }
+
+    if (has('Excess hair growth') && has('Acne')) {
+      return 'Androgenic';
+    }
+
+    if (has('Fatigue') && has('Mood issues')) {
+      return 'Adrenal';
+    }
+
+    return null;
   }
 
   /// Joins a list into a natural-language string:

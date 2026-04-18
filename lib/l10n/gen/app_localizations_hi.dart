@@ -125,4 +125,35 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get failedToGenerate => 'उत्पन्न करने में विफल';
+
+  @override
+  String get rec_track_regularly =>
+      'समय पर पहचान के लिए अपने लक्षणों को नियमित रूप से दर्ज करती रहें।';
+
+  @override
+  String get rec_balanced_diet => 'संतुलित आहार लें और नियमित व्यायाम करें।';
+
+  @override
+  String get rec_schedule_checkup =>
+      'अपने डॉक्टर से जांच का समय लेने पर विचार करें।';
+
+  @override
+  String get rec_monitor_cycle =>
+      'अपने मासिक चक्र पर ध्यान दें और किसी भी अनियमितता को नोट करें।';
+
+  @override
+  String get rec_stress_management =>
+      'योग या ध्यान जैसी तनाव प्रबंधन तकनीकें अपनाएं।';
+
+  @override
+  String get rec_consult_gynecologist =>
+      'कृपया जल्द से जल्द किसी स्त्री रोग विशेषज्ञ से मिलें।';
+
+  @override
+  String get rec_request_bloodwork =>
+      'हार्मोन पैनल और इंसुलिन स्तर सहित रक्त जांच करवाएं।';
+
+  @override
+  String get rec_symptom_diary =>
+      'अपने डॉक्टर को दिखाने के लिए लक्षणों की विस्तृत डायरी बनाएं।';
 }

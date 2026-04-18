@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../domain/symptom_entity.dart';
 import '../providers/symptom_notifier.dart';
 import '../../../core/intelligence/detection_engine.dart';
+import '../../../shared/utils/recommendation_resolver.dart';
 import '../../../shared/widgets/status_banner.dart';
 
 /// Screen for logging PCOS symptoms and viewing risk evaluation.
@@ -24,11 +25,22 @@ class LogScreen extends ConsumerStatefulWidget {
 class _LogScreenState extends ConsumerState<LogScreen> {
   // ── Form state ───────────────────────────────────────────────
 
+  // Original symptoms
   bool _irregularCycle = false;
   bool _acne = false;
   bool _weightGain = false;
   bool _hairGrowth = false;
   bool _moodIssues = false;
+
+  // Extended symptoms
+  bool _hairThinning = false;
+  bool _skinDarkening = false;
+  bool _fatigue = false;
+  bool _sleepProblems = false;
+  bool _bloating = false;
+  bool _familyHistory = false;
+  bool _difficultyConceiving = false;
+
   final TextEditingController _notesController = TextEditingController();
 
   @override
@@ -57,6 +69,13 @@ class _LogScreenState extends ConsumerState<LogScreen> {
       weightGain: _weightGain,
       hairGrowth: _hairGrowth,
       moodIssues: _moodIssues,
+      hairThinning: _hairThinning,
+      skinDarkening: _skinDarkening,
+      fatigue: _fatigue,
+      sleepProblems: _sleepProblems,
+      bloating: _bloating,
+      familyHistory: _familyHistory,
+      difficultyConceiving: _difficultyConceiving,
       notes: _notesController.text.trim().isEmpty
           ? null
           : _notesController.text.trim(),
@@ -71,6 +90,13 @@ class _LogScreenState extends ConsumerState<LogScreen> {
       _weightGain = false;
       _hairGrowth = false;
       _moodIssues = false;
+      _hairThinning = false;
+      _skinDarkening = false;
+      _fatigue = false;
+      _sleepProblems = false;
+      _bloating = false;
+      _familyHistory = false;
+      _difficultyConceiving = false;
     });
     _notesController.clear();
 
@@ -122,6 +148,8 @@ class _LogScreenState extends ConsumerState<LogScreen> {
                             style: theme.textTheme.titleMedium,
                           ),
                         ),
+
+                        // ── Core symptoms ──────────────────────
                         _buildSwitch(
                           'Irregular Cycle',
                           Icons.loop,
@@ -151,6 +179,62 @@ class _LogScreenState extends ConsumerState<LogScreen> {
                           Icons.mood_bad,
                           _moodIssues,
                           (v) => setState(() => _moodIssues = v),
+                        ),
+
+                        const Divider(height: 1),
+
+                        // ── Extended symptoms ──────────────────
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 8),
+                          child: Text(
+                            'Additional indicators',
+                            style: theme.textTheme.titleSmall?.copyWith(
+                              color: theme.colorScheme.secondary,
+                            ),
+                          ),
+                        ),
+                        _buildSwitch(
+                          'Hair Thinning / Loss',
+                          Icons.healing,
+                          _hairThinning,
+                          (v) => setState(() => _hairThinning = v),
+                        ),
+                        _buildSwitch(
+                          'Skin Darkening',
+                          Icons.contrast,
+                          _skinDarkening,
+                          (v) => setState(() => _skinDarkening = v),
+                        ),
+                        _buildSwitch(
+                          'Fatigue',
+                          Icons.battery_alert,
+                          _fatigue,
+                          (v) => setState(() => _fatigue = v),
+                        ),
+                        _buildSwitch(
+                          'Sleep Problems',
+                          Icons.bedtime,
+                          _sleepProblems,
+                          (v) => setState(() => _sleepProblems = v),
+                        ),
+                        _buildSwitch(
+                          'Bloating',
+                          Icons.water_drop,
+                          _bloating,
+                          (v) => setState(() => _bloating = v),
+                        ),
+                        _buildSwitch(
+                          'Family History of PCOS',
+                          Icons.family_restroom,
+                          _familyHistory,
+                          (v) => setState(() => _familyHistory = v),
+                        ),
+                        _buildSwitch(
+                          'Difficulty Conceiving',
+                          Icons.favorite_border,
+                          _difficultyConceiving,
+                          (v) => setState(() => _difficultyConceiving = v),
                         ),
                       ],
                     ),
@@ -261,6 +345,10 @@ class _RiskResultCard extends StatelessWidget {
     final theme = Theme.of(context);
     final color = _levelColor(result.level);
 
+    // Resolve l10n recommendation keys → localized strings.
+    final resolvedRecs =
+        resolveRecommendations(context, result.recommendations);
+
     return Card(
       color: color.withValues(alpha: 0.1),
       shape: RoundedRectangleBorder(
@@ -276,20 +364,42 @@ class _RiskResultCard extends StatelessWidget {
               children: [
                 Icon(Icons.assessment, color: color),
                 const SizedBox(width: 8),
-                Text(
-                  'Risk Level: ${result.level}',
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    color: color,
-                    fontWeight: FontWeight.bold,
+                Expanded(
+                  child: Text(
+                    'Risk Level: ${result.level}',
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      color: color,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                const Spacer(),
                 Chip(
                   label: Text('Score: ${result.score}'),
                   backgroundColor: color.withValues(alpha: 0.2),
                 ),
               ],
             ),
+
+            // ── PCOS type hint ──────────────────────────────────
+            if (result.pcosTypeHint != null) ...[
+              const SizedBox(height: 8),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: color.withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  'Possible type: ${result.pcosTypeHint}',
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    color: color,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
+
             const SizedBox(height: 12),
             Text(
               result.explanation,
@@ -303,7 +413,7 @@ class _RiskResultCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 4),
-            ...result.recommendations.map(
+            ...resolvedRecs.map(
               (r) => Padding(
                 padding: const EdgeInsets.only(bottom: 4),
                 child: Row(
@@ -343,6 +453,13 @@ class _SymptomHistoryTile extends StatelessWidget {
     if (symptom.weightGain) activeSymptoms.add('Weight Gain');
     if (symptom.hairGrowth) activeSymptoms.add('Hair Growth');
     if (symptom.moodIssues) activeSymptoms.add('Mood Issues');
+    if (symptom.hairThinning) activeSymptoms.add('Hair Thinning');
+    if (symptom.skinDarkening) activeSymptoms.add('Skin Darkening');
+    if (symptom.fatigue) activeSymptoms.add('Fatigue');
+    if (symptom.sleepProblems) activeSymptoms.add('Sleep Problems');
+    if (symptom.bloating) activeSymptoms.add('Bloating');
+    if (symptom.familyHistory) activeSymptoms.add('Family History');
+    if (symptom.difficultyConceiving) activeSymptoms.add('Difficulty Conceiving');
 
     final date =
         '${symptom.timestamp.day}/${symptom.timestamp.month}/${symptom.timestamp.year}';
