@@ -84,6 +84,13 @@ class SymptomNotifier extends StateNotifier<SymptomState> {
           'weightGain': symptom.weightGain,
           'hairGrowth': symptom.hairGrowth,
           'moodIssues': symptom.moodIssues,
+          'hairThinning': symptom.hairThinning,
+          'skinDarkening': symptom.skinDarkening,
+          'fatigue': symptom.fatigue,
+          'sleepProblems': symptom.sleepProblems,
+          'bloating': symptom.bloating,
+          'familyHistory': symptom.familyHistory,
+          'difficultyConceiving': symptom.difficultyConceiving,
           'notes': symptom.notes,
         },
       );

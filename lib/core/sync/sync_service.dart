@@ -135,11 +135,15 @@ class SyncService {
       // Device just came back online.
       ref?.read(syncStatusProvider.notifier).state = SyncStatus.syncing;
       debugPrint("Internet restored -> syncing...");
-      await syncPendingData();
-      ref?.read(syncStatusProvider.notifier).state = SyncStatus.synced;
-      
-      // Keep existing queue sync functionality as well
-      syncNow();
+
+      try {
+        await syncPendingData();
+        await syncNow();
+        ref?.read(syncStatusProvider.notifier).state = SyncStatus.synced;
+      } catch (e) {
+        debugPrint('[Sync] Sync failed after connectivity restored: $e');
+        ref?.read(syncStatusProvider.notifier).state = SyncStatus.offline;
+      }
     }
   }
 
@@ -157,11 +161,14 @@ class SyncService {
     for (final log in unsyncedLogs) {
       try {
         debugPrint("Uploading log: ${log.id}");
+        final payload = log.toJson();
+        payload['syncedAt'] = FieldValue.serverTimestamp();
+        payload['timestamp'] = FieldValue.serverTimestamp(); // Enforce timestamp on write
         await firestore
             .collection('users')
             .doc('demo_user')
             .collection('symptomLogs')
-            .add(log.toJson());
+            .add(payload);
         await isarService.markAsSynced(log.id);
       } catch(e) {
         debugPrint('[Sync] Error syncing log ${log.id}: $e');
@@ -175,13 +182,85 @@ class SyncService {
 
   /// Pushes a single [QueueItem] to Firestore.
   ///
-  /// TODO: Replace with actual Firestore write logic once
-  /// Firebase is configured in the project.
+  /// Uses [_resolveCollection] to map action names to proper
+  /// Firestore collection paths (e.g. `add_symptom` → `symptomLogs`).
+  ///
+  /// Behaviour depends on the item's action and payload:
+  ///   - **delete_symptom** → deletes the doc specified by `payload['docId']`.
+  ///   - **payload contains `docId`** → upserts (merge) into that doc.
+  ///   - **otherwise** → creates a new document via `.add()`.
+  ///
+  /// Throws on failure so [QueueService.incrementRetry] handles retries.
   Future<void> _pushToFirestore(QueueItem item) async {
-    // Placeholder — this is where the Firestore write call goes.
-    // Example:
-    // final collection = FirebaseFirestore.instance.collection(item.action);
-    // await collection.add(item.payload);
-    await Future<void>.delayed(const Duration(milliseconds: 50));
+    final firestore = FirebaseFirestore.instance;
+    final payload = Map<String, dynamic>.from(item.payload);
+    final collection = _resolveCollection(item.action);
+
+    debugPrint('[Sync] Action: ${item.action} → collection: $collection');
+    debugPrint('[Sync] Writing to users/demo_user/$collection');
+
+    // Attach metadata.
+    payload['syncedAt'] = FieldValue.serverTimestamp();
+    payload['timestamp'] = FieldValue.serverTimestamp(); // Enforce timestamp on write
+
+    final collectionRef = firestore
+        .collection('users')
+        .doc('demo_user')
+        .collection(collection);
+
+    // ── DELETE ─────────────────────────────────────────────────
+    if (item.action == 'delete' || item.action == 'delete_symptom') {
+      final docId = payload['docId'] as String?;
+
+      if (docId == null) {
+        throw Exception(
+          '[Sync] Delete action requires "docId" in payload.',
+        );
+      }
+
+      debugPrint('[Sync] Deleting doc $docId from $collection');
+      await collectionRef.doc(docId).delete();
+      debugPrint('[Sync] Deleted $docId from $collection');
+      return;
+    }
+
+    // ── UPDATE (merge) ────────────────────────────────────────
+    final docId = payload.remove('docId') as String?;
+
+    if (docId != null) {
+      debugPrint('[Sync] Updating doc $docId in $collection');
+      await collectionRef.doc(docId).set(payload, SetOptions(merge: true));
+      debugPrint('[Sync] Updated doc $docId in $collection');
+      return;
+    }
+
+    // ── CREATE ─────────────────────────────────────────────────
+    debugPrint('[Sync] Creating new doc in $collection');
+    final docRef = await collectionRef.add(payload);
+    debugPrint('[Sync] Created doc ${docRef.id} in $collection');
+  }
+
+  /// Maps queue action names to their canonical Firestore collection.
+  ///
+  /// This ensures all symptom-related actions write to `symptomLogs`
+  /// rather than creating separate collections per action verb.
+  String _resolveCollection(String action) {
+    switch (action) {
+      case 'add_symptom':
+      case 'update_symptom':
+      case 'delete_symptom':
+      case 'symptomLogs':
+        return 'symptomLogs';
+      case 'add_insight':
+      case 'update_insight':
+      case 'delete_insight':
+        return 'insights';
+      case 'add_cycle':
+      case 'update_cycle':
+      case 'delete_cycle':
+        return 'cycleEntries';
+      default:
+        return action;
+    }
   }
 }

@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ovya/l10n/gen/app_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'firebase_options.dart';
 
 import 'app/router.dart';
@@ -15,23 +14,12 @@ import 'core/services/language_service.dart';
 /// Global language service instance — initialised before runApp.
 final languageService = LanguageService();
 
-Future<void> testFirestoreWrite() async {
-  final db = FirebaseFirestore.instance;
-
-  await db.collection('test').add({
-    'message': 'Ovya connected',
-    'timestamp': FieldValue.serverTimestamp(),
-  });
-}
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  await testFirestoreWrite();
 
   // 1. Open the local Isar database.
   final isarService = IsarService();
