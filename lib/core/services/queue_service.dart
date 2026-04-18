@@ -67,6 +67,13 @@ class QueueService {
       await isar.writeTxn(() async {
         id = await isar.syncQueues.put(entry);
       });
+
+      final length = await pendingCount;
+      if (length > 100) {
+        // ignore: avoid_print
+        print('[Queue] Warning: $length pending items. User should login to sync.');
+      }
+
       return id;
     } catch (e) {
       throw QueueServiceException('Failed to enqueue action "$action": $e');
@@ -104,6 +111,8 @@ class QueueService {
       throw QueueServiceException('Failed to count pending items: $e');
     }
   }
+
+  Future<bool> hasPendingItems() async => (await pendingCount) > 0;
 
   // ── Update ───────────────────────────────────────────────────
 

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' show pow;
 
 import 'package:flutter/foundation.dart';
 
@@ -7,10 +8,10 @@ import '../services/connectivity_service.dart';
 import '../services/queue_service.dart';
 import '../constants.dart';
 import '../../features/ai_insights/data/insight_cache_service.dart';
-import '../isar/isar_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../shared/providers/sync_status_provider.dart';
 
@@ -57,7 +58,11 @@ class SyncService {
     // Periodic sweep for missed items.
     _periodicTimer = Timer.periodic(
       AppConstants.syncInterval,
-      (_) => syncNow(),
+      (_) async {
+        if (FirebaseAuth.instance.currentUser != null) {
+          await syncNow();
+        }
+      },
     );
   }
 
@@ -139,8 +144,18 @@ class SyncService {
 
       if (FirebaseAuth.instance.currentUser != null) {
         try {
-          await syncPendingData();
-          await syncNow();
+          final count = await syncNow();
+          
+          if (count > 0) {
+            final prefs = await SharedPreferences.getInstance();
+            await prefs.setInt('last_sync_count', count);
+            await prefs.setString(
+              'last_sync_time',
+              DateTime.now().toIso8601String(),
+            );
+            debugPrint('[Sync] ✓ Synced $count items to Firestore');
+          }
+
           ref?.read(syncStatusProvider.notifier).state = SyncStatus.synced;
         } catch (e) {
           debugPrint('[Sync] Sync failed after connectivity restored: $e');
@@ -153,44 +168,7 @@ class SyncService {
     }
   }
 
-  Future<void> syncPendingData() async {
-    final isarService = IsarService();
-    final firestore = FirebaseFirestore.instance;
-    
-    final unsyncedLogs = await isarService.getUnsyncedLogs();
-    debugPrint("Unsynced logs: ${unsyncedLogs.length}");
-
-    if (unsyncedLogs.isNotEmpty) {
-      debugPrint("Sync started");
-    }
-
-    for (final log in unsyncedLogs) {
-      try {
-        debugPrint("Uploading log: ${log.id}");
-        final payload = log.toJson();
-        payload['syncedAt'] = FieldValue.serverTimestamp();
-        payload['timestamp'] = FieldValue.serverTimestamp(); // Enforce timestamp on write
-        final user = FirebaseAuth.instance.currentUser;
-        if (user == null) {
-          debugPrint('[Sync] User not authenticated — retry later');
-          throw Exception('User not authenticated');
-        }
-        
-        await firestore
-            .collection('users')
-            .doc(user.uid)
-            .collection('symptomLogs')
-            .add(payload);
-        await isarService.markAsSynced(log.id);
-      } catch(e) {
-        debugPrint('[Sync] Error syncing log ${log.id}: $e');
-      }
-    }
-
-    if (unsyncedLogs.isNotEmpty) {
-      debugPrint("Sync completed");
-    }
-  }
+  Future<void> syncPendingData() async => syncNow();
 
   /// Pushes a single [QueueItem] to Firestore.
   ///
@@ -217,9 +195,15 @@ class SyncService {
     debugPrint('[Sync] Action: ${item.action} → collection: $collection');
     debugPrint('[Sync] Writing to users/${user.uid}/$collection');
 
+    if (item.retryCount > 0) {
+      final backoffSeconds = pow(2, item.retryCount).toInt().clamp(1, 60);
+      debugPrint('[Sync] Backoff ${backoffSeconds}s for item '
+                 '${item.id} (retry ${item.retryCount})');
+      await Future.delayed(Duration(seconds: backoffSeconds));
+    }
+
     // Attach metadata.
     payload['syncedAt'] = FieldValue.serverTimestamp();
-    payload['timestamp'] = FieldValue.serverTimestamp(); // Enforce timestamp on write
 
     final collectionRef = firestore
         .collection('users')
@@ -253,9 +237,21 @@ class SyncService {
     }
 
     // ── CREATE ─────────────────────────────────────────────────
-    debugPrint('[Sync] Creating new doc in $collection');
-    final docRef = await collectionRef.add(payload);
-    debugPrint('[Sync] Created doc ${docRef.id} in $collection');
+    final clientId = payload['clientId'] as String?;
+    if (clientId == null) {
+      debugPrint('[Sync] Missing clientId — skipping to prevent orphan doc');
+      return;
+    }
+    try {
+      await collectionRef
+          .doc(clientId)
+          .set(payload, SetOptions(merge: true));
+      debugPrint('[Sync] ✓ Wrote $clientId to Firestore');
+    } catch (e, stack) {
+      debugPrint('[Sync Error] Failed to write $clientId: $e');
+      debugPrint('[Sync Stack] $stack');
+      rethrow; // REQUIRED — triggers retry system
+    }
   }
 
   /// Maps queue action names to their canonical Firestore collection.
