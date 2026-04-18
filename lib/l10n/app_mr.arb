@@ -1,48 +1,164 @@
 {
   "@@locale": "mr",
-  "appTitle": "ओव्या",
+  "appTitle": "Ovya",
+  "continueText": "पुढे जा",
+  "auth_sign_in": "साइन इन करा",
+  "auth_sign_up": "साइन अप करा",
+  "auth_email": "ईमेल",
+  "auth_password": "पासवर्ड",
+  "auth_confirm_password": "पासवर्डची पुष्टी करा",
+  "auth_error_passwords_no_match": "पासवर्ड जुळत नाहीत",
+  "auth_create_account": "नवीन खाते तयार करा",
+  "auth_loading": "लोड होत आहे...",
   "logSymptoms": "लक्षणे नोंदवा",
   "howAreYouFeeling": "आज तुम्हाला कसे वाटत आहे?",
-  "irregularCycle": "अनियमित मासिक पाळी",
-  "acne": "मुरुम",
+  "irregularCycle": "अनियमित पाळी",
+  "acne": "मुरुमे (Acne)",
   "weightGain": "वजन वाढणे",
-  "excessHairGrowth": "अतिरिक्त केसांची वाढ",
-  "moodIssues": "मूड समस्या",
-  "notesOptional": "टिपा (पर्यायी)",
-  "notesHint": "कोणतेही अतिरिक्त तपशील...",
+  "excessHairGrowth": "अनावश्यक केस वाढणे",
+  "moodIssues": "वारंवार मूड बदलणे",
+  "notesOptional": "नोंदी (पर्यायी)",
+  "notesHint": "इतर कोणतीही माहिती...",
   "logSymptomsButton": "लक्षणे नोंदवा",
-  "symptomsLoggedSuccess": "लक्षणे यशस्वीपणे नोंदवली!",
+  "symptomsLoggedSuccess": "लक्षणे यशस्वीरित्या नोंदवली!",
   "history": "इतिहास",
   "noSymptoms": "कोणतीही लक्षणे नाहीत",
-  "riskLevel": "जोखीम पातळी: {level}",
-  "score": "गुण: {value}",
-  "recommendations": "शिफारसी",
-  "aiInsights": "AI अंतर्दृष्टी",
-  "generateInsight": "अंतर्दृष्टी तयार करा",
-  "noInsightsYet": "अद्याप कोणतीही अंतर्दृष्टी नाही",
-  "noInsightsDescription": "प्रथम तुमची लक्षणे नोंदवा, नंतर\n\"अंतर्दृष्टी तयार करा\" वर टॅप करा.",
-  "latestInsight": "नवीनतम अंतर्दृष्टी",
-  "cached": "कॅश केलेले",
-  "aiGenerated": "AI द्वारे तयार",
-  "previousInsights": "मागील अंतर्दृष्टी",
-  "disclaimer": "हे केवळ माहितीपूर्ण आहे आणि वैद्यकीय निदान नाही. कृपया आरोग्य व्यावसायिकांचा सल्ला घ्या.",
-  "clearCache": "कॅश साफ करा",
-  "viewInsights": "अंतर्दृष्टी पहा",
-  "offlineModeActive": "ऑफलाइन मोड सक्रिय",
-  "syncingData": "डेटा सिंक होत आहे…",
-  "syncedSuccessfully": "यशस्वीपणे सिंक झाले",
-  "fetchingInsights": "नवीन अंतर्दृष्टी मिळवत आहे…",
-  "usingLastSaved": "शेवटची सेव्ह केलेली अंतर्दृष्टी वापरत आहे",
-  "offlineShowingLast": "आम्ही ऑफलाइन आहोत. तुमची शेवटची अंतर्दृष्टी दाखवत आहोत.",
+  "riskLevel": "धोक्याची पातळी: {level}",
+  "@riskLevel": {
+    "placeholders": {
+      "level": { "type": "String" }
+    }
+  },
+  "score": "स्कोर: {value}",
+  "@score": {
+    "placeholders": {
+      "value": { "type": "int" }
+    }
+  },
+  "recommendations": "सल्ले",
+  "aiInsights": "AI माहिती",
+  "generateInsight": "माहिती मिळवा",
+  "noInsightsYet": "अद्याप कोणतीही माहिती नाही",
+  "noInsightsDescription": "प्रथम तुमची लक्षणे नोंदवा आणि नंतर सल्ल्यासाठी टॅप करा.",
+  "latestInsight": "नवीनतम माहिती",
+  "cached": "सेव्ह केलेले",
+  "aiGenerated": "AI द्वारे निर्माण केलेले",
+  "previousInsights": "मागील माहिती",
+  "disclaimer": "ही एक सामान्य माहिती आहे. कृपया डॉक्टरांचा सल्ला घ्या.",
+  "clearCache": "कॅश क्लिअर करा",
+  "viewInsights": "माहिती पहा",
+  "offlineModeActive": "ऑफलाइन मोड सुरू आहे",
+  "syncingData": "डेटा सिंक होत आहे...",
+  "syncedSuccessfully": "यशस्वीरित्या सिंक झाले",
+  "fetchingInsights": "नवीन माहिती आणत आहे...",
+  "usingLastSaved": "मागील सेव्ह केलेली माहिती दाखवत आहे",
+  "offlineShowingLast": "आपण ऑफलाइन आहोत. आपली मागील माहिती दाखवत आहोत.",
   "failedToLoad": "लोड करण्यात अयशस्वी",
-  "failedToAdd": "जोडण्यात अयशस्वी",
-  "failedToGenerate": "तयार करण्यात अयशस्वी",
-  "rec_track_regularly": "लवकर ओळखण्यासाठी तुमची लक्षणे नियमितपणे नोंदवत राहा.",
-  "rec_balanced_diet": "संतुलित आहार घ्या आणि नियमित व्यायाम करा.",
-  "rec_schedule_checkup": "तुमच्या डॉक्टरांकडे तपासणीसाठी भेट घेण्याचा विचार करा.",
-  "rec_monitor_cycle": "तुमच्या मासिक पाळीवर बारकाईने लक्ष ठेवा आणि कोणतीही अनियमितता नोंदवा.",
-  "rec_stress_management": "योग किंवा ध्यान यासारख्या तणाव व्यवस्थापन पद्धती अवलंबा.",
-  "rec_consult_gynecologist": "कृपया शक्य तितक्या लवकर स्त्रीरोगतज्ञांचा सल्ला घ्या.",
-  "rec_request_bloodwork": "हार्मोन पॅनल आणि इन्सुलिन पातळीसह रक्त तपासणी करा.",
-  "rec_symptom_diary": "तुमच्या डॉक्टरांना दाखवण्यासाठी लक्षणांची सविस्तर डायरी ठेवा."
+  "failedToAdd": "नोंद करण्यात अयशस्वी",
+  "failedToGenerate": "निर्माण करण्यात अयशस्वी",
+  "rec_track_regularly": "तुमच्या लक्षणांवर लक्ष ठेवा आणि ती नियमित नोंदवा.",
+  "rec_balanced_diet": "सकस आहार आणि नियमित व्यायाम करा.",
+  "rec_schedule_checkup": "तुमच्या डॉक्टरांचा सल्ला घेण्याचा विचार करा.",
+  "rec_monitor_cycle": "तुमच्या मासिक पाळीकडे लक्ष द्या आणि बदलांची नोंद करा.",
+  "rec_stress_management": "तणाव कमी करण्यासाठी योग किंवा ध्यान करा.",
+  "rec_consult_gynecologist": "कृपया शक्य तितक्या लवकर स्त्रीरोगतज्ज्ञांचा (Gynecologist) सल्ला घ्या.",
+  "rec_request_bloodwork": "तुमच्या हार्मोन आणि इन्सुलिनच्या पातळीसाठी रक्त तपासणी करा.",
+  "rec_symptom_diary": "तुमच्या डॉक्टरांना माहिती देण्यासाठी लक्षणांची डायरी ठेवा.",
+  "q_irregular_cycle": "तुमची मासिक पाळी अनियमित आहे का?",
+  "q_hair_growth": "तुमच्या चेहऱ्यावर किंवा अंगावर अनावश्यक केस वाढले आहेत का?",
+  "q_family_history": "तुमच्या कुटुंबात कोणाला पॉलीसिस्टिक ओव्हरी सिंड्रोम (PCOS) आहे का?",
+  "q_weight_gain": "तुमचे वजन अचानक वाढले आहे का?",
+  "q_acne": "तुम्हाला नेहमी मुरुमे (Acne) येतात का?",
+  "q_skin_darkening": "तुमच्या त्वचेवर काळे डाग दिसतात का?",
+  "q_hair_thinning": "तुमचे केस गळत आहेत किंवा विरळ होत आहेत का?",
+  "q_fatigue": "तुम्हाला नेहमी थकवा जाणवतो का?",
+  "q_sleep_problems": "तुम्हाला झोपायला त्रास होतो का?",
+  "q_bloating": "तुम्हाला वारंवार पोट फुगल्यासारखे वाटते का?",
+  "q_mood_issues": "तुमचा मूड वारंवार बदलतो का?",
+  "q_difficulty_conceiving": "तुम्हाला गर्भधारणा करण्यास अडचण येत आहे का?",
+  "q_age_verification": "तुमचे वय १८ किंवा उससे अधिक आहे का?",
+  "btn_yes": "होय",
+  "btn_no": "नाही",
+  "progress_indicator": "प्रश्न {current} / {total}",
+  "@progress_indicator": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "pcos_type_hint": "तुमची लक्षणे {type} पॉलीसिस्टिक ओव्हरी सिंड्रोम (PCOS) दर्शवतात",
+  "@pcos_type_hint": {
+    "placeholders": {
+      "type": { "type": "String" }
+    }
+  },
+  "pcos_type_insulin_desc": "तुमच्या शरीराला इन्सुलिन वापरण्यात अडचण येत आहे ज्यामुळे वजन वाढते.",
+  "pcos_type_androgenic_desc": "पुरुष संप्रेरकांची वाढ झाल्यामुळे मुरुमे आणि अनावश्यक केस वाढतात.",
+  "pcos_type_adrenal_desc": "हे सहसा तणावामुळे होणाऱ्या बदलांमुळे होते.",
+  "type_insulin_resistant": "इन्सुलिन-प्रतिरोधक (Insulin-resistant)",
+  "type_androgenic": "अँड्रोजेनिक (Androgenic)",
+  "type_adrenal": "अड्रेनल (Adrenal)",
+  "btn_save_track": "सेव्ह करा आणि लक्षणे नोंदवा",
+  "btn_generate_report": "डॉक्टरांसाठी रिपोर्ट तयार करा",
+  "log_date_header": "आज, {date}",
+  "@log_date_header": {
+    "placeholders": {
+      "date": { "type": "String" }
+    }
+  },
+  "log_symptoms_label": "आजची लक्षणे निवडा",
+  "log_notes_label": "आजच्यासाठी काही नोंदी?",
+  "log_save_button": "सेव्ह करा",
+  "log_saved_success": "यशस्वीरित्या सेव्ह केले ✓",
+  "log_already_logged": "आज आधीच नोंदवले आहे",
+  "report_patient_name": "रुग्णाचे नाव",
+  "report_preview_title": "रिपोर्टचे पूर्वावलोकन",
+  "report_share_btn": "WhatsApp वर शेअर करा",
+  "report_print_btn": "प्रिंट करा",
+  "report_offline_note": "हा रिपोर्ट पूर्णपणे सुरक्षित आणि ऑफलाइन तयार केला आहे.",
+  "home_hello": "नमस्कार",
+  "home_good_morning": "शुभ सकाळ",
+  "home_good_afternoon": "शुभ दुपार",
+  "home_good_evening": "शुभ संध्याकाळ",
+  "home_time_today": "आज",
+  "home_time_yesterday": "काल",
+  "home_time_days_ago": "{days} दिवसांपूर्वी",
+  "@home_time_days_ago": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "home_start_assessment": "आरोग्य तपासणी सुरू करा",
+  "home_rerun_assessment": "पुन्हा तपासणी करा",
+  "home_card_log": "लक्षणे नोंदवा",
+  "home_logged_done": "झाले ✓",
+  "home_logged_today": "आज",
+  "home_card_report": "रिपोर्ट मिळवा",
+  "home_card_report_sub": "डॉक्टरांशी शेअर करा",
+  "home_card_ai": "Ovya ला विचारा",
+  "home_card_ai_ready": "तयार",
+  "home_card_ai_offline": "फक्त ऑनलाइन",
+  "home_err_offline": "या सुविधेसाठी इंटरनेटची आवश्यकता आहे.",
+  "home_card_history": "माझा इतिहास",
+  "home_card_history_sub": "मागील नोंदी पहा",
+  "home_empty_risk_title": "तुमचा पॉलीसिस्टिक ओव्हरी सिंड्रोम (PCOS) धोका येथे दिसेल",
+  "home_empty_risk_sub": "फक्त 2 मिनिटे लागतील",
+  "home_pcos_risk": "धोका: {level}",
+  "@home_pcos_risk": {
+    "placeholders": {
+      "level": { "type": "String" }
+    }
+  },
+  "home_type_hint": "{hint} प्रकार",
+  "@home_type_hint": {
+    "placeholders": {
+      "hint": { "type": "String" }
+    }
+  },
+  "home_last_assessed": "शेवटची तपासणी: {time}",
+  "@home_last_assessed": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  }
 }

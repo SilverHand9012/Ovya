@@ -110,6 +110,60 @@ abstract class AppLocalizations {
   /// **'Ovya'**
   String get appTitle;
 
+  /// No description provided for @continueText.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get continueText;
+
+  /// No description provided for @auth_sign_in.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In'**
+  String get auth_sign_in;
+
+  /// No description provided for @auth_sign_up.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up'**
+  String get auth_sign_up;
+
+  /// No description provided for @auth_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get auth_email;
+
+  /// No description provided for @auth_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get auth_password;
+
+  /// No description provided for @auth_confirm_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get auth_confirm_password;
+
+  /// No description provided for @auth_error_passwords_no_match.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get auth_error_passwords_no_match;
+
+  /// No description provided for @auth_create_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account'**
+  String get auth_create_account;
+
+  /// No description provided for @auth_loading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading...'**
+  String get auth_loading;
+
   /// No description provided for @logSymptoms.
   ///
   /// In en, this message translates to:
@@ -281,7 +335,7 @@ abstract class AppLocalizations {
   /// No description provided for @syncingData.
   ///
   /// In en, this message translates to:
-  /// **'Syncing data…'**
+  /// **'Syncing dataâ€¦'**
   String get syncingData;
 
   /// No description provided for @syncedSuccessfully.
@@ -293,7 +347,7 @@ abstract class AppLocalizations {
   /// No description provided for @fetchingInsights.
   ///
   /// In en, this message translates to:
-  /// **'Fetching new insights…'**
+  /// **'Fetching new insightsâ€¦'**
   String get fetchingInsights;
 
   /// No description provided for @usingLastSaved.
@@ -373,6 +427,432 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Keep a detailed symptom diary to share with your doctor.'**
   String get rec_symptom_diary;
+
+  /// No description provided for @q_irregular_cycle.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you have irregular or missed periods?'**
+  String get q_irregular_cycle;
+
+  /// No description provided for @q_hair_growth.
+  ///
+  /// In en, this message translates to:
+  /// **'Have you noticed unusual hair growth on your face or body?'**
+  String get q_hair_growth;
+
+  /// No description provided for @q_family_history.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you have a family member with PCOS?'**
+  String get q_family_history;
+
+  /// No description provided for @q_weight_gain.
+  ///
+  /// In en, this message translates to:
+  /// **'Have you experienced unexplained weight gain?'**
+  String get q_weight_gain;
+
+  /// No description provided for @q_acne.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you have persistent acne?'**
+  String get q_acne;
+
+  /// No description provided for @q_skin_darkening.
+  ///
+  /// In en, this message translates to:
+  /// **'Have you noticed dark patches on your skin?'**
+  String get q_skin_darkening;
+
+  /// No description provided for @q_hair_thinning.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you experiencing hair thinning or loss?'**
+  String get q_hair_thinning;
+
+  /// No description provided for @q_fatigue.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you often feel fatigued or low on energy?'**
+  String get q_fatigue;
+
+  /// No description provided for @q_sleep_problems.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you have difficulty sleeping?'**
+  String get q_sleep_problems;
+
+  /// No description provided for @q_bloating.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you experience bloating regularly?'**
+  String get q_bloating;
+
+  /// No description provided for @q_mood_issues.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you experience frequent mood swings?'**
+  String get q_mood_issues;
+
+  /// No description provided for @q_difficulty_conceiving.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you having difficulty conceiving?'**
+  String get q_difficulty_conceiving;
+
+  /// No description provided for @q_age_verification.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you 18 years or older?'**
+  String get q_age_verification;
+
+  /// No description provided for @btn_yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get btn_yes;
+
+  /// No description provided for @btn_no.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get btn_no;
+
+  /// No description provided for @progress_indicator.
+  ///
+  /// In en, this message translates to:
+  /// **'Question {current} of {total}'**
+  String progress_indicator(int current, int total);
+
+  /// No description provided for @pcos_type_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Your symptoms suggest {type} PCOS'**
+  String pcos_type_hint(String type);
+
+  /// No description provided for @pcos_type_insulin_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'This typically means your body has trouble using insulin effectively, leading to weight gain and irregular cycles.'**
+  String get pcos_type_insulin_desc;
+
+  /// No description provided for @pcos_type_androgenic_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'This often involves higher levels of male hormones (androgens) causing excess hair and acne.'**
+  String get pcos_type_androgenic_desc;
+
+  /// No description provided for @pcos_type_adrenal_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'This is often triggered by an abnormal response to stress, primarily driven by adrenal androgens.'**
+  String get pcos_type_adrenal_desc;
+
+  /// No description provided for @type_insulin_resistant.
+  ///
+  /// In en, this message translates to:
+  /// **'Insulin-resistant'**
+  String get type_insulin_resistant;
+
+  /// No description provided for @type_androgenic.
+  ///
+  /// In en, this message translates to:
+  /// **'Androgenic'**
+  String get type_androgenic;
+
+  /// No description provided for @type_adrenal.
+  ///
+  /// In en, this message translates to:
+  /// **'Adrenal'**
+  String get type_adrenal;
+
+  /// No description provided for @btn_save_track.
+  ///
+  /// In en, this message translates to:
+  /// **'Save & Track Symptoms'**
+  String get btn_save_track;
+
+  /// No description provided for @btn_generate_report.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate Doctor Report'**
+  String get btn_generate_report;
+
+  /// No description provided for @log_date_header.
+  ///
+  /// In en, this message translates to:
+  /// **'Today, {date}'**
+  String log_date_header(String date);
+
+  /// No description provided for @log_symptoms_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Select your symptoms today'**
+  String get log_symptoms_label;
+
+  /// No description provided for @log_notes_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Any notes for today?'**
+  String get log_notes_label;
+
+  /// No description provided for @log_save_button.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Log'**
+  String get log_save_button;
+
+  /// No description provided for @log_saved_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved ✓'**
+  String get log_saved_success;
+
+  /// No description provided for @log_already_logged.
+  ///
+  /// In en, this message translates to:
+  /// **'Already logged today'**
+  String get log_already_logged;
+
+  /// No description provided for @report_patient_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Patient Name'**
+  String get report_patient_name;
+
+  /// No description provided for @report_preview_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Report Preview'**
+  String get report_preview_title;
+
+  /// No description provided for @report_share_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Share via WhatsApp / Apps'**
+  String get report_share_btn;
+
+  /// No description provided for @report_print_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Print'**
+  String get report_print_btn;
+
+  /// No description provided for @report_offline_note.
+  ///
+  /// In en, this message translates to:
+  /// **'This report is generated securely offline.'**
+  String get report_offline_note;
+
+  /// No description provided for @home_hello.
+  ///
+  /// In en, this message translates to:
+  /// **'Hello'**
+  String get home_hello;
+
+  /// No description provided for @home_good_morning.
+  ///
+  /// In en, this message translates to:
+  /// **'Good morning'**
+  String get home_good_morning;
+
+  /// No description provided for @home_good_afternoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Good afternoon'**
+  String get home_good_afternoon;
+
+  /// No description provided for @home_good_evening.
+  ///
+  /// In en, this message translates to:
+  /// **'Good evening'**
+  String get home_good_evening;
+
+  /// No description provided for @home_time_today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get home_time_today;
+
+  /// No description provided for @home_time_yesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get home_time_yesterday;
+
+  /// No description provided for @home_time_days_ago.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days ago'**
+  String home_time_days_ago(int days);
+
+  /// No description provided for @home_start_assessment.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Health Assessment'**
+  String get home_start_assessment;
+
+  /// No description provided for @home_rerun_assessment.
+  ///
+  /// In en, this message translates to:
+  /// **'Re-run Assessment'**
+  String get home_rerun_assessment;
+
+  /// No description provided for @home_card_log.
+  ///
+  /// In en, this message translates to:
+  /// **'Log Symptoms'**
+  String get home_card_log;
+
+  /// No description provided for @home_logged_done.
+  ///
+  /// In en, this message translates to:
+  /// **'Done ✓'**
+  String get home_logged_done;
+
+  /// No description provided for @home_logged_today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get home_logged_today;
+
+  /// No description provided for @home_card_report.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Report'**
+  String get home_card_report;
+
+  /// No description provided for @home_card_report_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Share with doctor'**
+  String get home_card_report_sub;
+
+  /// No description provided for @home_card_ai.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask Ovya'**
+  String get home_card_ai;
+
+  /// No description provided for @home_card_ai_ready.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready'**
+  String get home_card_ai_ready;
+
+  /// No description provided for @home_card_ai_offline.
+  ///
+  /// In en, this message translates to:
+  /// **'Online only'**
+  String get home_card_ai_offline;
+
+  /// No description provided for @home_err_offline.
+  ///
+  /// In en, this message translates to:
+  /// **'This feature requires an active internet connection.'**
+  String get home_err_offline;
+
+  /// No description provided for @home_card_history.
+  ///
+  /// In en, this message translates to:
+  /// **'My History'**
+  String get home_card_history;
+
+  /// No description provided for @home_card_history_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'View past logs'**
+  String get home_card_history_sub;
+
+  /// No description provided for @home_empty_risk_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Your PCOS risk assessment will appear here'**
+  String get home_empty_risk_title;
+
+  /// No description provided for @home_empty_risk_sub.
+  ///
+  /// In en, this message translates to:
+  /// **'Takes only 2 minutes'**
+  String get home_empty_risk_sub;
+
+  /// No description provided for @home_pcos_risk.
+  ///
+  /// In en, this message translates to:
+  /// **'PCOS Risk: {level}'**
+  String home_pcos_risk(String level);
+
+  /// No description provided for @home_type_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'{hint} type'**
+  String home_type_hint(String hint);
+
+  /// No description provided for @home_last_assessed.
+  ///
+  /// In en, this message translates to:
+  /// **'Last assessed: {time}'**
+  String home_last_assessed(String time);
+
+  /// No description provided for @chat_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask Ovya'**
+  String get chat_title;
+
+  /// No description provided for @chat_context_card.
+  ///
+  /// In en, this message translates to:
+  /// **'Based on your {level} risk assessment...'**
+  String chat_context_card(String level);
+
+  /// No description provided for @chat_offline_banner.
+  ///
+  /// In en, this message translates to:
+  /// **'Showing cached response — connect for live guidance'**
+  String get chat_offline_banner;
+
+  /// No description provided for @chat_disclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'This is AI guidance, not medical advice'**
+  String get chat_disclaimer;
+
+  /// No description provided for @chat_suggested_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested Questions'**
+  String get chat_suggested_title;
+
+  /// No description provided for @chat_suggestion_1.
+  ///
+  /// In en, this message translates to:
+  /// **'What foods should I avoid with PCOS?'**
+  String get chat_suggestion_1;
+
+  /// No description provided for @chat_suggestion_2.
+  ///
+  /// In en, this message translates to:
+  /// **'How does stress affect PCOS?'**
+  String get chat_suggestion_2;
+
+  /// No description provided for @chat_suggestion_3.
+  ///
+  /// In en, this message translates to:
+  /// **'What should I ask my doctor?'**
+  String get chat_suggestion_3;
+
+  /// No description provided for @chat_offline_tooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to internet to ask Ovya'**
+  String get chat_offline_tooltip;
+
+  /// No description provided for @chat_input_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask about your PCOS...'**
+  String get chat_input_hint;
 }
 
 class _AppLocalizationsDelegate

@@ -1,20 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:ovya/l10n/gen/app_localizations.dart';
+import 'package:intl/intl.dart';
 
 import '../domain/symptom_entity.dart';
 import '../providers/symptom_notifier.dart';
-import '../../../core/intelligence/detection_engine.dart';
-import '../../../shared/utils/recommendation_resolver.dart';
-import '../../../shared/widgets/status_banner.dart';
 
-/// Screen for logging PCOS symptoms and viewing risk evaluation.
-///
-/// Flow:
-///   1. User toggles symptom switches.
-///   2. Optionally adds notes.
-///   3. Taps "Log Symptoms" → data saved locally + detection runs.
-///   4. Risk result card appears below the form.
-///   5. History list shows past entries.
 class LogScreen extends ConsumerStatefulWidget {
   const LogScreen({super.key});
 
@@ -23,31 +15,42 @@ class LogScreen extends ConsumerStatefulWidget {
 }
 
 class _LogScreenState extends ConsumerState<LogScreen> {
-  // ── Form state ───────────────────────────────────────────────
-
-  // Original symptoms
-  bool _irregularCycle = false;
-  bool _acne = false;
-  bool _weightGain = false;
-  bool _hairGrowth = false;
-  bool _moodIssues = false;
-
-  // Extended symptoms
-  bool _hairThinning = false;
-  bool _skinDarkening = false;
-  bool _fatigue = false;
-  bool _sleepProblems = false;
-  bool _bloating = false;
-  bool _familyHistory = false;
-  bool _difficultyConceiving = false;
-
+  int _selectedMood = 3; // 1 to 5, default neutral
+  final Set<String> _selectedSymptoms = {};
   final TextEditingController _notesController = TextEditingController();
+
+  final List<String> _emojis = ['😔', '😐', '🙂', '😊', '😄'];
+
+  // All 12 symptoms
+  final List<String> _symptomKeys = [
+    'irregularCycle', 'hairGrowth', 'hairThinning', 'weightGain',
+    'acne', 'skinDarkening', 'fatigue', 'moodIssues', 
+    'sleepProblems', 'bloating', 'familyHistory', 'difficultyConceiving'
+  ];
+
+  String _getSymptomLabel(String key, AppLocalizations loc) {
+    switch (key) {
+      case 'irregularCycle': return loc.q_irregular_cycle.replaceAll('Do you have ', '').replaceAll('?', ''); // Simplified
+      case 'hairGrowth': return 'Excess hair growth';
+      case 'hairThinning': return 'Hair thinning';
+      case 'weightGain': return 'Weight gain';
+      case 'acne': return 'Acne';
+      case 'skinDarkening': return 'Skin darkening';
+      case 'fatigue': return 'Fatigue';
+      case 'moodIssues': return 'Mood swings';
+      case 'sleepProblems': return 'Sleep problems';
+      case 'bloating': return 'Bloating';
+      case 'familyHistory': return 'Family history';
+      case 'difficultyConceiving': return 'Difficulty conceiving';
+      default: return key;
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    // Load existing logs on first build.
-    Future.microtask(() {
+    // Pre-load symptoms to discover if already logged today
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(symptomNotifierProvider.notifier).loadSymptoms();
     });
   }
@@ -58,435 +61,273 @@ class _LogScreenState extends ConsumerState<LogScreen> {
     super.dispose();
   }
 
-  // ── Submit ───────────────────────────────────────────────────
-
-  void _submit() {
-    final symptom = SymptomEntity(
-      id: '',
-      timestamp: DateTime.now(),
-      irregularCycle: _irregularCycle,
-      acne: _acne,
-      weightGain: _weightGain,
-      hairGrowth: _hairGrowth,
-      moodIssues: _moodIssues,
-      hairThinning: _hairThinning,
-      skinDarkening: _skinDarkening,
-      fatigue: _fatigue,
-      sleepProblems: _sleepProblems,
-      bloating: _bloating,
-      familyHistory: _familyHistory,
-      difficultyConceiving: _difficultyConceiving,
-      notes: _notesController.text.trim().isEmpty
-          ? null
-          : _notesController.text.trim(),
-    );
-
-    ref.read(symptomNotifierProvider.notifier).addSymptom(symptom);
-
-    // Reset form.
-    setState(() {
-      _irregularCycle = false;
-      _acne = false;
-      _weightGain = false;
-      _hairGrowth = false;
-      _moodIssues = false;
-      _hairThinning = false;
-      _skinDarkening = false;
-      _fatigue = false;
-      _sleepProblems = false;
-      _bloating = false;
-      _familyHistory = false;
-      _difficultyConceiving = false;
-    });
-    _notesController.clear();
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Symptoms logged successfully!')),
-    );
-  }
-
-  // ── Build ────────────────────────────────────────────────────
-
-  @override
-  Widget build(BuildContext context) {
+  bool _isAlreadyLoggedToday() {
     final state = ref.watch(symptomNotifierProvider);
-    final theme = Theme.of(context);
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Log Symptoms'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.insights),
-            tooltip: 'View Insights',
-            onPressed: () =>
-                Navigator.of(context).pushNamed('/insights'),
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          const SyncStatusBanner(),
-          Expanded(
-            child: state.isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : ListView(
-              padding: const EdgeInsets.all(16),
-              children: [
-                // ── Symptom toggles ────────────────────────────
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 8),
-                          child: Text(
-                            'How are you feeling today?',
-                            style: theme.textTheme.titleMedium,
-                          ),
-                        ),
-
-                        // ── Core symptoms ──────────────────────
-                        _buildSwitch(
-                          'Irregular Cycle',
-                          Icons.loop,
-                          _irregularCycle,
-                          (v) => setState(() => _irregularCycle = v),
-                        ),
-                        _buildSwitch(
-                          'Acne',
-                          Icons.face,
-                          _acne,
-                          (v) => setState(() => _acne = v),
-                        ),
-                        _buildSwitch(
-                          'Weight Gain',
-                          Icons.monitor_weight,
-                          _weightGain,
-                          (v) => setState(() => _weightGain = v),
-                        ),
-                        _buildSwitch(
-                          'Excess Hair Growth',
-                          Icons.content_cut,
-                          _hairGrowth,
-                          (v) => setState(() => _hairGrowth = v),
-                        ),
-                        _buildSwitch(
-                          'Mood Issues',
-                          Icons.mood_bad,
-                          _moodIssues,
-                          (v) => setState(() => _moodIssues = v),
-                        ),
-
-                        const Divider(height: 1),
-
-                        // ── Extended symptoms ──────────────────
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 8),
-                          child: Text(
-                            'Additional indicators',
-                            style: theme.textTheme.titleSmall?.copyWith(
-                              color: theme.colorScheme.secondary,
-                            ),
-                          ),
-                        ),
-                        _buildSwitch(
-                          'Hair Thinning / Loss',
-                          Icons.healing,
-                          _hairThinning,
-                          (v) => setState(() => _hairThinning = v),
-                        ),
-                        _buildSwitch(
-                          'Skin Darkening',
-                          Icons.contrast,
-                          _skinDarkening,
-                          (v) => setState(() => _skinDarkening = v),
-                        ),
-                        _buildSwitch(
-                          'Fatigue',
-                          Icons.battery_alert,
-                          _fatigue,
-                          (v) => setState(() => _fatigue = v),
-                        ),
-                        _buildSwitch(
-                          'Sleep Problems',
-                          Icons.bedtime,
-                          _sleepProblems,
-                          (v) => setState(() => _sleepProblems = v),
-                        ),
-                        _buildSwitch(
-                          'Bloating',
-                          Icons.water_drop,
-                          _bloating,
-                          (v) => setState(() => _bloating = v),
-                        ),
-                        _buildSwitch(
-                          'Family History of PCOS',
-                          Icons.family_restroom,
-                          _familyHistory,
-                          (v) => setState(() => _familyHistory = v),
-                        ),
-                        _buildSwitch(
-                          'Difficulty Conceiving',
-                          Icons.favorite_border,
-                          _difficultyConceiving,
-                          (v) => setState(() => _difficultyConceiving = v),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 12),
-
-                // ── Notes ──────────────────────────────────────
-                TextField(
-                  controller: _notesController,
-                  decoration: const InputDecoration(
-                    labelText: 'Notes (optional)',
-                    border: OutlineInputBorder(),
-                    hintText: 'Any additional details...',
-                  ),
-                  maxLines: 3,
-                ),
-
-                const SizedBox(height: 16),
-
-                // ── Submit button ──────────────────────────────
-                FilledButton.icon(
-                  onPressed: _submit,
-                  icon: const Icon(Icons.add_circle_outline),
-                  label: const Text('Log Symptoms'),
-                ),
-
-                // ── Risk result card ───────────────────────────
-                if (state.riskResult != null) ...[
-                  const SizedBox(height: 24),
-                  _RiskResultCard(result: state.riskResult!),
-                ],
-
-                // ── Error message ──────────────────────────────
-                if (state.errorMessage != null) ...[
-                  const SizedBox(height: 12),
-                  Text(
-                    state.errorMessage!,
-                    style: TextStyle(color: theme.colorScheme.error),
-                  ),
-                ],
-
-                // ── History ────────────────────────────────────
-                if (state.symptoms.isNotEmpty) ...[
-                  const SizedBox(height: 24),
-                  Text(
-                    'History',
-                    style: theme.textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: 8),
-                  ...state.symptoms.map(
-                    (s) => _SymptomHistoryTile(
-                      symptom: s,
-                      onDelete: () => ref
-                          .read(symptomNotifierProvider.notifier)
-                          .deleteSymptom(s.id),
-                    ),
-                  ),
-                ],
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+    if (state.symptoms.isEmpty) return false;
+    
+    // Sort logic usually puts latest first
+    final latest = state.symptoms.first;
+    final now = DateTime.now();
+    return latest.timestamp.year == now.year &&
+           latest.timestamp.month == now.month &&
+           latest.timestamp.day == now.day;
   }
 
-  // ── Helpers ──────────────────────────────────────────────────
+  Future<void> _handleSave() async {
+    final state = ref.read(symptomNotifierProvider);
+    if (state.isLoading) return;
 
-  Widget _buildSwitch(
-    String label,
-    IconData icon,
-    bool value,
-    ValueChanged<bool> onChanged,
-  ) {
-    return SwitchListTile(
-      title: Text(label),
-      secondary: Icon(icon),
-      value: value,
-      onChanged: onChanged,
+    final loc = AppLocalizations.of(context)!;
+
+    // Mood mapping: if mood is very low (1 or 2), we can optionally flag moodIssues if not natively selected, 
+    // but the prompt says they select it independently. We'll append mood to notes to preserve the integer.
+    String finalNotes = _notesController.text.trim();
+    finalNotes = 'Mood Level: $_selectedMood/5' + (finalNotes.isNotEmpty ? '\n\n$finalNotes' : '');
+
+    final entity = SymptomEntity(
+      id: DateTime.now().toIso8601String(),
+      timestamp: DateTime.now(),
+      irregularCycle: _selectedSymptoms.contains('irregularCycle'),
+      hairGrowth: _selectedSymptoms.contains('hairGrowth'),
+      hairThinning: _selectedSymptoms.contains('hairThinning'),
+      weightGain: _selectedSymptoms.contains('weightGain'),
+      acne: _selectedSymptoms.contains('acne'),
+      skinDarkening: _selectedSymptoms.contains('skinDarkening'),
+      fatigue: _selectedSymptoms.contains('fatigue'),
+      moodIssues: _selectedSymptoms.contains('moodIssues'),
+      sleepProblems: _selectedSymptoms.contains('sleepProblems'),
+      bloating: _selectedSymptoms.contains('bloating'),
+      familyHistory: _selectedSymptoms.contains('familyHistory'),
+      difficultyConceiving: _selectedSymptoms.contains('difficultyConceiving'),
+      notes: finalNotes,
     );
-  }
-}
 
-// ──────────────────────────────────────────────────────────────
-//  Risk result card
-// ──────────────────────────────────────────────────────────────
+    // This calls save locally, enqueues to firestore, and computes risk offline
+    await ref.read(symptomNotifierProvider.notifier).addSymptom(entity);
 
-class _RiskResultCard extends StatelessWidget {
-  final RiskResult result;
-
-  const _RiskResultCard({required this.result});
-
-  Color _levelColor(String level) {
-    switch (level) {
-      case 'High':
-        return Colors.red.shade700;
-      case 'Medium':
-        return Colors.orange.shade700;
-      default:
-        return Colors.green.shade700;
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(loc.log_saved_success),
+          backgroundColor: Colors.green,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+      if (context.canPop()) {
+        context.pop();
+      } else {
+        context.go('/home'); // Ensure we leave the screen
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final color = _levelColor(result.level);
+    final colors = Theme.of(context).colorScheme;
+    final loc = AppLocalizations.of(context)!;
+    final state = ref.watch(symptomNotifierProvider);
 
-    // Resolve l10n recommendation keys → localized strings.
-    final resolvedRecs =
-        resolveRecommendations(context, result.recommendations);
+    final now = DateTime.now();
+    final dateString = DateFormat('MMMM d').format(now);
+    final headerDate = loc.log_date_header(dateString);
 
-    return Card(
-      color: color.withValues(alpha: 0.1),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side: BorderSide(color: color, width: 1.5),
+    final alreadyLogged = _isAlreadyLoggedToday();
+
+    return Scaffold(
+      backgroundColor: colors.surface,
+      appBar: AppBar(
+        title: Text(loc.logSymptoms, style: const TextStyle(fontWeight: FontWeight.bold)),
+        backgroundColor: colors.surface,
+        elevation: 0,
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(Icons.assessment, color: color),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    'Risk Level: ${result.level}',
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      color: color,
-                      fontWeight: FontWeight.bold,
-                    ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (alreadyLogged) ...[
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  margin: const EdgeInsets.only(bottom: 24),
+                  decoration: BoxDecoration(
+                    color: colors.primaryContainer.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                ),
-                Chip(
-                  label: Text('Score: ${result.score}'),
-                  backgroundColor: color.withValues(alpha: 0.2),
+                  child: Row(
+                    children: [
+                      Icon(Icons.info_outline, color: colors.primary),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          loc.log_already_logged,
+                          style: TextStyle(
+                            color: colors.onPrimaryContainer,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
-            ),
 
-            // ── PCOS type hint ──────────────────────────────────
-            if (result.pcosTypeHint != null) ...[
-              const SizedBox(height: 8),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 10, vertical: 4),
-                decoration: BoxDecoration(
-                  color: color.withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(8),
+              // Header
+              Text(
+                headerDate,
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: colors.primary,
                 ),
-                child: Text(
-                  'Possible type: ${result.pcosTypeHint}',
-                  style: theme.textTheme.labelMedium?.copyWith(
-                    color: color,
-                    fontWeight: FontWeight.w600,
+              ),
+              const SizedBox(height: 32),
+
+              // Mood Section
+              Text(
+                loc.howAreYouFeeling,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: colors.onSurface,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: List.generate(5, (index) {
+                  final moodValue = index + 1;
+                  final isSelected = _selectedMood == moodValue;
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _selectedMood = moodValue;
+                      });
+                    },
+                    child: AnimatedScale(
+                      scale: isSelected ? 1.5 : 1.0,
+                      duration: const Duration(milliseconds: 200),
+                      curve: Curves.easeOutBack,
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: isSelected ? colors.primary.withOpacity(0.2) : Colors.transparent,
+                        ),
+                        child: Text(
+                          _emojis[index],
+                          style: const TextStyle(fontSize: 32),
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+              ),
+              const SizedBox(height: 40),
+
+              // Symptoms Section
+              Text(
+                loc.log_symptoms_label,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: colors.onSurface,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Wrap(
+                spacing: 8,
+                runSpacing: 12,
+                children: _symptomKeys.map((key) {
+                  final isSelected = _selectedSymptoms.contains(key);
+                  return FilterChip(
+                    label: Text(_getSymptomLabel(key, loc)),
+                    selected: isSelected,
+                    onSelected: (selected) {
+                      setState(() {
+                        if (selected) {
+                          _selectedSymptoms.add(key);
+                        } else {
+                          _selectedSymptoms.remove(key);
+                        }
+                      });
+                    },
+                    selectedColor: colors.primary.withOpacity(0.2),
+                    checkmarkColor: colors.primary,
+                    labelStyle: TextStyle(
+                      color: isSelected ? colors.primary : colors.onSurface,
+                      fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                    ),
+                    backgroundColor: colors.surfaceContainerHighest.withOpacity(0.5),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      side: BorderSide(
+                        color: isSelected ? colors.primary : Colors.transparent,
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 40),
+
+              // Notes Section
+              Text(
+                loc.log_notes_label,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: colors.onSurface,
+                ),
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: _notesController,
+                maxLength: 300,
+                maxLines: 4,
+                decoration: InputDecoration(
+                  hintText: loc.notesHint,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
                   ),
+                  filled: true,
+                  fillColor: colors.surfaceContainerHighest.withOpacity(0.3),
                 ),
               ),
+              const SizedBox(height: 32),
+
+              // Save Button
+              ElevatedButton(
+                onPressed: state.isLoading ? null : _handleSave,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: colors.primary,
+                  foregroundColor: colors.onPrimary,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  elevation: 0,
+                ),
+                child: state.isLoading
+                    ? SizedBox(
+                        height: 24,
+                        width: 24,
+                        child: CircularProgressIndicator(
+                          color: colors.onPrimary,
+                          strokeWidth: 2,
+                        ),
+                      )
+                    : Text(
+                        loc.log_save_button,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+              ),
+              const SizedBox(height: 24),
             ],
-
-            const SizedBox(height: 12),
-            Text(
-              result.explanation,
-              style: theme.textTheme.bodyMedium,
-            ),
-            const SizedBox(height: 12),
-            Text(
-              'Recommendations',
-              style: theme.textTheme.titleSmall?.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const SizedBox(height: 4),
-            ...resolvedRecs.map(
-              (r) => Padding(
-                padding: const EdgeInsets.only(bottom: 4),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('• '),
-                    Expanded(child: Text(r)),
-                  ],
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
-      ),
-    );
-  }
-}
-
-// ──────────────────────────────────────────────────────────────
-//  Symptom history tile
-// ──────────────────────────────────────────────────────────────
-
-class _SymptomHistoryTile extends StatelessWidget {
-  final SymptomEntity symptom;
-  final VoidCallback onDelete;
-
-  const _SymptomHistoryTile({
-    required this.symptom,
-    required this.onDelete,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final activeSymptoms = <String>[];
-    if (symptom.irregularCycle) activeSymptoms.add('Irregular Cycle');
-    if (symptom.acne) activeSymptoms.add('Acne');
-    if (symptom.weightGain) activeSymptoms.add('Weight Gain');
-    if (symptom.hairGrowth) activeSymptoms.add('Hair Growth');
-    if (symptom.moodIssues) activeSymptoms.add('Mood Issues');
-    if (symptom.hairThinning) activeSymptoms.add('Hair Thinning');
-    if (symptom.skinDarkening) activeSymptoms.add('Skin Darkening');
-    if (symptom.fatigue) activeSymptoms.add('Fatigue');
-    if (symptom.sleepProblems) activeSymptoms.add('Sleep Problems');
-    if (symptom.bloating) activeSymptoms.add('Bloating');
-    if (symptom.familyHistory) activeSymptoms.add('Family History');
-    if (symptom.difficultyConceiving) activeSymptoms.add('Difficulty Conceiving');
-
-    final date =
-        '${symptom.timestamp.day}/${symptom.timestamp.month}/${symptom.timestamp.year}';
-
-    return Dismissible(
-      key: ValueKey(symptom.id),
-      direction: DismissDirection.endToStart,
-      background: Container(
-        alignment: Alignment.centerRight,
-        padding: const EdgeInsets.only(right: 16),
-        color: Colors.red,
-        child: const Icon(Icons.delete, color: Colors.white),
-      ),
-      onDismissed: (_) => onDelete(),
-      child: ListTile(
-        leading: CircleAvatar(
-          child: Text('${activeSymptoms.length}'),
-        ),
-        title: Text(
-          activeSymptoms.isEmpty ? 'No symptoms' : activeSymptoms.join(', '),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-        subtitle: Text(date),
-        trailing: symptom.notes != null
-            ? const Icon(Icons.note, size: 18)
-            : null,
       ),
     );
   }

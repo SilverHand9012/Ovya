@@ -1,6 +1,15 @@
 {
   "@@locale": "en",
   "appTitle": "Ovya",
+  "continueText": "Continue",
+  "auth_sign_in": "Sign In",
+  "auth_sign_up": "Sign Up",
+  "auth_email": "Email",
+  "auth_password": "Password",
+  "auth_confirm_password": "Confirm Password",
+  "auth_error_passwords_no_match": "Passwords do not match",
+  "auth_create_account": "Create Account",
+  "auth_loading": "Loading...",
   "logSymptoms": "Log Symptoms",
   "howAreYouFeeling": "How are you feeling today?",
   "irregularCycle": "Irregular Cycle",
@@ -39,9 +48,9 @@
   "clearCache": "Clear cache",
   "viewInsights": "View Insights",
   "offlineModeActive": "Offline mode active",
-  "syncingData": "Syncing data…",
+  "syncingData": "Syncing dataâ€¦",
   "syncedSuccessfully": "Synced successfully",
-  "fetchingInsights": "Fetching new insights…",
+  "fetchingInsights": "Fetching new insightsâ€¦",
   "usingLastSaved": "Using last saved insights",
   "offlineShowingLast": "We're offline. Showing your last insights.",
   "failedToLoad": "Failed to load",
@@ -54,5 +63,117 @@
   "rec_stress_management": "Incorporate stress-management techniques like yoga or meditation.",
   "rec_consult_gynecologist": "Please consult a gynecologist or endocrinologist as soon as possible.",
   "rec_request_bloodwork": "Request blood work including hormone panel and insulin levels.",
-  "rec_symptom_diary": "Keep a detailed symptom diary to share with your doctor."
+  "rec_symptom_diary": "Keep a detailed symptom diary to share with your doctor.",
+  "q_irregular_cycle": "Do you have irregular or missed periods?",
+  "q_hair_growth": "Have you noticed unusual hair growth on your face or body?",
+  "q_family_history": "Do you have a family member with PCOS?",
+  "q_weight_gain": "Have you experienced unexplained weight gain?",
+  "q_acne": "Do you have persistent acne?",
+  "q_skin_darkening": "Have you noticed dark patches on your skin?",
+  "q_hair_thinning": "Are you experiencing hair thinning or loss?",
+  "q_fatigue": "Do you often feel fatigued or low on energy?",
+  "q_sleep_problems": "Do you have difficulty sleeping?",
+  "q_bloating": "Do you experience bloating regularly?",
+  "q_mood_issues": "Do you experience frequent mood swings?",
+  "q_difficulty_conceiving": "Are you having difficulty conceiving?",
+  "q_age_verification": "Are you 18 years or older?",
+  "btn_yes": "Yes",
+  "btn_no": "No",
+  "progress_indicator": "Question {current} of {total}",
+  "@progress_indicator": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "pcos_type_hint": "Your symptoms suggest {type} PCOS",
+  "@pcos_type_hint": {
+    "placeholders": {
+      "type": { "type": "String" }
+    }
+  },
+  "pcos_type_insulin_desc": "This typically means your body has trouble using insulin effectively, leading to weight gain and irregular cycles.",
+  "pcos_type_androgenic_desc": "This often involves higher levels of male hormones (androgens) causing excess hair and acne.",
+  "pcos_type_adrenal_desc": "This is often triggered by an abnormal response to stress, primarily driven by adrenal androgens.",
+  "type_insulin_resistant": "Insulin-resistant",
+  "type_androgenic": "Androgenic",
+  "type_adrenal": "Adrenal",
+  "btn_save_track": "Save & Track Symptoms",
+  "btn_generate_report": "Generate Doctor Report",
+  "log_date_header": "Today, {date}",
+  "@log_date_header": {
+    "placeholders": {
+      "date": { "type": "String" }
+    }
+  },
+  "log_symptoms_label": "Select your symptoms today",
+  "log_notes_label": "Any notes for today?",
+  "log_save_button": "Save Log",
+  "log_saved_success": "Saved ✓",
+  "log_already_logged": "Already logged today",
+  "report_patient_name": "Patient Name",
+  "report_preview_title": "Report Preview",
+  "report_share_btn": "Share via WhatsApp / Apps",
+  "report_print_btn": "Print",
+  "report_offline_note": "This report is generated securely offline.",
+  "home_hello": "Hello",
+  "home_good_morning": "Good morning",
+  "home_good_afternoon": "Good afternoon",
+  "home_good_evening": "Good evening",
+  "home_time_today": "Today",
+  "home_time_yesterday": "Yesterday",
+  "home_time_days_ago": "{days} days ago",
+  "@home_time_days_ago": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "home_start_assessment": "Start Health Assessment",
+  "home_rerun_assessment": "Re-run Assessment",
+  "home_card_log": "Log Symptoms",
+  "home_logged_done": "Done ✓",
+  "home_logged_today": "Today",
+  "home_card_report": "Get Report",
+  "home_card_report_sub": "Share with doctor",
+  "home_card_ai": "Ask Ovya",
+  "home_card_ai_ready": "Ready",
+  "home_card_ai_offline": "Online only",
+  "home_err_offline": "This feature requires an active internet connection.",
+  "home_card_history": "My History",
+  "home_card_history_sub": "View past logs",
+  "home_empty_risk_title": "Your PCOS risk assessment will appear here",
+  "home_empty_risk_sub": "Takes only 2 minutes",
+  "home_pcos_risk": "PCOS Risk: {level}",
+  "@home_pcos_risk": {
+    "placeholders": {
+      "level": { "type": "String" }
+    }
+  },
+  "home_type_hint": "{hint} type",
+  "@home_type_hint": {
+    "placeholders": {
+      "hint": { "type": "String" }
+    }
+  },
+  "home_last_assessed": "Last assessed: {time}",
+  "@home_last_assessed": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+  "chat_title": "Ask Ovya",
+  "chat_context_card": "Based on your {level} risk assessment...",
+  "@chat_context_card": {
+    "placeholders": {
+      "level": { "type": "String" }
+    }
+  },
+  "chat_offline_banner": "Showing cached response — connect for live guidance",
+  "chat_disclaimer": "This is AI guidance, not medical advice",
+  "chat_suggested_title": "Suggested Questions",
+  "chat_suggestion_1": "What foods should I avoid with PCOS?",
+  "chat_suggestion_2": "How does stress affect PCOS?",
+  "chat_suggestion_3": "What should I ask my doctor?",
+  "chat_offline_tooltip": "Connect to internet to ask Ovya",
+  "chat_input_hint": "Ask about your PCOS..."
 }

@@ -5,6 +5,7 @@ import '../data/symptom_repository.dart';
 import '../domain/symptom_entity.dart';
 import '../../../core/intelligence/detection_engine.dart';
 import '../../../core/services/queue_service.dart';
+import '../../../shared/providers/sync_service_provider.dart';
 import 'symptom_state.dart';
 
 // ──────────────────────────────────────────────────────────────
@@ -23,8 +24,10 @@ class SymptomNotifier extends StateNotifier<SymptomState> {
   final SymptomRepository _repository;
   final DetectionEngine _detectionEngine;
   final QueueService _queueService;
+  final Ref ref;
 
   SymptomNotifier({
+    required this.ref,
     SymptomRepository? repository,
     DetectionEngine? detectionEngine,
     QueueService? queueService,
@@ -91,16 +94,24 @@ class SymptomNotifier extends StateNotifier<SymptomState> {
           'bloating': symptom.bloating,
           'familyHistory': symptom.familyHistory,
           'difficultyConceiving': symptom.difficultyConceiving,
-          'notes': symptom.notes,
+          'notes': symptom.notes ?? '',
         },
       );
+      
+      debugPrint('[Queue] Added symptom to queue');
 
-      // 3. Run risk evaluation.
+      // 3. Trigger realtime sync attempt right away instead of waiting 15mins
+      try {
+        await ref.read(syncServiceProvider).syncPendingData();
+        await ref.read(syncServiceProvider).syncNow();
+      } catch (_) {}
+
+      // 4. Run risk evaluation.
       debugPrint('[Symptom] Running detection engine...');
       final riskResult = _detectionEngine.evaluate(symptom);
       debugPrint('[Symptom] Risk: ${riskResult.level} (score: ${riskResult.score})');
 
-      // 4. Refresh symptom list from DB and update state.
+      // 5. Refresh symptom list from DB and update state.
       final updatedSymptoms = await _repository.getAllLogs();
 
       state = state.copyWith(
@@ -160,5 +171,5 @@ class SymptomNotifier extends StateNotifier<SymptomState> {
 /// Provider for the symptom notifier.
 final symptomNotifierProvider =
     StateNotifierProvider<SymptomNotifier, SymptomState>(
-  (ref) => SymptomNotifier(),
+  (ref) => SymptomNotifier(ref: ref),
 );
