@@ -3,11 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ovya/l10n/gen/app_localizations.dart';
 
 import '../../../core/intelligence/detection_engine.dart';
-import '../../../shared/providers/connectivity_provider.dart';
+import '../../auth/presentation/auth_screen.dart';
 import '../providers/home_provider.dart';
+import '../../../main.dart';
+import '../../../core/services/language_service.dart';
+import '../../../core/isar/isar_service.dart';
+import '../../symptom_tracking/providers/symptom_notifier.dart';
+import '../../../shared/providers/connectivity_provider.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -107,6 +114,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             _getGreeting(state.firstName, loc),
                             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: colors.onSurface),
                           ),
+                          if (FirebaseAuth.instance.currentUser != null) ...[
+                            const SizedBox(height: 2),
+                            Text(
+                              "Welcome, ${FirebaseAuth.instance.currentUser!.email?.split('@')[0] ?? ''}",
+                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: colors.primary.withOpacity(0.8)),
+                            ),
+                          ],
                           const SizedBox(height: 4),
                           Text(
                             nowStr,
@@ -115,7 +129,43 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         ],
                       ),
                     ),
-                    _SyncPill(isOnline: isOnline),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        _SyncPill(isOnline: isOnline),
+                        PopupMenuButton<String>(
+                          icon: Icon(Icons.language, color: colors.onSurface.withOpacity(0.8), size: 20),
+                          tooltip: 'Change Language',
+                          position: PopupMenuPosition.under,
+                          onSelected: (code) async {
+                            await languageService.changeLanguage(code);
+                          },
+                          itemBuilder: (context) => LanguageService.supportedCodes.map((code) => PopupMenuItem(
+                            value: code,
+                            child: Text(LanguageService.languageNames[code]!),
+                          )).toList(),
+                        ),
+                        // const SizedBox(width: 4), // Optional spacing if needed
+                        IconButton(
+                          icon: Icon(Icons.logout, color: colors.error.withOpacity(0.8), size: 20),
+                          tooltip: 'Sign Out',
+                          onPressed: () async {
+                            final prefs = await SharedPreferences.getInstance();
+                            
+                            try {
+                              await ref.read(authRepositoryProvider).signOut();
+                              await IsarService().clearAll();
+                              ref.invalidate(homeProvider);
+                              ref.invalidate(symptomNotifierProvider);
+                            } catch (_) {}
+                            
+                            if (context.mounted) {
+                              context.go('/auth');
+                            }
+                          },
+                        ),
+                      ],
+                    ),
                   ],
                 ),
                 const SizedBox(height: 32),
@@ -131,7 +181,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
                 // Primary Action Button
                 ElevatedButton(
-                  onPressed: () => context.go('/detection'),
+                  onPressed: () => context.push('/detection'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: colors.primary,
                     foregroundColor: colors.onPrimary,
@@ -168,14 +218,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       icon: Icons.edit_note,
                       label: loc.home_card_log,
                       subtitle: state.hasLoggedToday ? loc.home_logged_done : loc.home_logged_today,
-                      onTap: () => context.go('/tracker'),
+                      onTap: () => context.push('/tracker'),
                       colors: colors,
                     ),
                     _ActionCard(
                       icon: Icons.description_outlined,
                       label: loc.home_card_report,
                       subtitle: loc.home_card_report_sub,
-                      onTap: () => context.go('/report'),
+                      onTap: () => context.push('/report'),
                       colors: colors,
                     ),
                     _ActionCard(
@@ -189,7 +239,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             SnackBar(content: Text(loc.home_err_offline)),
                           );
                         } else {
-                          context.go('/insights'); // Fallback path assuming /chat is /insights
+                          context.push('/insights'); // Fallback path assuming /chat is /insights
                         }
                       },
                       colors: colors,
@@ -198,7 +248,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       icon: Icons.history,
                       label: loc.home_card_history,
                       subtitle: loc.home_card_history_sub,
-                      onTap: () => context.go('/history'),
+                      onTap: () => context.push('/history'),
                       colors: colors,
                     ),
                   ],
@@ -316,7 +366,7 @@ class _RiskResultCard extends StatelessWidget {
     final riskColor = getRiskColor(result!.level);
 
     return InkWell(
-      onTap: () => context.go('/detection_result'),
+      onTap: () => context.push('/detection_result'),
       borderRadius: BorderRadius.circular(24),
       child: Container(
         padding: const EdgeInsets.all(24),

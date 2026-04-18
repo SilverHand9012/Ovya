@@ -421,4 +421,91 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get chat_input_hint => 'Ask about your PCOS...';
+
+  @override
+  String get pdfTitle =>
+      'ओव्या — पीसीओएस स्वास्थ्य रिपोर्ट (PCOS Health Report)';
+
+  @override
+  String pdfDateGenerated(String date) {
+    return 'उत्पन्न तिथि: $date';
+  }
+
+  @override
+  String get pdfDisclaimer =>
+      'यह रिपोर्ट केवल सूचनात्मक उद्देश्यों के लिए है। कृपया एक योग्य डॉक्टर से परामर्श लें।';
+
+  @override
+  String get pdfGeneratedBy => 'ओव्या द्वारा उत्पन्न — महिला स्वास्थ्य साथी';
+
+  @override
+  String get patientDetails => 'रोगी विवरण';
+
+  @override
+  String patientNameLabel(String name) {
+    return 'नाम: $name';
+  }
+
+  @override
+  String reportDateLabel(String date) {
+    return 'रिपोर्ट तिथि: $date';
+  }
+
+  @override
+  String get riskAssessment => 'जोखिम मूल्यांकन';
+
+  @override
+  String get riskLevelLabel => 'जोखिम स्तर:';
+
+  @override
+  String get scoreLabel => 'स्कोर:';
+
+  @override
+  String get pcosTypeHintLabel => 'पीसीओएस (PCOS) प्रकार संकेत:';
+
+  @override
+  String get explanationLabel => 'व्याख्या:';
+
+  @override
+  String get symptomsLast30Days => 'पिछले 30 दिनों के लक्षण';
+
+  @override
+  String get noSymptoms30Days =>
+      'पिछले 30 दिनों में कोई लक्षण दर्ज नहीं किया गया।';
+
+  @override
+  String get tableHeaderDate => 'तारीख़';
+
+  @override
+  String get tableHeaderSymptoms => 'लक्षण';
+
+  @override
+  String get tableHeaderMood => 'मूड/नोट्स';
+
+  @override
+  String get tableNone => 'कोई नहीं';
+
+  @override
+  String get low => 'कम';
+
+  @override
+  String get medium => 'मध्यम';
+
+  @override
+  String get high => 'उच्च';
+
+  @override
+  String get hairThinning => 'बालों का पतला होना';
+
+  @override
+  String get skinDarkening => 'त्वचा का काला पड़ना';
+
+  @override
+  String get fatigue => 'थकान';
+
+  @override
+  String get sleepProblems => 'नींद की समस्या';
+
+  @override
+  String get bloating => 'पेट फूलना';
 }

@@ -37,12 +37,6 @@ class HomeNotifier extends AsyncNotifier<HomeState> {
   Future<HomeState> build() async {
     // Watch symptom provider so HomeState reacts to changes in symptoms
     final symptomState = ref.watch(symptomNotifierProvider);
-    
-    // On the very first build, if symptoms are totally empty and we aren't loading,
-    // trigger a load so we have the offline persisted data available.
-    if (symptomState.symptoms.isEmpty && !symptomState.isLoading) {
-      Future.microtask(() => ref.read(symptomNotifierProvider.notifier).loadSymptoms());
-    }
 
     final prefs = await SharedPreferences.getInstance();
     final lastSyncStr = prefs.getString('lastSyncTime');

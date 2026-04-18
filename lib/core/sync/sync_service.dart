@@ -9,6 +9,7 @@ import '../constants.dart';
 import '../../features/ai_insights/data/insight_cache_service.dart';
 import '../isar/isar_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../shared/providers/sync_status_provider.dart';
@@ -136,13 +137,18 @@ class SyncService {
       ref?.read(syncStatusProvider.notifier).state = SyncStatus.syncing;
       debugPrint("Internet restored -> syncing...");
 
-      try {
-        await syncPendingData();
-        await syncNow();
-        ref?.read(syncStatusProvider.notifier).state = SyncStatus.synced;
-      } catch (e) {
-        debugPrint('[Sync] Sync failed after connectivity restored: $e');
+      if (FirebaseAuth.instance.currentUser != null) {
+        try {
+          await syncPendingData();
+          await syncNow();
+          ref?.read(syncStatusProvider.notifier).state = SyncStatus.synced;
+        } catch (e) {
+          debugPrint('[Sync] Sync failed after connectivity restored: $e');
+          ref?.read(syncStatusProvider.notifier).state = SyncStatus.offline;
+        }
+      } else {
         ref?.read(syncStatusProvider.notifier).state = SyncStatus.offline;
+        debugPrint('[Sync] Online but waiting for login to sync');
       }
     }
   }
@@ -164,9 +170,15 @@ class SyncService {
         final payload = log.toJson();
         payload['syncedAt'] = FieldValue.serverTimestamp();
         payload['timestamp'] = FieldValue.serverTimestamp(); // Enforce timestamp on write
+        final user = FirebaseAuth.instance.currentUser;
+        if (user == null) {
+          debugPrint('[Sync] User not authenticated — retry later');
+          throw Exception('User not authenticated');
+        }
+        
         await firestore
             .collection('users')
-            .doc('demo_user')
+            .doc(user.uid)
             .collection('symptomLogs')
             .add(payload);
         await isarService.markAsSynced(log.id);
@@ -196,8 +208,14 @@ class SyncService {
     final payload = Map<String, dynamic>.from(item.payload);
     final collection = _resolveCollection(item.action);
 
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      debugPrint('[Sync] User not authenticated — retry later');
+      throw Exception('User not authenticated');
+    }
+
     debugPrint('[Sync] Action: ${item.action} → collection: $collection');
-    debugPrint('[Sync] Writing to users/demo_user/$collection');
+    debugPrint('[Sync] Writing to users/${user.uid}/$collection');
 
     // Attach metadata.
     payload['syncedAt'] = FieldValue.serverTimestamp();
@@ -205,7 +223,7 @@ class SyncService {
 
     final collectionRef = firestore
         .collection('users')
-        .doc('demo_user')
+        .doc(user.uid)
         .collection(collection);
 
     // ── DELETE ─────────────────────────────────────────────────

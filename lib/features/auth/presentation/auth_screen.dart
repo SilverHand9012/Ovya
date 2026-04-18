@@ -4,11 +4,13 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ovya/l10n/gen/app_localizations.dart';
 
+import '../../../shared/providers/sync_service_provider.dart';
+
 import '../data/auth_repository.dart';
 
 /// Provider for AuthRepository. Provide your actual implementation here.
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
-  throw UnimplementedError('Provide the FirebaseAuth implementation here');
+  return FirebaseAuthRepository();
 });
 
 class AuthScreen extends ConsumerStatefulWidget {
@@ -72,7 +74,6 @@ class _SignInTabState extends ConsumerState<_SignInTab> {
 
   bool _obscurePassword = true;
   bool _isLoading = false;
-  String? _errorMessage;
 
   @override
   void dispose() {
@@ -86,7 +87,6 @@ class _SignInTabState extends ConsumerState<_SignInTab> {
 
     setState(() {
       _isLoading = true;
-      _errorMessage = null;
     });
 
     try {
@@ -96,12 +96,23 @@ class _SignInTabState extends ConsumerState<_SignInTab> {
           );
       
       if (!mounted) return;
+      
+      try {
+        await ref.read(syncServiceProvider).syncPendingData();
+        await ref.read(syncServiceProvider).syncNow();
+      } catch (e) {
+        debugPrint('[Auth] Sync failed post-login: $e');
+      }
+      
       _navigateToNextScreen();
     } catch (e) {
       if (mounted) {
-        setState(() {
-          _errorMessage = e.toString();
-        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString().replaceAll('Exception: ', '')),
+            backgroundColor: Theme.of(context).colorScheme.error,
+          ),
+        );
       }
     } finally {
       if (mounted) {
@@ -116,7 +127,7 @@ class _SignInTabState extends ConsumerState<_SignInTab> {
     final prefs = await SharedPreferences.getInstance();
     if (!mounted) return;
     
-    if (prefs.containsKey('selected_locale')) {
+    if (prefs.containsKey('selected_language')) {
       context.go('/home');
     } else {
       context.go('/onboarding');
@@ -136,18 +147,7 @@ class _SignInTabState extends ConsumerState<_SignInTab> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              if (_errorMessage != null) ...[
-                Text(
-                  _errorMessage!,
-                  style: TextStyle(
-                    color: colors.error,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 16),
-              ],
+
 
               TextFormField(
                 controller: _emailController,
@@ -252,7 +252,6 @@ class _SignUpTabState extends ConsumerState<_SignUpTab> {
 
   bool _obscurePassword = true;
   bool _isLoading = false;
-  String? _errorMessage;
 
   @override
   void dispose() {
@@ -267,7 +266,6 @@ class _SignUpTabState extends ConsumerState<_SignUpTab> {
 
     setState(() {
       _isLoading = true;
-      _errorMessage = null;
     });
 
     try {
@@ -277,12 +275,23 @@ class _SignUpTabState extends ConsumerState<_SignUpTab> {
           );
       
       if (!mounted) return;
+      
+      try {
+        await ref.read(syncServiceProvider).syncPendingData();
+        await ref.read(syncServiceProvider).syncNow();
+      } catch (e) {
+        debugPrint('[Auth] Sync failed post-signup: $e');
+      }
+      
       _navigateToNextScreen();
     } catch (e) {
       if (mounted) {
-        setState(() {
-          _errorMessage = e.toString();
-        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString().replaceAll('Exception: ', '')),
+            backgroundColor: Theme.of(context).colorScheme.error,
+          ),
+        );
       }
     } finally {
       if (mounted) {
@@ -297,7 +306,7 @@ class _SignUpTabState extends ConsumerState<_SignUpTab> {
     final prefs = await SharedPreferences.getInstance();
     if (!mounted) return;
     
-    if (prefs.containsKey('selected_locale')) {
+    if (prefs.containsKey('selected_language')) {
       context.go('/home');
     } else {
       context.go('/onboarding');
@@ -317,18 +326,7 @@ class _SignUpTabState extends ConsumerState<_SignUpTab> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              if (_errorMessage != null) ...[
-                Text(
-                  _errorMessage!,
-                  style: TextStyle(
-                    color: colors.error,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 16),
-              ],
+
 
               TextFormField(
                 controller: _emailController,

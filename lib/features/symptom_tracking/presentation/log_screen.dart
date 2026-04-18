@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ovya/l10n/gen/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../domain/symptom_entity.dart';
 import '../providers/symptom_notifier.dart';
@@ -49,10 +50,6 @@ class _LogScreenState extends ConsumerState<LogScreen> {
   @override
   void initState() {
     super.initState();
-    // Pre-load symptoms to discover if already logged today
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(symptomNotifierProvider.notifier).loadSymptoms();
-    });
   }
 
   @override
@@ -324,6 +321,18 @@ class _LogScreenState extends ConsumerState<LogScreen> {
                         ),
                       ),
               ),
+              if (FirebaseAuth.instance.currentUser == null) ...[
+                const SizedBox(height: 12),
+                Text(
+                  "Your data will sync once you sign in",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                    color: colors.onSurface.withOpacity(0.5),
+                  ),
+                ),
+              ],
               const SizedBox(height: 24),
             ],
           ),

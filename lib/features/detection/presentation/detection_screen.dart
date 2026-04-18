@@ -67,7 +67,7 @@ class _DetectionScreenState extends ConsumerState<DetectionScreen> {
         _currentIndex++;
       });
     } else {
-      context.go('/detection_result');
+      context.pushReplacement('/detection_result');
     }
   }
 
@@ -83,7 +83,7 @@ class _DetectionScreenState extends ConsumerState<DetectionScreen> {
       if (context.canPop()) {
         context.pop();
       } else {
-        context.go('/home'); // Fallback
+        context.pushReplacement('/home'); // Fallback
       }
     }
   }

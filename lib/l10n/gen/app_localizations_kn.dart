@@ -420,4 +420,90 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get chat_input_hint => 'Ask about your PCOS...';
+
+  @override
+  String get pdfTitle => 'ಓವ್ಯಾ — PCOS ಆರೋಗ್ಯ ವರದಿ';
+
+  @override
+  String pdfDateGenerated(String date) {
+    return 'ರಚಿಸಿದ ದಿನಾಂಕ: $date';
+  }
+
+  @override
+  String get pdfDisclaimer =>
+      'ಈ ವರದಿಯು ಕೇವಲ ಮಾಹಿತಿಗಾಗಿ. ದಯವಿಟ್ಟು ವೈದ್ಯರನ್ನು ಸಂಪರ್ಕಿಸಿ.';
+
+  @override
+  String get pdfGeneratedBy => 'ಓವ್ಯಾ ನಿಂದ ರಚಿಸಲಾಗಿದೆ — ಮಹಿಳಾ ಆರೋಗ್ಯ ಸಂಗಾತಿ';
+
+  @override
+  String get patientDetails => 'ರೋಗಿಯ ವಿವರಗಳು';
+
+  @override
+  String patientNameLabel(String name) {
+    return 'ಹೆಸರು: $name';
+  }
+
+  @override
+  String reportDateLabel(String date) {
+    return 'ವರದಿ ದಿನಾಂಕ: $date';
+  }
+
+  @override
+  String get riskAssessment => 'ಅಪಾಯದ ಮೌಲ್ಯಮಾಪನ';
+
+  @override
+  String get riskLevelLabel => 'ಅಪಾಯದ ಮಟ್ಟ:';
+
+  @override
+  String get scoreLabel => 'ಸ್ಕೋರ್:';
+
+  @override
+  String get pcosTypeHintLabel => 'PCOS ಪ್ರಕಾರದ ಸುಳಿವು:';
+
+  @override
+  String get explanationLabel => 'ವಿವರಣೆ:';
+
+  @override
+  String get symptomsLast30Days => 'ಕಳೆದ 30 ದಿನಗಳ ಲಕ್ಷಣಗಳು';
+
+  @override
+  String get noSymptoms30Days =>
+      'ಕಳೆದ 30 ದಿನಗಳಲ್ಲಿ ಯಾವುದೇ ಲಕ್ಷಣಗಳನ್ನು ದಾಖಲಿಸಿಲ್ಲ.';
+
+  @override
+  String get tableHeaderDate => 'ದಿನಾಂಕ';
+
+  @override
+  String get tableHeaderSymptoms => 'ಲಕ್ಷಣಗಳು';
+
+  @override
+  String get tableHeaderMood => 'ಮೂಡ್/ಟಿಪ್ಪಣಿಗಳು';
+
+  @override
+  String get tableNone => 'ಯಾವುದೂ ಇಲ್ಲ';
+
+  @override
+  String get low => 'ಕಡಿಮೆ';
+
+  @override
+  String get medium => 'ಮಧ್ಯಮ';
+
+  @override
+  String get high => 'ಹೆಚ್ಚು';
+
+  @override
+  String get hairThinning => 'ಕೂದಲು ತೆಳುವಾಗುವುದು';
+
+  @override
+  String get skinDarkening => 'ಚರ್ಮ ಕಪ್ಪಾಗುವುದು';
+
+  @override
+  String get fatigue => 'ಆಯಾಸ';
+
+  @override
+  String get sleepProblems => 'ನಿದ್ರೆಯ ಸಮಸ್ಯೆಗಳು';
+
+  @override
+  String get bloating => 'ಹೊಟ್ಟೆ ಉಬ್ಬರ';
 }

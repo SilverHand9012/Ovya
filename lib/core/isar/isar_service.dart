@@ -75,4 +75,12 @@ class IsarService {
       });
     }
   }
+
+  /// Wipes all data locally. Call exclusively on User Logout.
+  Future<void> clearAll() async {
+    final isar = await db;
+    await isar.writeTxn(() async {
+      await isar.clear();
+    });
+  }
 }

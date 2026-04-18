@@ -26,13 +26,17 @@
   "riskLevel": "धोक्याची पातळी: {level}",
   "@riskLevel": {
     "placeholders": {
-      "level": { "type": "String" }
+      "level": {
+        "type": "String"
+      }
     }
   },
   "score": "स्कोर: {value}",
   "@score": {
     "placeholders": {
-      "value": { "type": "int" }
+      "value": {
+        "type": "int"
+      }
     }
   },
   "recommendations": "सल्ले",
@@ -82,14 +86,20 @@
   "progress_indicator": "प्रश्न {current} / {total}",
   "@progress_indicator": {
     "placeholders": {
-      "current": { "type": "int" },
-      "total": { "type": "int" }
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
     }
   },
   "pcos_type_hint": "तुमची लक्षणे {type} पॉलीसिस्टिक ओव्हरी सिंड्रोम (PCOS) दर्शवतात",
   "@pcos_type_hint": {
     "placeholders": {
-      "type": { "type": "String" }
+      "type": {
+        "type": "String"
+      }
     }
   },
   "pcos_type_insulin_desc": "तुमच्या शरीराला इन्सुलिन वापरण्यात अडचण येत आहे ज्यामुळे वजन वाढते.",
@@ -103,7 +113,9 @@
   "log_date_header": "आज, {date}",
   "@log_date_header": {
     "placeholders": {
-      "date": { "type": "String" }
+      "date": {
+        "type": "String"
+      }
     }
   },
   "log_symptoms_label": "आजची लक्षणे निवडा",
@@ -125,7 +137,9 @@
   "home_time_days_ago": "{days} दिवसांपूर्वी",
   "@home_time_days_ago": {
     "placeholders": {
-      "days": { "type": "int" }
+      "days": {
+        "type": "int"
+      }
     }
   },
   "home_start_assessment": "आरोग्य तपासणी सुरू करा",
@@ -146,19 +160,72 @@
   "home_pcos_risk": "धोका: {level}",
   "@home_pcos_risk": {
     "placeholders": {
-      "level": { "type": "String" }
+      "level": {
+        "type": "String"
+      }
     }
   },
   "home_type_hint": "{hint} प्रकार",
   "@home_type_hint": {
     "placeholders": {
-      "hint": { "type": "String" }
+      "hint": {
+        "type": "String"
+      }
     }
   },
   "home_last_assessed": "शेवटची तपासणी: {time}",
   "@home_last_assessed": {
     "placeholders": {
-      "time": { "type": "String" }
+      "time": {
+        "type": "String"
+      }
     }
-  }
+  },
+  "pdfTitle": "ओव्या — पीसीओएस आरोग्य अहवाल",
+  "pdfDateGenerated": "तयार केलेली तारीख: {date}",
+  "@pdfDateGenerated": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "pdfDisclaimer": "हा अहवाल केवळ माहितीसाठी आहे. कृपया योग्य डॉक्टरांचा सल्ला घ्या.",
+  "pdfGeneratedBy": "ओव्या द्वारे निर्मित — महिला आरोग्य साथी",
+  "patientDetails": "रुग्णाचे तपशील",
+  "patientNameLabel": "नाव: {name}",
+  "@patientNameLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "reportDateLabel": "अहवाल तारीख: {date}",
+  "@reportDateLabel": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "riskAssessment": "धोका मूल्यांकन",
+  "riskLevelLabel": "धोका पातळी:",
+  "scoreLabel": "स्कोर:",
+  "pcosTypeHintLabel": "पीसीओएस (PCOS) प्रकार संकेत:",
+  "explanationLabel": "स्पष्टीकरण:",
+  "symptomsLast30Days": "मागील ३० दिवसांतील लक्षणे",
+  "noSymptoms30Days": "मागील ३० दिवसांत कोणतीही लक्षणे नोंदवली नाहीत.",
+  "tableHeaderDate": "तारीख",
+  "tableHeaderSymptoms": "लक्षणे",
+  "tableHeaderMood": "मूड/नोट्स",
+  "tableNone": "काहीही नाही",
+  "low": "कमी",
+  "medium": "मध्यम",
+  "high": "जास्त",
+  "hairThinning": "केस पातळ होणे",
+  "skinDarkening": "त्वचा काळी पडणे",
+  "fatigue": "थकवा",
+  "sleepProblems": "झोपेची समस्या",
+  "bloating": "पोट फुगणे"
 }

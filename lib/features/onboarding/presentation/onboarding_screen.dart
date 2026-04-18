@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ovya/l10n/gen/app_localizations.dart';
 
-import '../../../shared/providers/locale_provider.dart';
+import '../../../main.dart';
 
 class OnboardingScreen extends ConsumerStatefulWidget {
   const OnboardingScreen({super.key});
@@ -31,10 +31,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
     // Save to SharedPreferences
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('selected_locale', code);
+    await prefs.setString('selected_language', code);
 
-    // Update app locale via Riverpod to immediately trigger UI translation
-    ref.read(localeProvider.notifier).state = Locale(code);
+    // Update app locale via global language service
+    await languageService.changeLanguage(code);
   }
 
   void _handleContinue() {

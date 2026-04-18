@@ -34,7 +34,10 @@ class SymptomNotifier extends StateNotifier<SymptomState> {
   })  : _repository = repository ?? SymptomRepositoryImpl(),
         _detectionEngine = detectionEngine ?? DetectionEngine(),
         _queueService = queueService ?? QueueService(),
-        super(const SymptomState());
+        super(const SymptomState()) {
+    // Auto-load exclusively on first instantiation
+    loadSymptoms();
+  }
 
   // ── Load all logs ────────────────────────────────────────────
 
@@ -100,10 +103,15 @@ class SymptomNotifier extends StateNotifier<SymptomState> {
       
       debugPrint('[Queue] Added symptom to queue');
 
-      // 3. Trigger realtime sync attempt right away instead of waiting 15mins
+      // 3. Trigger realtime sync attempt quietly in the background without blocking the UI
       try {
-        await ref.read(syncServiceProvider).syncPendingData();
-        await ref.read(syncServiceProvider).syncNow();
+        final syncService = ref.read(syncServiceProvider);
+        Future.microtask(() async {
+          try {
+            await syncService.syncPendingData();
+            await syncService.syncNow();
+          } catch (_) {}
+        });
       } catch (_) {}
 
       // 4. Run risk evaluation.

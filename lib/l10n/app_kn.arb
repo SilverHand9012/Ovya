@@ -26,13 +26,17 @@
   "riskLevel": "ಅಪಾಯದ ಮಟ್ಟ: {level}",
   "@riskLevel": {
     "placeholders": {
-      "level": { "type": "String" }
+      "level": {
+        "type": "String"
+      }
     }
   },
   "score": "ಸ್ಕೋರ್: {value}",
   "@score": {
     "placeholders": {
-      "value": { "type": "int" }
+      "value": {
+        "type": "int"
+      }
     }
   },
   "recommendations": "ಸಲಹೆಗಳು",
@@ -82,14 +86,20 @@
   "progress_indicator": "ಪ್ರಶ್ನೆ {current} / {total}",
   "@progress_indicator": {
     "placeholders": {
-      "current": { "type": "int" },
-      "total": { "type": "int" }
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
     }
   },
   "pcos_type_hint": "ರೋಗಲಕ್ಷಣಗಳು {type} ಪಾಲಿಸಿಸ್ಟಿಕ್ ಓವರಿ ಸಿಂಡ್ರೋಮ್ (PCOS) ಅನ್ನು ಸೂಚಿಸುತ್ತವೆ",
   "@pcos_type_hint": {
     "placeholders": {
-      "type": { "type": "String" }
+      "type": {
+        "type": "String"
+      }
     }
   },
   "pcos_type_insulin_desc": "ನಿಮ್ಮ ದೇಹವು ಇನ್ಸುಲಿನ್ ಅನ್ನು ಸರಿಯಾಗಿ ಬಳಸುತ್ತಿಲ್ಲದಿರಬಹುದು, ಇದು ತೂಕ ಹೆಚ್ಚಳಕ್ಕೆ ಕಾರಣವಾಗುತ್ತದೆ.",
@@ -103,7 +113,9 @@
   "log_date_header": "ಇಂದು, {date}",
   "@log_date_header": {
     "placeholders": {
-      "date": { "type": "String" }
+      "date": {
+        "type": "String"
+      }
     }
   },
   "log_symptoms_label": "ಇಂದಿನ ರೋಗಲಕ್ಷಣಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ",
@@ -125,7 +137,9 @@
   "home_time_days_ago": "{days} ದಿನಗಳ ಹಿಂದೆ",
   "@home_time_days_ago": {
     "placeholders": {
-      "days": { "type": "int" }
+      "days": {
+        "type": "int"
+      }
     }
   },
   "home_start_assessment": "ಪರೀಕ್ಷೆ ಪ್ರಾರಂಭಿಸಿ",
@@ -146,19 +160,72 @@
   "home_pcos_risk": "ಅಪಾಯ: {level}",
   "@home_pcos_risk": {
     "placeholders": {
-      "level": { "type": "String" }
+      "level": {
+        "type": "String"
+      }
     }
   },
   "home_type_hint": "{hint} ಪ್ರಕಾರ",
   "@home_type_hint": {
     "placeholders": {
-      "hint": { "type": "String" }
+      "hint": {
+        "type": "String"
+      }
     }
   },
   "home_last_assessed": "ಕೊನೆಯ ಪರೀಕ್ಷೆ: {time}",
   "@home_last_assessed": {
     "placeholders": {
-      "time": { "type": "String" }
+      "time": {
+        "type": "String"
+      }
     }
-  }
+  },
+  "pdfTitle": "ಓವ್ಯಾ — PCOS ಆರೋಗ್ಯ ವರದಿ",
+  "pdfDateGenerated": "ರಚಿಸಿದ ದಿನಾಂಕ: {date}",
+  "@pdfDateGenerated": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "pdfDisclaimer": "ಈ ವರದಿಯು ಕೇವಲ ಮಾಹಿತಿಗಾಗಿ. ದಯವಿಟ್ಟು ವೈದ್ಯರನ್ನು ಸಂಪರ್ಕಿಸಿ.",
+  "pdfGeneratedBy": "ಓವ್ಯಾ ನಿಂದ ರಚಿಸಲಾಗಿದೆ — ಮಹಿಳಾ ಆರೋಗ್ಯ ಸಂಗಾತಿ",
+  "patientDetails": "ರೋಗಿಯ ವಿವರಗಳು",
+  "patientNameLabel": "ಹೆಸರು: {name}",
+  "@patientNameLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "reportDateLabel": "ವರದಿ ದಿನಾಂಕ: {date}",
+  "@reportDateLabel": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "riskAssessment": "ಅಪಾಯದ ಮೌಲ್ಯಮಾಪನ",
+  "riskLevelLabel": "ಅಪಾಯದ ಮಟ್ಟ:",
+  "scoreLabel": "ಸ್ಕೋರ್:",
+  "pcosTypeHintLabel": "PCOS ಪ್ರಕಾರದ ಸುಳಿವು:",
+  "explanationLabel": "ವಿವರಣೆ:",
+  "symptomsLast30Days": "ಕಳೆದ 30 ದಿನಗಳ ಲಕ್ಷಣಗಳು",
+  "noSymptoms30Days": "ಕಳೆದ 30 ದಿನಗಳಲ್ಲಿ ಯಾವುದೇ ಲಕ್ಷಣಗಳನ್ನು ದಾಖಲಿಸಿಲ್ಲ.",
+  "tableHeaderDate": "ದಿನಾಂಕ",
+  "tableHeaderSymptoms": "ಲಕ್ಷಣಗಳು",
+  "tableHeaderMood": "ಮೂಡ್/ಟಿಪ್ಪಣಿಗಳು",
+  "tableNone": "ಯಾವುದೂ ಇಲ್ಲ",
+  "low": "ಕಡಿಮೆ",
+  "medium": "ಮಧ್ಯಮ",
+  "high": "ಹೆಚ್ಚು",
+  "hairThinning": "ಕೂದಲು ತೆಳುವಾಗುವುದು",
+  "skinDarkening": "ಚರ್ಮ ಕಪ್ಪಾಗುವುದು",
+  "fatigue": "ಆಯಾಸ",
+  "sleepProblems": "ನಿದ್ರೆಯ ಸಮಸ್ಯೆಗಳು",
+  "bloating": "ಹೊಟ್ಟೆ ಉಬ್ಬರ"
 }

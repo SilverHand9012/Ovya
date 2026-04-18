@@ -126,7 +126,6 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
           style: TextStyle(color: colors.onSurface, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        automaticallyImplyLeading: false, // Force flow forward via buttons
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -282,7 +281,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
               // Action Buttons
               ElevatedButton(
                 onPressed: () {
-                  context.go('/tracker');
+                  context.push('/tracker');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: colors.primary,
@@ -301,7 +300,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
               const SizedBox(height: 16),
               OutlinedButton(
                 onPressed: () {
-                  context.go('/report');
+                  context.push('/report');
                 },
                 style: OutlinedButton.styleFrom(
                   foregroundColor: colors.primary,

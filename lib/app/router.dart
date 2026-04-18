@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../features/auth/presentation/auth_screen.dart';
@@ -15,12 +16,24 @@ import 'app_scaffold.dart';
 final GoRouter appRouter = GoRouter(
   initialLocation: '/onboarding',
   redirect: (context, state) async {
-    if (state.uri.path == '/onboarding') {
-      final prefs = await SharedPreferences.getInstance();
-      if (prefs.containsKey('selected_locale')) {
-        return '/home';
-      }
+    final prefs = await SharedPreferences.getInstance();
+    final user = FirebaseAuth.instance.currentUser;
+    final isAuthRoute = state.uri.path == '/auth';
+    final isOnboardingRoute = state.uri.path == '/onboarding';
+
+    // If they haven't finished onboarding, don't trap them inside Auth unexpectedly
+    if (!prefs.containsKey('selected_language') && !isOnboardingRoute) {
+      return '/onboarding';
     }
+
+    if (user == null && !isAuthRoute && !isOnboardingRoute) {
+      return '/auth';
+    }
+
+    if (user != null && isAuthRoute) {
+      return '/home';
+    }
+
     return null;
   },
   routes: [
