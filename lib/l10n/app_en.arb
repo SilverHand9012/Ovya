@@ -244,5 +244,28 @@
   "skinDarkening": "Skin Darkening",
   "fatigue": "Fatigue",
   "sleepProblems": "Sleep Problems",
-  "bloating": "Bloating"
+  "bloating": "Bloating",
+  "logout_dialog_title": "Unsaved data",
+  "logout_dialog_content": "You have {count} unsynced health logs. Logging out now will permanently delete this data.",
+  "@logout_dialog_content": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "logout_dialog_stay": "Stay",
+  "logout_dialog_confirm": "Log out anyway",
+  "sync_dialog_title": "Pending Offline Data",
+  "sync_dialog_content": "You have {count} unsynced logs offline. Would you like to sync them now?",
+  "@sync_dialog_content": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "syncNow": "Sync Now",
+  "discard": "Discard",
+  "later": "Later"
 }
