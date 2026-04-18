@@ -154,9 +154,9 @@ class ReportGenerator {
     if (logs.isEmpty) {
       return pw.Container(
         padding: const pw.EdgeInsets.all(12),
-        decoration: pw.BoxDecoration(
+        decoration: const pw.BoxDecoration(
           color: PdfColors.grey100,
-          borderRadius: const pw.BorderRadius.all(pw.Radius.circular(4)),
+          borderRadius: pw.BorderRadius.all(pw.Radius.circular(4)),
         ),
         child: pw.Text('No symptoms logged in the last 30 days.', style: const pw.TextStyle(color: PdfColors.grey700)),
       );

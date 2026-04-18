@@ -35,8 +35,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   String _getGreeting(String? firstName, AppLocalizations loc) {
     final hour = DateTime.now().hour;
     String timeGreeting = loc.home_hello;
-    if (hour >= 5 && hour < 12) timeGreeting = loc.home_good_morning;
-    else if (hour >= 12 && hour < 17) timeGreeting = loc.home_good_afternoon;
+    if (hour >= 5 && hour < 12) {
+      timeGreeting = loc.home_good_morning;
+    } else if (hour >= 12 && hour < 17) timeGreeting = loc.home_good_afternoon;
     else if (hour >= 17 && hour < 21) timeGreeting = loc.home_good_evening;
     
     if (firstName != null && firstName.isNotEmpty) {

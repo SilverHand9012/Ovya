@@ -82,7 +82,7 @@ class _LogScreenState extends ConsumerState<LogScreen> {
     // Mood mapping: if mood is very low (1 or 2), we can optionally flag moodIssues if not natively selected, 
     // but the prompt says they select it independently. We'll append mood to notes to preserve the integer.
     String finalNotes = _notesController.text.trim();
-    finalNotes = 'Mood Level: $_selectedMood/5' + (finalNotes.isNotEmpty ? '\n\n$finalNotes' : '');
+    finalNotes = 'Mood Level: $_selectedMood/5${finalNotes.isNotEmpty ? '\n\n$finalNotes' : ''}';
 
     final entity = SymptomEntity(
       id: DateTime.now().toIso8601String(),

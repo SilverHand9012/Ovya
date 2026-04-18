@@ -1,12 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../features/auth/presentation/auth_screen.dart';
 import '../features/home/presentation/home_screen.dart';
-import '../features/chat/presentation/chat_screen.dart';
 import '../features/symptom_tracking/presentation/log_screen.dart';
-import '../features/ai_insights/presentation/insights_screen.dart';
+import '../features/chat/presentation/chat_screen.dart';
 import '../features/onboarding/presentation/onboarding_screen.dart';
 import '../features/reports/presentation/report_screen.dart';
 import '../features/detection/presentation/detection_screen.dart';
@@ -57,7 +55,7 @@ final GoRouter appRouter = GoRouter(
         GoRoute(
           path: '/insights',
           name: 'insights',
-          builder: (context, state) => const InsightsScreen(),
+          builder: (context, state) => const ChatScreen(),
         ),
         GoRoute(
           path: '/detection',

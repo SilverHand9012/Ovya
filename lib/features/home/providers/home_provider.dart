@@ -3,7 +3,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/intelligence/detection_engine.dart';
 import '../../symptom_tracking/providers/symptom_notifier.dart';
-import '../../symptom_tracking/providers/symptom_state.dart';
 
 class HomeState {
   final RiskResult? latestRiskResult;
