@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:uuid/uuid.dart';
 import 'dart:math' show pow;
 
 import 'package:flutter/foundation.dart';
@@ -14,6 +15,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../shared/providers/sync_status_provider.dart';
+import '../../shared/providers/device_service_provider.dart';
+import '../../features/symptom_tracking/data/symptom_repository.dart';
+import '../../features/symptom_tracking/domain/symptom_entity.dart';
 
 // ──────────────────────────────────────────────────────────────
 //  Sync service
@@ -96,7 +100,10 @@ class SyncService {
     int synced = 0;
 
     try {
-      // 1. Push pending queue items to Firestore.
+      // 1. Backfill legacy records if needed.
+      await _backfillLegacyRecords();
+
+      // 2. Push pending queue items to Firestore.
       final pending = await _queueService.getPending();
       debugPrint('[Sync] Found ${pending.length} pending items.');
 
@@ -113,13 +120,16 @@ class SyncService {
         }
       }
 
-      // 2. Clean up successfully synced entries.
+      // 3. Pull latest changes from remote.
+      await _pullRemoteChanges();
+
+      // 4. Clean up successfully synced entries.
       if (synced > 0) {
         await _queueService.purgeSynced();
         debugPrint('[Sync] Purged $synced synced entries.');
       }
 
-      // 3. Clear expired insight caches.
+      // 5. Clear expired insight caches.
       await _insightCacheService.clearExpired();
       debugPrint('[Sync] Cleared expired insight caches.');
     } finally {
@@ -203,6 +213,8 @@ class SyncService {
     }
 
     // Attach metadata.
+    final deviceId = await ref?.read(deviceServiceProvider).getDeviceId();
+    payload['deviceId'] = deviceId;
     payload['syncedAt'] = FieldValue.serverTimestamp();
 
     final collectionRef = firestore
@@ -210,38 +222,23 @@ class SyncService {
         .doc(user.uid)
         .collection(collection);
 
-    // ── DELETE ─────────────────────────────────────────────────
-    if (item.action == 'delete' || item.action == 'delete_symptom') {
-      final docId = payload['docId'] as String?;
+    // ── SOFT DELETE ────────────────────────────────────────────
+    if (item.action == 'delete_symptom' || payload['isDeleted'] == true) {
+      final clientId = payload['clientId'] as String?;
+      if (clientId == null) return;
 
-      if (docId == null) {
-        throw Exception(
-          '[Sync] Delete action requires "docId" in payload.',
-        );
-      }
-
-      debugPrint('[Sync] Deleting doc $docId from $collection');
-      await collectionRef.doc(docId).delete();
-      debugPrint('[Sync] Deleted $docId from $collection');
+      debugPrint('[Sync] Soft-deleting doc $clientId in $collection');
+      await collectionRef.doc(clientId).set(payload, SetOptions(merge: true));
       return;
     }
 
-    // ── UPDATE (merge) ────────────────────────────────────────
-    final docId = payload.remove('docId') as String?;
-
-    if (docId != null) {
-      debugPrint('[Sync] Updating doc $docId in $collection');
-      await collectionRef.doc(docId).set(payload, SetOptions(merge: true));
-      debugPrint('[Sync] Updated doc $docId in $collection');
-      return;
-    }
-
-    // ── CREATE ─────────────────────────────────────────────────
+    // ── UPSERT (merge) ────────────────────────────────────────
     final clientId = payload['clientId'] as String?;
     if (clientId == null) {
-      debugPrint('[Sync] Missing clientId — skipping to prevent orphan doc');
+      debugPrint('[Sync] Critical: Missing clientId in symptom payload');
       return;
     }
+
     try {
       await collectionRef
           .doc(clientId)
@@ -249,15 +246,94 @@ class SyncService {
       debugPrint('[Sync] ✓ Wrote $clientId to Firestore');
     } catch (e, stack) {
       debugPrint('[Sync Error] Failed to write $clientId: $e');
-      debugPrint('[Sync Stack] $stack');
-      rethrow; // REQUIRED — triggers retry system
+      rethrow; 
     }
   }
 
+  /// Fetches latest changes from Firestore and merges into local Isar DB.
+  /// 
+  /// Implements Last-Write-Wins logic based on [updatedAt].
+  Future<void> _pullRemoteChanges() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
+    debugPrint('[Sync] Pulling remote changes...');
+    final repository = SymptomRepositoryImpl();
+    
+    // 1. Fetch from Firestore
+    final snapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection('symptomLogs')
+        .get();
+
+    for (final doc in snapshot.docs) {
+      final data = doc.data();
+      final clientId = data['clientId'] as String?;
+      if (clientId == null) continue;
+
+      final remoteUpdatedAtStr = data['updatedAt'] as String?;
+      if (remoteUpdatedAtStr == null) continue;
+      final remoteUpdatedAt = DateTime.parse(remoteUpdatedAtStr);
+      
+      // 2. Search local by clientId
+      final localLogs = await repository.getAllLogs();
+      final localMatch = localLogs.cast<SymptomEntity?>().firstWhere(
+        (e) => e?.clientId == clientId,
+        orElse: () => null,
+      );
+
+      if (localMatch == null || remoteUpdatedAt.isAfter(localMatch.updatedAt)) {
+        debugPrint('[Sync] Overwriting local $clientId with newer remote version');
+        await repository.upsertLog(SymptomEntity(
+          id: localMatch?.id ?? '0', // upsertLog handles ID mapping via clientId
+          clientId: clientId,
+          timestamp: DateTime.parse(data['timestamp'] as String),
+          updatedAt: remoteUpdatedAt,
+          isDeleted: data['isDeleted'] ?? false,
+          deviceId: data['deviceId'],
+          irregularCycle: data['irregularCycle'] ?? false,
+          acne: data['acne'] ?? false,
+          weightGain: data['weightGain'] ?? false,
+          hairGrowth: data['hairGrowth'] ?? false,
+          moodIssues: data['moodIssues'] ?? false,
+          hairThinning: data['hairThinning'] ?? false,
+          skinDarkening: data['skinDarkening'] ?? false,
+          fatigue: data['fatigue'] ?? false,
+          sleepProblems: data['sleepProblems'] ?? false,
+          bloating: data['bloating'] ?? false,
+          familyHistory: data['familyHistory'] ?? false,
+          difficultyConceiving: data['difficultyConceiving'] ?? false,
+          notes: data['notes'],
+        ));
+      }
+    }
+  }
+
+  /// Assigns [clientId] and [updatedAt] to existing local records 
+  /// that were created before the sync hardening.
+  Future<void> _backfillLegacyRecords() async {
+    final repository = SymptomRepositoryImpl();
+    final logs = await repository.getAllLogs();
+
+    final legacyLogs = logs.where((e) => e.clientId == null).toList();
+    if (legacyLogs.isEmpty) return;
+
+    debugPrint('[Sync] Backfilling ${legacyLogs.length} legacy local records');
+    final deviceId = await ref?.read(deviceServiceProvider).getDeviceId();
+
+    for (final log in legacyLogs) {
+      final updated = log.copyWith(
+        clientId: Uuid().v4(),
+        updatedAt: log.timestamp, // Best guess for legacy
+        deviceId: deviceId,
+      );
+      await repository.upsertLog(updated);
+    }
+    debugPrint('[Sync] Backfill complete');
+  }
+
   /// Maps queue action names to their canonical Firestore collection.
-  ///
-  /// This ensures all symptom-related actions write to `symptomLogs`
-  /// rather than creating separate collections per action verb.
   String _resolveCollection(String action) {
     switch (action) {
       case 'add_symptom':

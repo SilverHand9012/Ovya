@@ -1,11 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:uuid/uuid.dart';
+
 import '../data/symptom_repository.dart';
 import '../domain/symptom_entity.dart';
 import '../../../core/intelligence/detection_engine.dart';
 import '../../../core/services/queue_service.dart';
 import '../../../shared/providers/sync_service_provider.dart';
+import '../../../shared/providers/device_service_provider.dart';
 import 'symptom_state.dart';
 
 // ──────────────────────────────────────────────────────────────
@@ -48,8 +51,9 @@ class SymptomNotifier extends StateNotifier<SymptomState> {
 
     try {
       debugPrint('[Symptom] Loading all symptom logs...');
-      final symptoms = await _repository.getAllLogs();
-      debugPrint('[Symptom] Loaded ${symptoms.length} logs.');
+      final allLogs = await _repository.getAllLogs();
+      final symptoms = allLogs.where((e) => !e.isDeleted).toList();
+      debugPrint('[Symptom] Loaded ${symptoms.length} logs (filtered from ${allLogs.length}).');
       state = state.copyWith(
         isLoading: false,
         symptoms: symptoms,
@@ -75,52 +79,41 @@ class SymptomNotifier extends StateNotifier<SymptomState> {
     state = state.copyWith(isLoading: true, clearError: true);
 
     try {
-      // 1. Save to local Isar DB.
-      debugPrint('[Symptom] Saving new symptom log...');
-      await _repository.addSymptomLog(symptom);
-      debugPrint('[Symptom] Saved to local DB.');
+      // 1. Enrich with sync identifiers.
+      final clientId = Uuid().v4();
+      final deviceId = await ref.read(deviceServiceProvider).getDeviceId();
+      final updatedAt = DateTime.now();
 
-      // 2. Enqueue for offline sync.
+      final enrichedSymptom = symptom.copyWith(
+        clientId: clientId,
+        deviceId: deviceId,
+        updatedAt: updatedAt,
+      );
+
+      // 2. Save to local Isar DB.
+      debugPrint('[Symptom] Saving new symptom log (clientId: $clientId)...');
+      await _repository.addSymptomLog(enrichedSymptom);
+
+      // 3. Enqueue for offline sync.
       await _queueService.enqueue(
         action: 'add_symptom',
         payload: {
-          'timestamp': symptom.timestamp.toIso8601String(),
-          'irregularCycle': symptom.irregularCycle,
-          'acne': symptom.acne,
-          'weightGain': symptom.weightGain,
-          'hairGrowth': symptom.hairGrowth,
-          'moodIssues': symptom.moodIssues,
-          'hairThinning': symptom.hairThinning,
-          'skinDarkening': symptom.skinDarkening,
-          'fatigue': symptom.fatigue,
-          'sleepProblems': symptom.sleepProblems,
-          'bloating': symptom.bloating,
-          'familyHistory': symptom.familyHistory,
-          'difficultyConceiving': symptom.difficultyConceiving,
-          'notes': symptom.notes ?? '',
+          ...enrichedSymptom.toJson(),
+          'updatedAt': updatedAt.toIso8601String(),
         },
       );
       
       debugPrint('[Queue] Added symptom to queue');
 
-      // 3. Trigger realtime sync attempt quietly in the background without blocking the UI
-      try {
-        final syncService = ref.read(syncServiceProvider);
-        Future.microtask(() async {
-          try {
-            await syncService.syncPendingData();
-            await syncService.syncNow();
-          } catch (_) {}
-        });
-      } catch (_) {}
+      // 4. Trigger realtime sync.
+      _triggerSync();
 
-      // 4. Run risk evaluation.
-      debugPrint('[Symptom] Running detection engine...');
-      final riskResult = _detectionEngine.evaluate(symptom);
-      debugPrint('[Symptom] Risk: ${riskResult.level} (score: ${riskResult.score})');
+      // 5. Run risk evaluation.
+      final riskResult = _detectionEngine.evaluate(enrichedSymptom);
 
-      // 5. Refresh symptom list from DB and update state.
-      final updatedSymptoms = await _repository.getAllLogs();
+      // 6. Refresh list (excluding soft-deleted).
+      final allLogs = await _repository.getAllLogs();
+      final updatedSymptoms = allLogs.where((e) => !e.isDeleted).toList();
 
       state = state.copyWith(
         isLoading: false,
@@ -135,15 +128,69 @@ class SymptomNotifier extends StateNotifier<SymptomState> {
     }
   }
 
+  /// Updates an existing symptom log locally and enqueues for sync.
+  Future<void> updateSymptom(SymptomEntity symptom) async {
+    state = state.copyWith(isLoading: true, clearError: true);
+
+    try {
+      final updatedAt = DateTime.now();
+      final updatedSymptom = symptom.copyWith(updatedAt: updatedAt);
+
+      await _repository.upsertLog(updatedSymptom);
+
+      await _queueService.enqueue(
+        action: 'update_symptom',
+        payload: {
+          ...updatedSymptom.toJson(),
+          'updatedAt': updatedAt.toIso8601String(),
+        },
+      );
+
+      _triggerSync();
+
+      final allLogs = await _repository.getAllLogs();
+      final updatedSymptoms = allLogs.where((e) => !e.isDeleted).toList();
+      state = state.copyWith(
+        isLoading: false,
+        symptoms: updatedSymptoms,
+      );
+    } catch (e) {
+      state = state.copyWith(
+        isLoading: false,
+        errorMessage: 'Failed to update symptom: $e',
+      );
+    }
+  }
+
   // ── Delete symptom ───────────────────────────────────────────
 
   /// Deletes a single symptom log by its [id].
+  /// 
+  /// Performs a soft-delete locally and enqueues a `delete_symptom`
+  /// action for Firestore.
   Future<void> deleteSymptom(String id) async {
     try {
+      // Find item first to get clientId
+      final symptom = state.symptoms.firstWhere((s) => s.id == id);
+      
       await _repository.deleteLog(id);
 
-      // Refresh list.
-      final updatedSymptoms = await _repository.getAllLogs();
+      // Enqueue soft-delete for remote
+      await _queueService.enqueue(
+        action: 'delete_symptom',
+        payload: {
+          'clientId': symptom.clientId,
+          'docId': symptom.clientId, // SyncService uses docId for deletes
+          'isDeleted': true,
+          'updatedAt': DateTime.now().toIso8601String(),
+        },
+      );
+
+      _triggerSync();
+
+      // Refresh list (excluding soft-deleted).
+      final allLogs = await _repository.getAllLogs();
+      final updatedSymptoms = allLogs.where((e) => !e.isDeleted).toList();
       state = state.copyWith(symptoms: updatedSymptoms);
 
       // Re-evaluate if logs remain, clear risk result if empty.
@@ -157,6 +204,18 @@ class SymptomNotifier extends StateNotifier<SymptomState> {
         errorMessage: 'Failed to delete symptom: $e',
       );
     }
+  }
+
+  void _triggerSync() {
+    try {
+      final syncService = ref.read(syncServiceProvider);
+      Future.microtask(() async {
+        try {
+          await syncService.syncPendingData();
+          await syncService.syncNow();
+        } catch (_) {}
+      });
+    } catch (_) {}
   }
 
   // ── Evaluate latest ──────────────────────────────────────────

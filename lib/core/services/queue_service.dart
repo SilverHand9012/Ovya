@@ -54,6 +54,17 @@ class QueueService {
     required String action,
     required Map<String, dynamic> payload,
   }) async {
+    // ── VALIDATION ─────────────────────────────────────────────
+    // Symptom-related actions MUST have clientId and updatedAt.
+    if (action.contains('symptom')) {
+      if (payload['clientId'] == null) {
+        throw QueueServiceException('clientId is required for symptom sync items');
+      }
+      if (payload['updatedAt'] == null) {
+        throw QueueServiceException('updatedAt is required for symptom sync items');
+      }
+    }
+
     try {
       final isar = await _isarService.db;
       final entry = SyncQueue()
@@ -76,6 +87,7 @@ class QueueService {
 
       return id;
     } catch (e) {
+      if (e is QueueServiceException) rethrow;
       throw QueueServiceException('Failed to enqueue action "$action": $e');
     }
   }

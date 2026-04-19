@@ -5,12 +5,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ovya/l10n/gen/app_localizations.dart';
 
 import '../../../shared/providers/sync_service_provider.dart';
+import '../../../shared/providers/locale_provider.dart';
 
 import '../data/auth_repository.dart';
 
 /// Provider for AuthRepository. Provide your actual implementation here.
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
-  return FirebaseAuthRepository();
+  final prefs = ref.watch(sharedPreferencesProvider);
+  return FirebaseAuthRepository(prefs: prefs);
 });
 
 class AuthScreen extends ConsumerStatefulWidget {

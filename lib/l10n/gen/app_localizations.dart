@@ -1009,6 +1009,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Bloating'**
   String get bloating;
+
+  /// No description provided for @logout_dialog_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Unsaved data'**
+  String get logout_dialog_title;
+
+  /// No description provided for @logout_dialog_content.
+  ///
+  /// In en, this message translates to:
+  /// **'You have {count} unsynced health logs. Logging out now will permanently delete this data.'**
+  String logout_dialog_content(String count);
+
+  /// No description provided for @logout_dialog_stay.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay'**
+  String get logout_dialog_stay;
+
+  /// No description provided for @logout_dialog_confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out anyway'**
+  String get logout_dialog_confirm;
+
+  /// No description provided for @sync_dialog_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending Offline Data'**
+  String get sync_dialog_title;
+
+  /// No description provided for @sync_dialog_content.
+  ///
+  /// In en, this message translates to:
+  /// **'You have {count} unsynced logs offline. Would you like to sync them now?'**
+  String sync_dialog_content(String count);
+
+  /// No description provided for @syncNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync Now'**
+  String get syncNow;
+
+  /// No description provided for @discard.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard'**
+  String get discard;
+
+  /// No description provided for @later.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get later;
 }
 
 class _AppLocalizationsDelegate

@@ -27,68 +27,88 @@ const SymptomLogSchema = CollectionSchema(
       name: r'bloating',
       type: IsarType.bool,
     ),
-    r'difficultyConceiving': PropertySchema(
+    r'clientId': PropertySchema(
       id: 2,
+      name: r'clientId',
+      type: IsarType.string,
+    ),
+    r'deviceId': PropertySchema(
+      id: 3,
+      name: r'deviceId',
+      type: IsarType.string,
+    ),
+    r'difficultyConceiving': PropertySchema(
+      id: 4,
       name: r'difficultyConceiving',
       type: IsarType.bool,
     ),
     r'familyHistory': PropertySchema(
-      id: 3,
+      id: 5,
       name: r'familyHistory',
       type: IsarType.bool,
     ),
     r'fatigue': PropertySchema(
-      id: 4,
+      id: 6,
       name: r'fatigue',
       type: IsarType.bool,
     ),
     r'hairGrowth': PropertySchema(
-      id: 5,
+      id: 7,
       name: r'hairGrowth',
       type: IsarType.bool,
     ),
     r'hairThinning': PropertySchema(
-      id: 6,
+      id: 8,
       name: r'hairThinning',
       type: IsarType.bool,
     ),
     r'irregularCycle': PropertySchema(
-      id: 7,
+      id: 9,
       name: r'irregularCycle',
       type: IsarType.bool,
     ),
+    r'isDeleted': PropertySchema(
+      id: 10,
+      name: r'isDeleted',
+      type: IsarType.bool,
+    ),
     r'moodIssues': PropertySchema(
-      id: 8,
+      id: 11,
       name: r'moodIssues',
       type: IsarType.bool,
     ),
     r'notes': PropertySchema(
-      id: 9,
+      id: 12,
       name: r'notes',
       type: IsarType.string,
     ),
     r'skinDarkening': PropertySchema(
-      id: 10,
+      id: 13,
       name: r'skinDarkening',
       type: IsarType.bool,
     ),
     r'sleepProblems': PropertySchema(
-      id: 11,
+      id: 14,
       name: r'sleepProblems',
       type: IsarType.bool,
     ),
     r'synced': PropertySchema(
-      id: 12,
+      id: 15,
       name: r'synced',
       type: IsarType.bool,
     ),
     r'timestamp': PropertySchema(
-      id: 13,
+      id: 16,
       name: r'timestamp',
       type: IsarType.dateTime,
     ),
+    r'updatedAt': PropertySchema(
+      id: 17,
+      name: r'updatedAt',
+      type: IsarType.dateTime,
+    ),
     r'weightGain': PropertySchema(
-      id: 14,
+      id: 18,
       name: r'weightGain',
       type: IsarType.bool,
     )
@@ -99,6 +119,19 @@ const SymptomLogSchema = CollectionSchema(
   deserializeProp: _symptomLogDeserializeProp,
   idName: r'id',
   indexes: {
+    r'clientId': IndexSchema(
+      id: 2639372232964765565,
+      name: r'clientId',
+      unique: true,
+      replace: true,
+      properties: [
+        IndexPropertySchema(
+          name: r'clientId',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    ),
     r'timestamp': IndexSchema(
       id: 1852253767416892198,
       name: r'timestamp',
@@ -128,6 +161,18 @@ int _symptomLogEstimateSize(
 ) {
   var bytesCount = offsets.last;
   {
+    final value = object.clientId;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
+  {
+    final value = object.deviceId;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
+  {
     final value = object.notes;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
@@ -144,19 +189,23 @@ void _symptomLogSerialize(
 ) {
   writer.writeBool(offsets[0], object.acne);
   writer.writeBool(offsets[1], object.bloating);
-  writer.writeBool(offsets[2], object.difficultyConceiving);
-  writer.writeBool(offsets[3], object.familyHistory);
-  writer.writeBool(offsets[4], object.fatigue);
-  writer.writeBool(offsets[5], object.hairGrowth);
-  writer.writeBool(offsets[6], object.hairThinning);
-  writer.writeBool(offsets[7], object.irregularCycle);
-  writer.writeBool(offsets[8], object.moodIssues);
-  writer.writeString(offsets[9], object.notes);
-  writer.writeBool(offsets[10], object.skinDarkening);
-  writer.writeBool(offsets[11], object.sleepProblems);
-  writer.writeBool(offsets[12], object.synced);
-  writer.writeDateTime(offsets[13], object.timestamp);
-  writer.writeBool(offsets[14], object.weightGain);
+  writer.writeString(offsets[2], object.clientId);
+  writer.writeString(offsets[3], object.deviceId);
+  writer.writeBool(offsets[4], object.difficultyConceiving);
+  writer.writeBool(offsets[5], object.familyHistory);
+  writer.writeBool(offsets[6], object.fatigue);
+  writer.writeBool(offsets[7], object.hairGrowth);
+  writer.writeBool(offsets[8], object.hairThinning);
+  writer.writeBool(offsets[9], object.irregularCycle);
+  writer.writeBool(offsets[10], object.isDeleted);
+  writer.writeBool(offsets[11], object.moodIssues);
+  writer.writeString(offsets[12], object.notes);
+  writer.writeBool(offsets[13], object.skinDarkening);
+  writer.writeBool(offsets[14], object.sleepProblems);
+  writer.writeBool(offsets[15], object.synced);
+  writer.writeDateTime(offsets[16], object.timestamp);
+  writer.writeDateTime(offsets[17], object.updatedAt);
+  writer.writeBool(offsets[18], object.weightGain);
 }
 
 SymptomLog _symptomLogDeserialize(
@@ -168,20 +217,24 @@ SymptomLog _symptomLogDeserialize(
   final object = SymptomLog();
   object.acne = reader.readBool(offsets[0]);
   object.bloating = reader.readBool(offsets[1]);
-  object.difficultyConceiving = reader.readBool(offsets[2]);
-  object.familyHistory = reader.readBool(offsets[3]);
-  object.fatigue = reader.readBool(offsets[4]);
-  object.hairGrowth = reader.readBool(offsets[5]);
-  object.hairThinning = reader.readBool(offsets[6]);
+  object.clientId = reader.readStringOrNull(offsets[2]);
+  object.deviceId = reader.readStringOrNull(offsets[3]);
+  object.difficultyConceiving = reader.readBool(offsets[4]);
+  object.familyHistory = reader.readBool(offsets[5]);
+  object.fatigue = reader.readBool(offsets[6]);
+  object.hairGrowth = reader.readBool(offsets[7]);
+  object.hairThinning = reader.readBool(offsets[8]);
   object.id = id;
-  object.irregularCycle = reader.readBool(offsets[7]);
-  object.moodIssues = reader.readBool(offsets[8]);
-  object.notes = reader.readStringOrNull(offsets[9]);
-  object.skinDarkening = reader.readBool(offsets[10]);
-  object.sleepProblems = reader.readBool(offsets[11]);
-  object.synced = reader.readBool(offsets[12]);
-  object.timestamp = reader.readDateTime(offsets[13]);
-  object.weightGain = reader.readBool(offsets[14]);
+  object.irregularCycle = reader.readBool(offsets[9]);
+  object.isDeleted = reader.readBool(offsets[10]);
+  object.moodIssues = reader.readBool(offsets[11]);
+  object.notes = reader.readStringOrNull(offsets[12]);
+  object.skinDarkening = reader.readBool(offsets[13]);
+  object.sleepProblems = reader.readBool(offsets[14]);
+  object.synced = reader.readBool(offsets[15]);
+  object.timestamp = reader.readDateTime(offsets[16]);
+  object.updatedAt = reader.readDateTime(offsets[17]);
+  object.weightGain = reader.readBool(offsets[18]);
   return object;
 }
 
@@ -197,9 +250,9 @@ P _symptomLogDeserializeProp<P>(
     case 1:
       return (reader.readBool(offset)) as P;
     case 2:
-      return (reader.readBool(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 3:
-      return (reader.readBool(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 4:
       return (reader.readBool(offset)) as P;
     case 5:
@@ -211,16 +264,24 @@ P _symptomLogDeserializeProp<P>(
     case 8:
       return (reader.readBool(offset)) as P;
     case 9:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 10:
       return (reader.readBool(offset)) as P;
     case 11:
       return (reader.readBool(offset)) as P;
     case 12:
-      return (reader.readBool(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 13:
-      return (reader.readDateTime(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 14:
+      return (reader.readBool(offset)) as P;
+    case 15:
+      return (reader.readBool(offset)) as P;
+    case 16:
+      return (reader.readDateTime(offset)) as P;
+    case 17:
+      return (reader.readDateTime(offset)) as P;
+    case 18:
       return (reader.readBool(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -237,6 +298,61 @@ List<IsarLinkBase<dynamic>> _symptomLogGetLinks(SymptomLog object) {
 
 void _symptomLogAttach(IsarCollection<dynamic> col, Id id, SymptomLog object) {
   object.id = id;
+}
+
+extension SymptomLogByIndex on IsarCollection<SymptomLog> {
+  Future<SymptomLog?> getByClientId(String? clientId) {
+    return getByIndex(r'clientId', [clientId]);
+  }
+
+  SymptomLog? getByClientIdSync(String? clientId) {
+    return getByIndexSync(r'clientId', [clientId]);
+  }
+
+  Future<bool> deleteByClientId(String? clientId) {
+    return deleteByIndex(r'clientId', [clientId]);
+  }
+
+  bool deleteByClientIdSync(String? clientId) {
+    return deleteByIndexSync(r'clientId', [clientId]);
+  }
+
+  Future<List<SymptomLog?>> getAllByClientId(List<String?> clientIdValues) {
+    final values = clientIdValues.map((e) => [e]).toList();
+    return getAllByIndex(r'clientId', values);
+  }
+
+  List<SymptomLog?> getAllByClientIdSync(List<String?> clientIdValues) {
+    final values = clientIdValues.map((e) => [e]).toList();
+    return getAllByIndexSync(r'clientId', values);
+  }
+
+  Future<int> deleteAllByClientId(List<String?> clientIdValues) {
+    final values = clientIdValues.map((e) => [e]).toList();
+    return deleteAllByIndex(r'clientId', values);
+  }
+
+  int deleteAllByClientIdSync(List<String?> clientIdValues) {
+    final values = clientIdValues.map((e) => [e]).toList();
+    return deleteAllByIndexSync(r'clientId', values);
+  }
+
+  Future<Id> putByClientId(SymptomLog object) {
+    return putByIndex(r'clientId', object);
+  }
+
+  Id putByClientIdSync(SymptomLog object, {bool saveLinks = true}) {
+    return putByIndexSync(r'clientId', object, saveLinks: saveLinks);
+  }
+
+  Future<List<Id>> putAllByClientId(List<SymptomLog> objects) {
+    return putAllByIndex(r'clientId', objects);
+  }
+
+  List<Id> putAllByClientIdSync(List<SymptomLog> objects,
+      {bool saveLinks = true}) {
+    return putAllByIndexSync(r'clientId', objects, saveLinks: saveLinks);
+  }
 }
 
 extension SymptomLogQueryWhereSort
@@ -320,6 +436,71 @@ extension SymptomLogQueryWhere
         upper: upperId,
         includeUpper: includeUpper,
       ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterWhereClause> clientIdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'clientId',
+        value: [null],
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterWhereClause> clientIdIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'clientId',
+        lower: [null],
+        includeLower: false,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterWhereClause> clientIdEqualTo(
+      String? clientId) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'clientId',
+        value: [clientId],
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterWhereClause> clientIdNotEqualTo(
+      String? clientId) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'clientId',
+              lower: [],
+              upper: [clientId],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'clientId',
+              lower: [clientId],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'clientId',
+              lower: [clientId],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'clientId',
+              lower: [],
+              upper: [clientId],
+              includeUpper: false,
+            ));
+      }
     });
   }
 
@@ -436,6 +617,308 @@ extension SymptomLogQueryFilter
     });
   }
 
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> clientIdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'clientId',
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition>
+      clientIdIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'clientId',
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> clientIdEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'clientId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition>
+      clientIdGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'clientId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> clientIdLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'clientId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> clientIdBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'clientId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition>
+      clientIdStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'clientId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> clientIdEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'clientId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> clientIdContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'clientId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> clientIdMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'clientId',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition>
+      clientIdIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'clientId',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition>
+      clientIdIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'clientId',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> deviceIdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'deviceId',
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition>
+      deviceIdIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'deviceId',
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> deviceIdEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'deviceId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition>
+      deviceIdGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'deviceId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> deviceIdLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'deviceId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> deviceIdBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'deviceId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition>
+      deviceIdStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'deviceId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> deviceIdEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'deviceId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> deviceIdContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'deviceId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> deviceIdMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'deviceId',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition>
+      deviceIdIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'deviceId',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition>
+      deviceIdIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'deviceId',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition>
       difficultyConceivingEqualTo(bool value) {
     return QueryBuilder.apply(this, (query) {
@@ -544,6 +1027,16 @@ extension SymptomLogQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'irregularCycle',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> isDeletedEqualTo(
+      bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isDeleted',
         value: value,
       ));
     });
@@ -790,6 +1283,60 @@ extension SymptomLogQueryFilter
     });
   }
 
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> updatedAtEqualTo(
+      DateTime value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'updatedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition>
+      updatedAtGreaterThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'updatedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> updatedAtLessThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'updatedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> updatedAtBetween(
+    DateTime lower,
+    DateTime upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'updatedAt',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> weightGainEqualTo(
       bool value) {
     return QueryBuilder.apply(this, (query) {
@@ -830,6 +1377,30 @@ extension SymptomLogQuerySortBy
   QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortByBloatingDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'bloating', Sort.desc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortByClientId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'clientId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortByClientIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'clientId', Sort.desc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortByDeviceId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'deviceId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortByDeviceIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'deviceId', Sort.desc);
     });
   }
 
@@ -908,6 +1479,18 @@ extension SymptomLogQuerySortBy
     });
   }
 
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortByIsDeleted() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isDeleted', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortByIsDeletedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isDeleted', Sort.desc);
+    });
+  }
+
   QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortByMoodIssues() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'moodIssues', Sort.asc);
@@ -980,6 +1563,18 @@ extension SymptomLogQuerySortBy
     });
   }
 
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortByUpdatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'updatedAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortByUpdatedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'updatedAt', Sort.desc);
+    });
+  }
+
   QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortByWeightGain() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'weightGain', Sort.asc);
@@ -1016,6 +1611,30 @@ extension SymptomLogQuerySortThenBy
   QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenByBloatingDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'bloating', Sort.desc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenByClientId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'clientId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenByClientIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'clientId', Sort.desc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenByDeviceId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'deviceId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenByDeviceIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'deviceId', Sort.desc);
     });
   }
 
@@ -1106,6 +1725,18 @@ extension SymptomLogQuerySortThenBy
     });
   }
 
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenByIsDeleted() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isDeleted', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenByIsDeletedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isDeleted', Sort.desc);
+    });
+  }
+
   QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenByMoodIssues() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'moodIssues', Sort.asc);
@@ -1178,6 +1809,18 @@ extension SymptomLogQuerySortThenBy
     });
   }
 
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenByUpdatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'updatedAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenByUpdatedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'updatedAt', Sort.desc);
+    });
+  }
+
   QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenByWeightGain() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'weightGain', Sort.asc);
@@ -1202,6 +1845,20 @@ extension SymptomLogQueryWhereDistinct
   QueryBuilder<SymptomLog, SymptomLog, QDistinct> distinctByBloating() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'bloating');
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QDistinct> distinctByClientId(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'clientId', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QDistinct> distinctByDeviceId(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'deviceId', caseSensitive: caseSensitive);
     });
   }
 
@@ -1242,6 +1899,12 @@ extension SymptomLogQueryWhereDistinct
     });
   }
 
+  QueryBuilder<SymptomLog, SymptomLog, QDistinct> distinctByIsDeleted() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'isDeleted');
+    });
+  }
+
   QueryBuilder<SymptomLog, SymptomLog, QDistinct> distinctByMoodIssues() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'moodIssues');
@@ -1279,6 +1942,12 @@ extension SymptomLogQueryWhereDistinct
     });
   }
 
+  QueryBuilder<SymptomLog, SymptomLog, QDistinct> distinctByUpdatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'updatedAt');
+    });
+  }
+
   QueryBuilder<SymptomLog, SymptomLog, QDistinct> distinctByWeightGain() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'weightGain');
@@ -1303,6 +1972,18 @@ extension SymptomLogQueryProperty
   QueryBuilder<SymptomLog, bool, QQueryOperations> bloatingProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'bloating');
+    });
+  }
+
+  QueryBuilder<SymptomLog, String?, QQueryOperations> clientIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'clientId');
+    });
+  }
+
+  QueryBuilder<SymptomLog, String?, QQueryOperations> deviceIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'deviceId');
     });
   }
 
@@ -1343,6 +2024,12 @@ extension SymptomLogQueryProperty
     });
   }
 
+  QueryBuilder<SymptomLog, bool, QQueryOperations> isDeletedProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isDeleted');
+    });
+  }
+
   QueryBuilder<SymptomLog, bool, QQueryOperations> moodIssuesProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'moodIssues');
@@ -1376,6 +2063,12 @@ extension SymptomLogQueryProperty
   QueryBuilder<SymptomLog, DateTime, QQueryOperations> timestampProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'timestamp');
+    });
+  }
+
+  QueryBuilder<SymptomLog, DateTime, QQueryOperations> updatedAtProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'updatedAt');
     });
   }
 

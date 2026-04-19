@@ -10,8 +10,15 @@ part 'symptom_log.g.dart';
 class SymptomLog {
   Id id = Isar.autoIncrement;
 
+  @Index(unique: true, replace: true)
+  String? clientId;
+
   @Index()
   late DateTime timestamp;
+
+  late DateTime updatedAt;
+  late bool isDeleted = false;
+  String? deviceId;
 
   // ── Original symptoms ───────────────────────────────────────
   late bool irregularCycle;
@@ -35,7 +42,11 @@ class SymptomLog {
 
   Map<String, dynamic> toJson() {
     return {
+      'clientId': clientId,
       'timestamp': timestamp.toIso8601String(),
+      'updatedAt': updatedAt.toIso8601String(),
+      'isDeleted': isDeleted,
+      'deviceId': deviceId,
       'irregularCycle': irregularCycle,
       'acne': acne,
       'weightGain': weightGain,

@@ -28,7 +28,14 @@ abstract class SymptomRepository {
   Stream<List<SymptomEntity>> watchAllLogs();
 
   /// Deletes a single log by its [id]. Returns `true` if the entry existed.
+  /// 
+  /// Per sync engine hardening, this performs a soft-delete (setting `isDeleted = true`).
   Future<bool> deleteLog(String id);
+
+  /// Force-persists a remote log into the local database.
+  /// 
+  /// Used by [SyncService] pull logic for Last-Write-Wins resolution.
+  Future<void> upsertLog(SymptomEntity symptom);
 
   /// Deletes every symptom log. Useful for account reset / testing.
   Future<void> deleteAllLogs();
@@ -135,13 +142,46 @@ class SymptomRepositoryImpl implements SymptomRepository {
 
       late bool deleted;
       await isar.writeTxn(() async {
-        deleted = await isar.symptomLogs.delete(isarId);
+        final existing = await isar.symptomLogs.get(isarId);
+        if (existing != null) {
+          existing.isDeleted = true;
+          existing.updatedAt = DateTime.now();
+          existing.synced = false;
+          await isar.symptomLogs.put(existing);
+          deleted = true;
+        } else {
+          deleted = false;
+        }
       });
 
       return deleted;
     } catch (e) {
       if (e is SymptomRepositoryException) rethrow;
-      throw SymptomRepositoryException('Failed to delete symptom log: $e');
+      throw SymptomRepositoryException('Failed to soft-delete symptom log: $e');
+    }
+  }
+
+  @override
+  Future<void> upsertLog(SymptomEntity symptom) async {
+    try {
+      final isar = await _isarService.db;
+      final log = _toSchema(symptom);
+
+      // Try to find existing by clientId first
+      final existingByClient = await isar.symptomLogs
+          .filter()
+          .clientIdEqualTo(symptom.clientId)
+          .findFirst();
+      
+      if (existingByClient != null) {
+        log.id = existingByClient.id;
+      }
+
+      await isar.writeTxn(() async {
+        await isar.symptomLogs.put(log);
+      });
+    } catch (e) {
+      throw SymptomRepositoryException('Failed to upsert symptom log: $e');
     }
   }
 
@@ -164,7 +204,11 @@ class SymptomRepositoryImpl implements SymptomRepository {
   /// Maps a domain [SymptomEntity] → Isar [SymptomLog].
   SymptomLog _toSchema(SymptomEntity entity) {
     return SymptomLog()
+      ..clientId = entity.clientId
       ..timestamp = entity.timestamp
+      ..updatedAt = entity.updatedAt
+      ..isDeleted = entity.isDeleted
+      ..deviceId = entity.deviceId
       ..irregularCycle = entity.irregularCycle
       ..acne = entity.acne
       ..weightGain = entity.weightGain
@@ -185,7 +229,11 @@ class SymptomRepositoryImpl implements SymptomRepository {
   SymptomEntity _toEntity(SymptomLog log) {
     return SymptomEntity(
       id: log.id.toString(),
+      clientId: log.clientId,
       timestamp: log.timestamp,
+      updatedAt: log.updatedAt,
+      isDeleted: log.isDeleted,
+      deviceId: log.deviceId,
       irregularCycle: log.irregularCycle,
       acne: log.acne,
       weightGain: log.weightGain,

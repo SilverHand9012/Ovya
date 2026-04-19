@@ -506,4 +506,35 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get bloating => 'ಹೊಟ್ಟೆ ಉಬ್ಬರ';
+
+  @override
+  String get logout_dialog_title => 'Unsaved data';
+
+  @override
+  String logout_dialog_content(String count) {
+    return 'You have $count unsynced health logs. Logging out now will permanently delete this data.';
+  }
+
+  @override
+  String get logout_dialog_stay => 'Stay';
+
+  @override
+  String get logout_dialog_confirm => 'Log out anyway';
+
+  @override
+  String get sync_dialog_title => 'Pending Offline Data';
+
+  @override
+  String sync_dialog_content(String count) {
+    return 'You have $count unsynced logs offline. Would you like to sync them now?';
+  }
+
+  @override
+  String get syncNow => 'Sync Now';
+
+  @override
+  String get discard => 'Discard';
+
+  @override
+  String get later => 'Later';
 }
