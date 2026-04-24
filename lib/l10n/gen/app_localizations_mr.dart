@@ -12,530 +12,352 @@ class AppLocalizationsMr extends AppLocalizations {
   String get appTitle => 'Ovya';
 
   @override
-  String get continueText => 'पुढे जा';
+  String get greeting_morning => 'शुभ सकाळ,';
 
   @override
-  String get auth_sign_in => 'साइन इन करा';
+  String get synced_just_now => 'आत्ताच सिंक केले';
 
   @override
-  String get auth_sign_up => 'साइन अप करा';
+  String get syncing => 'सिंक होत आहे...';
 
   @override
-  String get auth_email => 'ईमेल';
+  String get elevated_risk => 'धोक्याची पातळी वाढली आहे';
 
   @override
-  String get auth_password => 'पासवर्ड';
+  String get pcos_detected => 'PCOS चा प्रभाव आढळला';
 
   @override
-  String get auth_confirm_password => 'पासवर्डची पुष्टी करा';
+  String get review_assessment => 'मूल्यांकनाचे पुनरावलोकन करा';
 
   @override
-  String get auth_error_passwords_no_match => 'पासवर्ड जुळत नाहीत';
+  String get todays_focus => 'आजचे लक्ष';
 
   @override
-  String get auth_create_account => 'नवीन खाते तयार करा';
+  String get log_today => 'आजची नोंद करा';
 
   @override
-  String get auth_loading => 'लोड होत आहे...';
+  String get doctor_report => 'डॉक्टर रिपोर्ट';
 
   @override
-  String get logSymptoms => 'लक्षणे नोंदवा';
+  String get ask_ovya => 'Ovya ला विचारा';
 
   @override
-  String get howAreYouFeeling => 'आज तुम्हाला कसे वाटत आहे?';
+  String get my_history => 'माझा इतिहास';
 
   @override
-  String get irregularCycle => 'अनियमित पाळी';
+  String get mindful_moment => 'सचेत क्षण';
 
   @override
-  String get acne => 'मुरुमे (Acne)';
+  String get results_title => 'निकाल';
 
   @override
-  String get weightGain => 'वजन वाढणे';
+  String get high_risk => 'उच्च धोका';
 
   @override
-  String get excessHairGrowth => 'अनावश्यक केस वाढणे';
+  String get moderate_risk => 'मध्यम धोका';
 
   @override
-  String get moodIssues => 'वारंवार मूड बदलणे';
+  String get low_risk => 'कमी धोका';
 
   @override
-  String get notesOptional => 'नोंदी (पर्यायी)';
+  String get what_this_means => 'याचा अर्थ काय?';
 
   @override
-  String get notesHint => 'इतर कोणतीही माहिती...';
+  String get what_to_do_next => 'पुढे काय करावे?';
 
   @override
-  String get logSymptomsButton => 'लक्षणे नोंदवा';
+  String get generate_report => 'सविस्तर रिपोर्ट तयार करा';
 
   @override
-  String get symptomsLoggedSuccess => 'लक्षणे यशस्वीरित्या नोंदवली!';
+  String get continue_tracking => 'लक्षणे नोंदवणे सुरू ठेवा';
 
   @override
-  String get history => 'इतिहास';
-
-  @override
-  String get noSymptoms => 'कोणतीही लक्षणे नाहीत';
-
-  @override
-  String riskLevel(String level) {
-    return 'धोक्याची पातळी: $level';
+  String your_body_today(String style_body) {
+    return 'आज तुमचे $style_body';
   }
 
   @override
-  String score(int value) {
-    return 'स्कोर: $value';
+  String get energy_mood => 'ऊर्जा आणि मूड';
+
+  @override
+  String get symptoms_sensations => 'लक्षणे आणि संवेदना';
+
+  @override
+  String get journal_notes => 'जर्नल नोट्स';
+
+  @override
+  String get journal_hint =>
+      'तुम्हाला मानसिक आणि शारीरिकदृष्ट्या कसे वाटत आहे? काही विशिष्ट कारणे...';
+
+  @override
+  String get take_a_breath => 'एक दीर्घ श्वास घ्या.';
+
+  @override
+  String get save_log => 'लॉग सेव्ह करा';
+
+  @override
+  String get symptom_headache => 'सिरदर्द';
+
+  @override
+  String get symptom_cramps => 'पोटदुखी/क्रॅम्प्स';
+
+  @override
+  String get symptom_fatigue => 'थकवा';
+
+  @override
+  String get symptom_bloating => 'पोट फुगणे';
+
+  @override
+  String get symptom_nausea => 'मळमळणे';
+
+  @override
+  String get symptom_backache => 'कंबरदुखी';
+
+  @override
+  String get symptom_insomnia => 'निद्रानाश';
+
+  @override
+  String get logout_dialog_title => 'Log Out';
+
+  @override
+  String logout_dialog_content(String pendingCount) {
+    return 'You have $pendingCount unsynced logs. If you log out, they might be lost. Are you sure?';
   }
 
   @override
-  String get recommendations => 'सल्ले';
-
-  @override
-  String get aiInsights => 'AI माहिती';
-
-  @override
-  String get generateInsight => 'माहिती मिळवा';
-
-  @override
-  String get noInsightsYet => 'अद्याप कोणतीही माहिती नाही';
-
-  @override
-  String get noInsightsDescription =>
-      'प्रथम तुमची लक्षणे नोंदवा आणि नंतर सल्ल्यासाठी टॅप करा.';
-
-  @override
-  String get latestInsight => 'नवीनतम माहिती';
-
-  @override
-  String get cached => 'सेव्ह केलेले';
-
-  @override
-  String get aiGenerated => 'AI द्वारे निर्माण केलेले';
-
-  @override
-  String get previousInsights => 'मागील माहिती';
-
-  @override
-  String get disclaimer =>
-      'ही एक सामान्य माहिती आहे. कृपया डॉक्टरांचा सल्ला घ्या.';
-
-  @override
-  String get clearCache => 'कॅश क्लिअर करा';
-
-  @override
-  String get viewInsights => 'माहिती पहा';
-
-  @override
-  String get offlineModeActive => 'ऑफलाइन मोड सुरू आहे';
-
-  @override
-  String get syncingData => 'डेटा सिंक होत आहे...';
-
-  @override
-  String get syncedSuccessfully => 'यशस्वीरित्या सिंक झाले';
-
-  @override
-  String get fetchingInsights => 'नवीन माहिती आणत आहे...';
-
-  @override
-  String get usingLastSaved => 'मागील सेव्ह केलेली माहिती दाखवत आहे';
-
-  @override
-  String get offlineShowingLast =>
-      'आपण ऑफलाइन आहोत. आपली मागील माहिती दाखवत आहोत.';
-
-  @override
-  String get failedToLoad => 'लोड करण्यात अयशस्वी';
-
-  @override
-  String get failedToAdd => 'नोंद करण्यात अयशस्वी';
-
-  @override
-  String get failedToGenerate => 'निर्माण करण्यात अयशस्वी';
-
-  @override
-  String get rec_track_regularly =>
-      'तुमच्या लक्षणांवर लक्ष ठेवा आणि ती नियमित नोंदवा.';
-
-  @override
-  String get rec_balanced_diet => 'सकस आहार आणि नियमित व्यायाम करा.';
-
-  @override
-  String get rec_schedule_checkup =>
-      'तुमच्या डॉक्टरांचा सल्ला घेण्याचा विचार करा.';
-
-  @override
-  String get rec_monitor_cycle =>
-      'तुमच्या मासिक पाळीकडे लक्ष द्या आणि बदलांची नोंद करा.';
-
-  @override
-  String get rec_stress_management =>
-      'तणाव कमी करण्यासाठी योग किंवा ध्यान करा.';
-
-  @override
-  String get rec_consult_gynecologist =>
-      'कृपया शक्य तितक्या लवकर स्त्रीरोगतज्ज्ञांचा (Gynecologist) सल्ला घ्या.';
-
-  @override
-  String get rec_request_bloodwork =>
-      'तुमच्या हार्मोन आणि इन्सुलिनच्या पातळीसाठी रक्त तपासणी करा.';
-
-  @override
-  String get rec_symptom_diary =>
-      'तुमच्या डॉक्टरांना माहिती देण्यासाठी लक्षणांची डायरी ठेवा.';
-
-  @override
-  String get q_irregular_cycle => 'तुमची मासिक पाळी अनियमित आहे का?';
-
-  @override
-  String get q_hair_growth =>
-      'तुमच्या चेहऱ्यावर किंवा अंगावर अनावश्यक केस वाढले आहेत का?';
-
-  @override
-  String get q_family_history =>
-      'तुमच्या कुटुंबात कोणाला पॉलीसिस्टिक ओव्हरी सिंड्रोम (PCOS) आहे का?';
-
-  @override
-  String get q_weight_gain => 'तुमचे वजन अचानक वाढले आहे का?';
-
-  @override
-  String get q_acne => 'तुम्हाला नेहमी मुरुमे (Acne) येतात का?';
-
-  @override
-  String get q_skin_darkening => 'तुमच्या त्वचेवर काळे डाग दिसतात का?';
-
-  @override
-  String get q_hair_thinning => 'तुमचे केस गळत आहेत किंवा विरळ होत आहेत का?';
-
-  @override
-  String get q_fatigue => 'तुम्हाला नेहमी थकवा जाणवतो का?';
-
-  @override
-  String get q_sleep_problems => 'तुम्हाला झोपायला त्रास होतो का?';
-
-  @override
-  String get q_bloating => 'तुम्हाला वारंवार पोट फुगल्यासारखे वाटते का?';
-
-  @override
-  String get q_mood_issues => 'तुमचा मूड वारंवार बदलतो का?';
-
-  @override
-  String get q_difficulty_conceiving =>
-      'तुम्हाला गर्भधारणा करण्यास अडचण येत आहे का?';
-
-  @override
-  String get q_age_verification => 'तुमचे वय १८ किंवा उससे अधिक आहे का?';
-
-  @override
-  String get btn_yes => 'होय';
-
-  @override
-  String get btn_no => 'नाही';
-
-  @override
-  String progress_indicator(int current, int total) {
-    return 'प्रश्न $current / $total';
-  }
-
-  @override
-  String pcos_type_hint(String type) {
-    return 'तुमची लक्षणे $type पॉलीसिस्टिक ओव्हरी सिंड्रोम (PCOS) दर्शवतात';
-  }
-
-  @override
-  String get pcos_type_insulin_desc =>
-      'तुमच्या शरीराला इन्सुलिन वापरण्यात अडचण येत आहे ज्यामुळे वजन वाढते.';
-
-  @override
-  String get pcos_type_androgenic_desc =>
-      'पुरुष संप्रेरकांची वाढ झाल्यामुळे मुरुमे आणि अनावश्यक केस वाढतात.';
-
-  @override
-  String get pcos_type_adrenal_desc =>
-      'हे सहसा तणावामुळे होणाऱ्या बदलांमुळे होते.';
-
-  @override
-  String get type_insulin_resistant => 'इन्सुलिन-प्रतिरोधक (Insulin-resistant)';
-
-  @override
-  String get type_androgenic => 'अँड्रोजेनिक (Androgenic)';
-
-  @override
-  String get type_adrenal => 'अड्रेनल (Adrenal)';
-
-  @override
-  String get btn_save_track => 'सेव्ह करा आणि लक्षणे नोंदवा';
-
-  @override
-  String get btn_generate_report => 'डॉक्टरांसाठी रिपोर्ट तयार करा';
-
-  @override
-  String log_date_header(String date) {
-    return 'आज, $date';
-  }
-
-  @override
-  String get log_symptoms_label => 'आजची लक्षणे निवडा';
-
-  @override
-  String get log_notes_label => 'आजच्यासाठी काही नोंदी?';
-
-  @override
-  String get log_save_button => 'सेव्ह करा';
-
-  @override
-  String get log_saved_success => 'यशस्वीरित्या सेव्ह केले ✓';
-
-  @override
-  String get log_already_logged => 'आज आधीच नोंदवले आहे';
-
-  @override
-  String get report_patient_name => 'रुग्णाचे नाव';
-
-  @override
-  String get report_preview_title => 'रिपोर्टचे पूर्वावलोकन';
-
-  @override
-  String get report_share_btn => 'WhatsApp वर शेअर करा';
-
-  @override
-  String get report_print_btn => 'प्रिंट करा';
-
-  @override
-  String get report_offline_note =>
-      'हा रिपोर्ट पूर्णपणे सुरक्षित आणि ऑफलाइन तयार केला आहे.';
-
-  @override
-  String get home_hello => 'नमस्कार';
-
-  @override
-  String get home_good_morning => 'शुभ सकाळ';
-
-  @override
-  String get home_good_afternoon => 'शुभ दुपार';
-
-  @override
-  String get home_good_evening => 'शुभ संध्याकाळ';
-
-  @override
-  String get home_time_today => 'आज';
-
-  @override
-  String get home_time_yesterday => 'काल';
-
-  @override
-  String home_time_days_ago(int days) {
-    return '$days दिवसांपूर्वी';
-  }
-
-  @override
-  String get home_start_assessment => 'आरोग्य तपासणी सुरू करा';
-
-  @override
-  String get home_rerun_assessment => 'पुन्हा तपासणी करा';
-
-  @override
-  String get home_card_log => 'लक्षणे नोंदवा';
-
-  @override
-  String get home_logged_done => 'झाले ✓';
-
-  @override
-  String get home_logged_today => 'आज';
-
-  @override
-  String get home_card_report => 'रिपोर्ट मिळवा';
-
-  @override
-  String get home_card_report_sub => 'डॉक्टरांशी शेअर करा';
-
-  @override
-  String get home_card_ai => 'Ovya ला विचारा';
-
-  @override
-  String get home_card_ai_ready => 'तयार';
-
-  @override
-  String get home_card_ai_offline => 'फक्त ऑनलाइन';
-
-  @override
-  String get home_err_offline => 'या सुविधेसाठी इंटरनेटची आवश्यकता आहे.';
-
-  @override
-  String get home_card_history => 'माझा इतिहास';
-
-  @override
-  String get home_card_history_sub => 'मागील नोंदी पहा';
-
-  @override
-  String get home_empty_risk_title =>
-      'तुमचा पॉलीसिस्टिक ओव्हरी सिंड्रोम (PCOS) धोका येथे दिसेल';
-
-  @override
-  String get home_empty_risk_sub => 'फक्त 2 मिनिटे लागतील';
-
-  @override
-  String home_pcos_risk(String level) {
-    return 'धोका: $level';
-  }
-
-  @override
-  String home_type_hint(String hint) {
-    return '$hint प्रकार';
-  }
-
-  @override
-  String home_last_assessed(String time) {
-    return 'शेवटची तपासणी: $time';
-  }
-
-  @override
-  String get chat_title => 'Ask Ovya';
-
-  @override
-  String chat_context_card(String level) {
-    return 'Based on your $level risk assessment...';
-  }
-
-  @override
-  String get chat_offline_banner =>
-      'Showing cached response — connect for live guidance';
-
-  @override
-  String get chat_disclaimer => 'This is AI guidance, not medical advice';
-
-  @override
-  String get chat_suggested_title => 'Suggested Questions';
-
-  @override
-  String get chat_suggestion_1 => 'What foods should I avoid with PCOS?';
-
-  @override
-  String get chat_suggestion_2 => 'How does stress affect PCOS?';
-
-  @override
-  String get chat_suggestion_3 => 'What should I ask my doctor?';
-
-  @override
-  String get chat_offline_tooltip => 'Connect to internet to ask Ovya';
-
-  @override
-  String get chat_input_hint => 'Ask about your PCOS...';
-
-  @override
-  String get pdfTitle => 'ओव्या — पीसीओएस आरोग्य अहवाल';
-
-  @override
-  String pdfDateGenerated(String date) {
-    return 'तयार केलेली तारीख: $date';
-  }
-
-  @override
-  String get pdfDisclaimer =>
-      'हा अहवाल केवळ माहितीसाठी आहे. कृपया योग्य डॉक्टरांचा सल्ला घ्या.';
-
-  @override
-  String get pdfGeneratedBy => 'ओव्या द्वारे निर्मित — महिला आरोग्य साथी';
-
-  @override
-  String get patientDetails => 'रुग्णाचे तपशील';
-
-  @override
-  String patientNameLabel(String name) {
-    return 'नाव: $name';
-  }
-
-  @override
-  String reportDateLabel(String date) {
-    return 'अहवाल तारीख: $date';
-  }
-
-  @override
-  String get riskAssessment => 'धोका मूल्यांकन';
-
-  @override
-  String get riskLevelLabel => 'धोका पातळी:';
-
-  @override
-  String get scoreLabel => 'स्कोर:';
-
-  @override
-  String get pcosTypeHintLabel => 'पीसीओएस (PCOS) प्रकार संकेत:';
-
-  @override
-  String get explanationLabel => 'स्पष्टीकरण:';
-
-  @override
-  String get symptomsLast30Days => 'मागील ३० दिवसांतील लक्षणे';
-
-  @override
-  String get noSymptoms30Days =>
-      'मागील ३० दिवसांत कोणतीही लक्षणे नोंदवली नाहीत.';
-
-  @override
-  String get tableHeaderDate => 'तारीख';
-
-  @override
-  String get tableHeaderSymptoms => 'लक्षणे';
-
-  @override
-  String get tableHeaderMood => 'मूड/नोट्स';
-
-  @override
-  String get tableNone => 'काहीही नाही';
-
-  @override
-  String get low => 'कमी';
-
-  @override
-  String get medium => 'मध्यम';
-
-  @override
-  String get high => 'जास्त';
-
-  @override
-  String get hairThinning => 'केस पातळ होणे';
-
-  @override
-  String get skinDarkening => 'त्वचा काळी पडणे';
-
-  @override
-  String get fatigue => 'थकवा';
-
-  @override
-  String get sleepProblems => 'झोपेची समस्या';
-
-  @override
-  String get bloating => 'पोट फुगणे';
-
-  @override
-  String get logout_dialog_title => 'Unsaved data';
-
-  @override
-  String logout_dialog_content(String count) {
-    return 'You have $count unsynced health logs. Logging out now will permanently delete this data.';
-  }
+  String get logout_dialog_confirm => 'Log Out Anyway';
 
   @override
   String get logout_dialog_stay => 'Stay';
 
   @override
-  String get logout_dialog_confirm => 'Log out anyway';
+  String get sync_dialog_title => 'Sync Needed';
 
   @override
-  String get sync_dialog_title => 'Pending Offline Data';
-
-  @override
-  String sync_dialog_content(String count) {
-    return 'You have $count unsynced logs offline. Would you like to sync them now?';
+  String sync_dialog_content(String pendingCount) {
+    return 'You have $pendingCount offline logs. Would you like to sync them now?';
   }
-
-  @override
-  String get syncNow => 'Sync Now';
 
   @override
   String get discard => 'Discard';
 
   @override
   String get later => 'Later';
+
+  @override
+  String get syncNow => 'Sync Now';
+
+  @override
+  String get auth_sign_in => 'Sign In';
+
+  @override
+  String get auth_sign_up => 'Sign Up';
+
+  @override
+  String get auth_email => 'Email';
+
+  @override
+  String get auth_password => 'Password';
+
+  @override
+  String get auth_confirm_password => 'Confirm Password';
+
+  @override
+  String get auth_error_passwords_no_match => 'Passwords do not match';
+
+  @override
+  String get auth_create_account => 'Create Account';
+
+  @override
+  String get continueText => 'Continue';
+
+  @override
+  String get chat_title => 'Chat';
+
+  @override
+  String chat_context_card(String level) {
+    return 'Context: $level';
+  }
+
+  @override
+  String get chat_offline_banner => 'Offline mode';
+
+  @override
+  String get chat_disclaimer => 'Disclaimer';
+
+  @override
+  String get chat_suggested_title => 'Suggested';
+
+  @override
+  String get chat_suggestion_1 => 'Suggestion 1';
+
+  @override
+  String get chat_suggestion_2 => 'Suggestion 2';
+
+  @override
+  String get chat_suggestion_3 => 'Suggestion 3';
+
+  @override
+  String get chat_offline_tooltip => 'Offline';
+
+  @override
+  String get chat_input_hint => 'Type a message';
+
+  @override
+  String get btn_generate_report => 'Generate Report';
+
+  @override
+  String get report_offline_note => 'Offline Note';
+
+  @override
+  String get report_patient_name => 'Patient Name';
+
+  @override
+  String get report_preview_title => 'Preview';
+
+  @override
+  String get report_share_btn => 'Share';
+
+  @override
+  String get report_print_btn => 'Print';
+
+  @override
+  String get pdfTitle => 'PDF Title';
+
+  @override
+  String pdfDateGenerated(String dateStr) {
+    return 'Generated on $dateStr';
+  }
+
+  @override
+  String get pdfDisclaimer => 'Disclaimer';
+
+  @override
+  String get pdfGeneratedBy => 'Generated by';
+
+  @override
+  String get patientDetails => 'Patient Details';
+
+  @override
+  String patientNameLabel(String patientName) {
+    return 'Name: $patientName';
+  }
+
+  @override
+  String reportDateLabel(String nowStr) {
+    return 'Date: $nowStr';
+  }
+
+  @override
+  String get riskAssessment => 'Risk Assessment';
+
+  @override
+  String get riskLevelLabel => 'Risk Level';
+
+  @override
+  String get scoreLabel => 'Score';
+
+  @override
+  String get pcosTypeHintLabel => 'PCOS Type Hint';
+
+  @override
+  String pcos_type_hint(String hint) {
+    return 'Hint: $hint';
+  }
+
+  @override
+  String get explanationLabel => 'Explanation';
+
+  @override
+  String get recommendations => 'Recommendations';
+
+  @override
+  String get symptomsLast30Days => 'Symptoms in last 30 days';
+
+  @override
+  String get noSymptoms30Days => 'No symptoms in last 30 days';
+
+  @override
+  String get tableHeaderDate => 'Date';
+
+  @override
+  String get tableHeaderSymptoms => 'Symptoms';
+
+  @override
+  String get tableHeaderMood => 'Mood';
+
+  @override
+  String get irregularCycle => 'Irregular Cycle';
+
+  @override
+  String get acne => 'Acne';
+
+  @override
+  String get weightGain => 'Weight Gain';
+
+  @override
+  String get excessHairGrowth => 'Excess Hair Growth';
+
+  @override
+  String get moodIssues => 'Mood Issues';
+
+  @override
+  String get hairThinning => 'Hair Thinning';
+
+  @override
+  String get skinDarkening => 'Skin Darkening';
+
+  @override
+  String get fatigue => 'Fatigue';
+
+  @override
+  String get sleepProblems => 'Sleep Problems';
+
+  @override
+  String get bloating => 'Bloating';
+
+  @override
+  String get tableNone => 'None';
+
+  @override
+  String get rec_track_regularly => 'Track regularly';
+
+  @override
+  String get rec_balanced_diet => 'Balanced diet';
+
+  @override
+  String get rec_schedule_checkup => 'Schedule checkup';
+
+  @override
+  String get rec_monitor_cycle => 'Monitor cycle';
+
+  @override
+  String get rec_stress_management => 'Stress management';
+
+  @override
+  String get rec_consult_gynecologist => 'Consult gynecologist';
+
+  @override
+  String get rec_request_bloodwork => 'Request bloodwork';
+
+  @override
+  String get rec_symptom_diary => 'Symptom diary';
+
+  @override
+  String get type_insulin_resistant => 'Insulin Resistant';
+
+  @override
+  String get type_androgenic => 'Androgenic';
+
+  @override
+  String get type_adrenal => 'Adrenal';
+
+  @override
+  String get low => 'Low';
+
+  @override
+  String get medium => 'Medium';
+
+  @override
+  String get high => 'High';
 }

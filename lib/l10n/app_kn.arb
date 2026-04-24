@@ -1,231 +1,45 @@
 {
   "@@locale": "kn",
   "appTitle": "Ovya",
-  "continueText": "ಮುಂದುವರಿಸಿ",
-  "auth_sign_in": "ಸೈನ್ ಇನ್",
-  "auth_sign_up": "ಸೈನ್ ಅಪ್",
-  "auth_email": "ಇಮೇಲ್",
-  "auth_password": "ಪಾಸ್‌ವರ್ಡ್",
-  "auth_confirm_password": "ಪಾಸ್‌ವರ್ಡ್ ಖಚಿತಪಡಿಸಿ",
-  "auth_error_passwords_no_match": "ಪಾಸ್‌ವರ್ಡ್‌ಗಳು ಹೊಂದಿಕೆಯಾಗುತ್ತಿಲ್ಲ",
-  "auth_create_account": "ಖಾತೆ ರಚಿಸಿ",
-  "auth_loading": "ಲೋಡ್ ಆಗುತ್ತಿದೆ...",
-  "logSymptoms": "ರೋಗಲಕ್ಷಣಗಳನ್ನು ದಾಖಲಿಸಿ",
-  "howAreYouFeeling": "ಇಂದು ನಿಮಗೆ ಹೇಗನಿಸುತ್ತಿದೆ?",
-  "irregularCycle": "ಅನಿಯಮಿತ ಮುಟ್ಟು",
-  "acne": "ಮೊಡವೆ (Acne)",
-  "weightGain": "ತೂಕ ಹೆಚ್ಚಳ",
-  "excessHairGrowth": "ಅತಿಯಾದ ಕೂದಲು ಬೆಳವಣಿಗೆ",
-  "moodIssues": "ಮೂಡ್ ಬದಲಾವಣೆ",
-  "notesOptional": "ಟಿಪ್ಪಣಿಗಳು (ಐಚ್ಛಿಕ)",
-  "notesHint": "ಯಾವುದೇ ಇತರ ಮಾಹಿತಿ...",
-  "logSymptomsButton": "ರೋಗಲಕ್ಷಣಗಳನ್ನು ದಾಖಲಿಸಿ",
-  "symptomsLoggedSuccess": "ಯಶಸ್ವಿಯಾಗಿ ದಾಖಲಿಸಲಾಗಿದೆ!",
-  "history": "ಇತಿಹಾಸ",
-  "noSymptoms": "ಯಾವುದೇ ರೋಗಲಕ್ಷಣಗಳಿಲ್ಲ",
-  "riskLevel": "ಅಪಾಯದ ಮಟ್ಟ: {level}",
-  "@riskLevel": {
+  "greeting_morning": "ಶುಭೋದಯ,",
+  "synced_just_now": "ಈಗ ತಾನೇ ಸಿಂಕ್ ಆಗಿದೆ",
+  "syncing": "ಸಿಂಕ್ ಆಗುತ್ತಿದೆ...",
+  "elevated_risk": "ಹೆಚ್ಚಿದ ಅಪಾಯದ ಮಟ್ಟ",
+  "pcos_detected": "PCOS ಉಲ್ಬಣ ಪತ್ತೆಯಾಗಿದೆ",
+  "review_assessment": "ಮೌಲ್ಯಮಾಪನ ಪರಿಶೀಲಿಸಿ",
+  "todays_focus": "ಇಂದಿನ ಗಮನ",
+  "log_today": "ಇಂದು ದಾಖಲಿಸಿ",
+  "doctor_report": "ವೈದ್ಯರ ವರದಿ",
+  "ask_ovya": "Ovya ಕೇಳಿ",
+  "my_history": "ನನ್ನ ಇತಿಹಾಸ",
+  "mindful_moment": "ಸಚೇತ ಕ್ಷಣ",
+  "results_title": "ಫಲಿತಾಂಶಗಳು",
+  "high_risk": "ಹೆಚ್ಚಿನ ಅಪಾಯ",
+  "moderate_risk": "ಮಧ್ಯಮ ಅಪಾಯ",
+  "low_risk": "ಕಡಿಮೆ ಅಪಾಯ",
+  "what_this_means": "ಇದರ ಅರ್ಥವೇನು?",
+  "what_to_do_next": "ಮುಂದೆ ಏನು ಮಾಡಬೇಕು?",
+  "generate_report": "ವಿವರವಾದ ವರದಿ ರಚಿಸಿ",
+  "continue_tracking": "ಲಕ್ಷಣ ದಾಖಲಿಸುವುದನ್ನು ಮುಂದುವರಿಸಿ",
+  "your_body_today": "ಇಂದು ನಿಮ್ಮ {style_body}",
+  "@your_body_today": {
     "placeholders": {
-      "level": {
+      "style_body": {
         "type": "String"
       }
     }
   },
-  "score": "ಸ್ಕೋರ್: {value}",
-  "@score": {
-    "placeholders": {
-      "value": {
-        "type": "int"
-      }
-    }
-  },
-  "recommendations": "ಸಲಹೆಗಳು",
-  "aiInsights": "AI ಮಾಹಿತಿಗಳು",
-  "generateInsight": "ಮಾಹಿತಿ ಪಡೆಯಿರಿ",
-  "noInsightsYet": "ಇನ್ನೂ ಯಾವುದೇ ಮಾಹಿತಿ ಇಲ್ಲ",
-  "noInsightsDescription": "ಮೊದಲು ರೋಗಲಕ್ಷಣಗಳನ್ನು ದಾಖಲಿಸಿ, ನಂತರ ಸಲಹೆ ಪಡೆಯಲು ಟ್ಯಾಪ್ ಮಾಡಿ.",
-  "latestInsight": "ಇತ್ತೀಚಿನ ಮಾಹಿತಿ",
-  "cached": "ಉಳಿಸಲಾಗಿದೆ",
-  "aiGenerated": "AI ರಚಿಸಿದೆ",
-  "previousInsights": "ಹಿಂದಿನ ಮಾಹಿತಿಗಳು",
-  "disclaimer": "ಇದು ಕೇವಲ ಮಾಹಿತಿಗಾಗಿ. ದಯವಿಟ್ಟು ವೈದ್ಯರನ್ನು ಸಂಪರ್ಕಿಸಿ.",
-  "clearCache": "ಕ್ಯಾಶ್ ತೆರವುಗೊಳಿಸಿ",
-  "viewInsights": "ಮಾಹಿತಿ ನೋಡಿ",
-  "offlineModeActive": "ಆಫ್‌ಲೈನ್ ಮೋಡ್ ಸಕ್ರಿಯವಾಗಿದೆ",
-  "syncingData": "ಡೇಟಾ ಸಿಂಕ್ ಆಗುತ್ತಿದೆ...",
-  "syncedSuccessfully": "ಸಿಂಕ್ ಯಶಸ್ವಿಯಾಗಿದೆ",
-  "fetchingInsights": "ಹೊಸ ಮಾಹಿತಿ ತರಲಾಗುತ್ತಿದೆ...",
-  "usingLastSaved": "ಉಳಿಸಿದ ಮಾಹಿತಿಯನ್ನು ತೋರಿಸಲಾಗುತ್ತಿದೆ",
-  "offlineShowingLast": "ನಾವು ಆಫ್‌ಲೈನ್‌ನಲ್ಲಿದ್ದೇವೆ. ಹಿಂದಿನ ಮಾಹಿತಿಯನ್ನು ತೋರಿಸಲಾಗುತ್ತಿದೆ.",
-  "failedToLoad": "ಲೋಡ್ ಮಾಡಲು ವಿಫಲವಾಗಿದೆ",
-  "failedToAdd": "ಸೇರಿಸಲು ವಿಫಲವಾಗಿದೆ",
-  "failedToGenerate": "ರಚಿಸಲು ವಿಫಲವಾಗಿದೆ",
-  "rec_track_regularly": "ನಿಮ್ಮ ರೋಗಲಕ್ಷಣಗಳನ್ನು ನಿಯಮಿತವಾಗಿ ಗಮನಿಸಿ.",
-  "rec_balanced_diet": "ಉತ್ತಮ ಆಹಾರ ಮತ್ತು ವ್ಯಾಯಾಮವನ್ನು ರೂಢಿಸಿಕೊಳ್ಳಿ.",
-  "rec_schedule_checkup": "ನಿಮ್ಮ ವೈದ್ಯರನ್ನು ಭೇಟಿ ಮಾಡಲು ಪರಿಗಣಿಸಿ.",
-  "rec_monitor_cycle": "ನಿಮ್ಮ ಮುಟ್ಟಿನ ಚಕ್ರವನ್ನು ಸೂಕ್ಷ್ಮವಾಗಿ ಗಮನಿಸಿ.",
-  "rec_stress_management": "ಒತ್ತಡ ನಿವಾರಣೆಗೆ ಯೋಗ ಮತ್ತು ಧ್ಯಾನ ಮಾಡಿ.",
-  "rec_consult_gynecologist": "ದಯವಿಟ್ಟು ಸ್ತ್ರೀರೋಗ ತಜ್ಞರನ್ನು (Gynecologist) ಆದಷ್ಟು ಬೇಗ ಸಂಪರ್ಕಿಸಿ.",
-  "rec_request_bloodwork": "ಹಾರ್ಮೋನ್ ಮತ್ತು ಇನ್ಸುಲಿನ್ ಮಟ್ಟವನ್ನು ಪರೀಕ್ಷಿಸಲು ರಕ್ತ ಪರೀಕ್ಷೆ ಮಾಡಿಸಿ.",
-  "rec_symptom_diary": "ನಿಮ್ಮ ವೈದ್ಯರೊಂದಿಗೆ ಹಂಚಿಕೊಳ್ಳಲು ರೋಗಲಕ್ಷಣಗಳ ಡೈರಿಯನ್ನು ಇಟ್ಟುಕೊಳ್ಳಿ.",
-  "q_irregular_cycle": "ನಿಮ್ಮ ಮುಟ್ಟಿನ ಚಕ್ರವು ಅನಿಯಮಿತವಾಗಿದೆಯೇ?",
-  "q_hair_growth": "ನಿಮ್ಮ ಮುಖ ಅಥವಾ ದೇಹದ ಮೇಲೆ ಅತಿಯಾದ ಕೂದಲು ಬೆಳೆಯುತ್ತಿದೆಯೇ?",
-  "q_family_history": "ನಿಮ್ಮ ಕುಟುಂಬದಲ್ಲಿ ಯಾರಿಗಾದರೂ ಪಾಲಿಸಿಸ್ಟಿಕ್ ಓವರಿ ಸಿಂಡ್ರೋಮ್ (PCOS) ಇದೆಯೇ?",
-  "q_weight_gain": "ಕಾರಣವಿಲ್ಲದೆ ತೂಕ ಹೆಚ್ಚಾಗುತ್ತಿದೆಯೇ?",
-  "q_acne": "ನಿಮಗೆ ಸತತವಾಗಿ ಮೊಡವೆಗಳು ಬರುತ್ತಿವೆಯೇ?",
-  "q_skin_darkening": "ವಿನಾಕಾರಣ ಚರ್ಮದ ಮೇಲೆ ಕಪ್ಪು ಕಲೆಗಳು ಮೂಡುತ್ತಿವೆಯೇ?",
-  "q_hair_thinning": "ನಿಮ್ಮ ಕೂದಲು ಉದುರುತ್ತಿದೆಯೇ ಅಥವಾ ತೆಳುವಾಗುತ್ತಿದೆಯೇ?",
-  "q_fatigue": "ನೀವು ಆಗಾಗ್ಗೆ ಸುಸ್ತಾಗುತ್ತೀರಾ?",
-  "q_sleep_problems": "ನಿಮಗೆ ನಿದ್ರೆ ಮಾಡಲು ತೊಂದರೆ ಇದೆಯೇ?",
-  "q_bloating": "ನಿಮಗೆ ಆಗಾಗ್ಗೆ ಹೊಟ್ಟೆ ಉಬ್ಬರ ಆಗುತ್ತದೆಯೇ?",
-  "q_mood_issues": "ನಿಮ್ಮ ಮೂಡ್ ಆಗಾಗ್ಗೆ ಬದಲಾಗುತ್ತದೆಯೇ?",
-  "q_difficulty_conceiving": "ಗರ್ಭ ಧರಿಸಲು ಸ್ವಲ್ಪ ಕಷ್ಟವಾಗುತ್ತಿದೆಯೇ?",
-  "q_age_verification": "ನಿಮಗೆ 18 ವರ್ಷ ಅಥವಾ ಅದಕ್ಕಿಂತ ಹೆಚ್ಚಿನ ವಯಸ್ಸಾಗಿದೆಯೇ?",
-  "btn_yes": "ಹೌದು",
-  "btn_no": "ಇಲ್ಲ",
-  "progress_indicator": "ಪ್ರಶ್ನೆ {current} / {total}",
-  "@progress_indicator": {
-    "placeholders": {
-      "current": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      }
-    }
-  },
-  "pcos_type_hint": "ರೋಗಲಕ್ಷಣಗಳು {type} ಪಾಲಿಸಿಸ್ಟಿಕ್ ಓವರಿ ಸಿಂಡ್ರೋಮ್ (PCOS) ಅನ್ನು ಸೂಚಿಸುತ್ತವೆ",
-  "@pcos_type_hint": {
-    "placeholders": {
-      "type": {
-        "type": "String"
-      }
-    }
-  },
-  "pcos_type_insulin_desc": "ನಿಮ್ಮ ದೇಹವು ಇನ್ಸುಲಿನ್ ಅನ್ನು ಸರಿಯಾಗಿ ಬಳಸುತ್ತಿಲ್ಲದಿರಬಹುದು, ಇದು ತೂಕ ಹೆಚ್ಚಳಕ್ಕೆ ಕಾರಣವಾಗುತ್ತದೆ.",
-  "pcos_type_androgenic_desc": "ಇದು ಪುರುಷ ಹಾರ್ಮೋನ್‌ಗಳ ಏರಿಕೆಯಿಂದಾಗಿ ಕೂದಲು ಮತ್ತು ಮೊಡವೆಗೆ ಕಾರಣವಾಗುತ್ತದೆ.",
-  "pcos_type_adrenal_desc": "ಇದು ಒತ್ತಡದಿಂದಾಗಿ ಉಂಟಾಗುವ ಸಮಸ್ಯೆ ಆಗಿರಬಹುದು.",
-  "type_insulin_resistant": "ಇನ್ಸುಲಿನ್-ನಿರೋಧಕ (Insulin-resistant)",
-  "type_androgenic": "ಆಂಡ್ರೊಜೆನಿಕ್ (Androgenic)",
-  "type_adrenal": "ಅಡ್ರಿನಲ್ (Adrenal)",
-  "btn_save_track": "ರೋಗಲಕ್ಷಣಗಳನ್ನು ಉಳಿಸಿ",
-  "btn_generate_report": "ವೈದ್ಯರ ವರದಿ ರಚಿಸಿ",
-  "log_date_header": "ಇಂದು, {date}",
-  "@log_date_header": {
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
-  "log_symptoms_label": "ಇಂದಿನ ರೋಗಲಕ್ಷಣಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ",
-  "log_notes_label": "ಇಂದಿನ ಟಿಪ್ಪಣಿಗಳು?",
-  "log_save_button": "ಉಳಿಸಿ",
-  "log_saved_success": "ಉಳಿಸಲಾಗಿದೆ ✓",
-  "log_already_logged": "ಇಂದು ಈಗಾಗಲೇ ದಾಖಲಿಸಲಾಗಿದೆ",
-  "report_patient_name": "ರೋಗಿಯ ಹೆಸರು",
-  "report_preview_title": "ವರದಿ ಮುನ್ನೋಟ",
-  "report_share_btn": "WhatsApp ನಲ್ಲಿ ಹಂಚಿಕೊಳ್ಳಿ",
-  "report_print_btn": "ಪ್ರಿಂಟ್ ಮಾಡಿ",
-  "report_offline_note": "ಈ ವರದಿಯನ್ನು ಸುರಕ್ಷಿತವಾಗಿ ಆಫ್‌ಲೈನ್‌ನಲ್ಲಿ ರಚಿಸಲಾಗಿದೆ.",
-  "home_hello": "ನಮಸ್ಕಾರ",
-  "home_good_morning": "ಶುಭೋದಯ",
-  "home_good_afternoon": "ಶುಭ ಮಧ್ಯಾಹ್ನ",
-  "home_good_evening": "ಶುಭ ಸಂಜೆ",
-  "home_time_today": "ಇಂದು",
-  "home_time_yesterday": "ನಿನ್ನೆ",
-  "home_time_days_ago": "{days} ದಿನಗಳ ಹಿಂದೆ",
-  "@home_time_days_ago": {
-    "placeholders": {
-      "days": {
-        "type": "int"
-      }
-    }
-  },
-  "home_start_assessment": "ಪರೀಕ್ಷೆ ಪ್ರಾರಂಭಿಸಿ",
-  "home_rerun_assessment": "ಮತ್ತೆ ಪರೀಕ್ಷಿಸಿ",
-  "home_card_log": "ರೋಗಲಕ್ಷಣ ದಾಖಲಿಸಿ",
-  "home_logged_done": "ಮುಗಿದಿದೆ ✓",
-  "home_logged_today": "ಇಂದು",
-  "home_card_report": "ವರದಿ ಪಡೆಯಿರಿ",
-  "home_card_report_sub": "ವೈದ್ಯರೊಂದಿಗೆ ಹಂಚಿಕೊಳ್ಳಿ",
-  "home_card_ai": "Ovya ಕೇಳಿ",
-  "home_card_ai_ready": "ಸಿದ್ಧವಾಗಿದೆ",
-  "home_card_ai_offline": "ಆನ್‌ಲೈನ್ ಮಾತ್ರ",
-  "home_err_offline": "ಈ ವೈಶಿಷ್ಟ್ಯಕ್ಕೆ ಇಂಟರ್ನೆಟ್ ಸಂಪರ್ಕದ ಅಗತ್ಯವಿದೆ.",
-  "home_card_history": "ನನ್ನ ಇತಿಹಾಸ",
-  "home_card_history_sub": "ಹಳೆಯ ದಾಖಲೆಗಳು",
-  "home_empty_risk_title": "ನಿಮ್ಮ ಪಾಲಿಸಿಸ್ಟಿಕ್ ಓವರಿ ಸಿಂಡ್ರೋಮ್ (PCOS) ಅಪಾಯದ ವರದಿ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ",
-  "home_empty_risk_sub": "ಕೇವಲ 2 ನಿಮಿಷ ಸಾಕು",
-  "home_pcos_risk": "ಅಪಾಯ: {level}",
-  "@home_pcos_risk": {
-    "placeholders": {
-      "level": {
-        "type": "String"
-      }
-    }
-  },
-  "home_type_hint": "{hint} ಪ್ರಕಾರ",
-  "@home_type_hint": {
-    "placeholders": {
-      "hint": {
-        "type": "String"
-      }
-    }
-  },
-  "home_last_assessed": "ಕೊನೆಯ ಪರೀಕ್ಷೆ: {time}",
-  "@home_last_assessed": {
-    "placeholders": {
-      "time": {
-        "type": "String"
-      }
-    }
-  },
-  "pdfTitle": "ಓವ್ಯಾ — PCOS ಆರೋಗ್ಯ ವರದಿ",
-  "pdfDateGenerated": "ರಚಿಸಿದ ದಿನಾಂಕ: {date}",
-  "@pdfDateGenerated": {
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
-  "pdfDisclaimer": "ಈ ವರದಿಯು ಕೇವಲ ಮಾಹಿತಿಗಾಗಿ. ದಯವಿಟ್ಟು ವೈದ್ಯರನ್ನು ಸಂಪರ್ಕಿಸಿ.",
-  "pdfGeneratedBy": "ಓವ್ಯಾ ನಿಂದ ರಚಿಸಲಾಗಿದೆ — ಮಹಿಳಾ ಆರೋಗ್ಯ ಸಂಗಾತಿ",
-  "patientDetails": "ರೋಗಿಯ ವಿವರಗಳು",
-  "patientNameLabel": "ಹೆಸರು: {name}",
-  "@patientNameLabel": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "reportDateLabel": "ವರದಿ ದಿನಾಂಕ: {date}",
-  "@reportDateLabel": {
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
-  "riskAssessment": "ಅಪಾಯದ ಮೌಲ್ಯಮಾಪನ",
-  "riskLevelLabel": "ಅಪಾಯದ ಮಟ್ಟ:",
-  "scoreLabel": "ಸ್ಕೋರ್:",
-  "pcosTypeHintLabel": "PCOS ಪ್ರಕಾರದ ಸುಳಿವು:",
-  "explanationLabel": "ವಿವರಣೆ:",
-  "symptomsLast30Days": "ಕಳೆದ 30 ದಿನಗಳ ಲಕ್ಷಣಗಳು",
-  "noSymptoms30Days": "ಕಳೆದ 30 ದಿನಗಳಲ್ಲಿ ಯಾವುದೇ ಲಕ್ಷಣಗಳನ್ನು ದಾಖಲಿಸಿಲ್ಲ.",
-  "tableHeaderDate": "ದಿನಾಂಕ",
-  "tableHeaderSymptoms": "ಲಕ್ಷಣಗಳು",
-  "tableHeaderMood": "ಮೂಡ್/ಟಿಪ್ಪಣಿಗಳು",
-  "tableNone": "ಯಾವುದೂ ಇಲ್ಲ",
-  "low": "ಕಡಿಮೆ",
-  "medium": "ಮಧ್ಯಮ",
-  "high": "ಹೆಚ್ಚು",
-  "hairThinning": "ಕೂದಲು ತೆಳುವಾಗುವುದು",
-  "skinDarkening": "ಚರ್ಮ ಕಪ್ಪಾಗುವುದು",
-  "fatigue": "ಆಯಾಸ",
-  "sleepProblems": "ನಿದ್ರೆಯ ಸಮಸ್ಯೆಗಳು",
-  "bloating": "ಹೊಟ್ಟೆ ಉಬ್ಬರ"
+  "energy_mood": "ಶಕ್ತಿ ಮತ್ತು ಮೂಡ್",
+  "symptoms_sensations": "ಲಕ್ಷಣಗಳು ಮತ್ತು ಸಂವೇದನೆಗಳು",
+  "journal_notes": "ಜರ್ನಲ್ ಟಿಪ್ಪಣಿಗಳು",
+  "journal_hint": "ಮಾನಸಿಕವಾಗಿ ಮತ್ತು ದೈಹಿಕವಾಗಿ ನಿಮಗೆ ಹೇಗನಿಸುತ್ತಿದೆ? ಇಂದು ಯಾವುದೇ ನಿರ್ದಿಷ್ಟ ಕಾರಣಗಳು...",
+  "take_a_breath": "ಒಂದು ದೀರ್ಘ ಶ್ವಾಸ ತೆಗೆದುಕೊಳ್ಳಿ.",
+  "save_log": "ಲೋಗ್ ಉಳಿಸಿ",
+  "symptom_headache": "ತಲೆನೋವು",
+  "symptom_cramps": "ಹೊಟ್ಟೆ ನೋವು",
+  "symptom_fatigue": "ಆಯಾಸ",
+  "symptom_bloating": "ಹೊಟ್ಟೆ ಉಬ್ಬರ",
+  "symptom_nausea": "ವಾಕರಿಕೆ",
+  "symptom_backache": "ಬನ್ನು ನೋವು",
+  "symptom_insomnia": "ನಿದ್ರಾಹೀನತೆ"
 }

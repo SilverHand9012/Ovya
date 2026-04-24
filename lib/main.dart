@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ovya/l10n/gen/app_localizations.dart';
@@ -20,6 +21,7 @@ final languageService = LanguageService();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  GoogleFonts.config.allowRuntimeFetching = false;
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -93,9 +95,8 @@ class _OvyaAppState extends State<OvyaApp> {
     return MaterialApp.router(
       title: 'Ovya',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.system,
+      theme: AppTheme.lightTheme(languageService.locale),
+      themeMode: ThemeMode.light,
       routerConfig: appRouter,
 
       // ── Localization ──────────────────────────────────────

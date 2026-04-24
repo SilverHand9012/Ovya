@@ -1,231 +1,45 @@
 {
   "@@locale": "hi",
   "appTitle": "Ovya",
-  "continueText": "जारी रखें",
-  "auth_sign_in": "साइन इन",
-  "auth_sign_up": "साइन अप",
-  "auth_email": "ईमेल",
-  "auth_password": "पासवर्ड",
-  "auth_confirm_password": "पासवर्ड की पुष्टि करें",
-  "auth_error_passwords_no_match": "पासवर्ड मेल नहीं खाते",
-  "auth_create_account": "खाता बनाएं",
-  "auth_loading": "लोड हो रहा है...",
-  "logSymptoms": "लक्षण दर्ज करें",
-  "howAreYouFeeling": "आज आप कैसा महसूस कर रही हैं?",
-  "irregularCycle": "अनियमित मासिक धर्म",
-  "acne": "मुंहासे (Acne)",
-  "weightGain": "वजन बढ़ना",
-  "excessHairGrowth": "अनचाहे बाल बढ़ना",
-  "moodIssues": "मूड में बदलाव",
-  "notesOptional": "नोट्स (वैकल्पिक)",
-  "notesHint": "कोई अन्य जानकारी...",
-  "logSymptomsButton": "लक्षण दर्ज करें",
-  "symptomsLoggedSuccess": "लक्षण सफलतापूर्वक दर्ज किए गए!",
-  "history": "इतिहास",
-  "noSymptoms": "कोई लक्षण नहीं",
-  "riskLevel": "जोखिम स्तर: {level}",
-  "@riskLevel": {
+  "greeting_morning": "सुप्रभात,",
+  "synced_just_now": "अभी सिंक किया गया",
+  "syncing": "सिंक हो रहा है...",
+  "elevated_risk": "बढ़ा हुआ जोखिम",
+  "pcos_detected": "पीसीओएस (PCOS) का प्रभाव पाया गया",
+  "review_assessment": "मूल्यांकन की समीक्षा करें",
+  "todays_focus": "आज का ध्यान",
+  "log_today": "आज दर्ज करें",
+  "doctor_report": "डॉक्टर की रिपोर्ट",
+  "ask_ovya": "ओव्या से पूछें",
+  "my_history": "मेरा इतिहास",
+  "mindful_moment": "सचेत क्षण",
+  "results_title": "परिणाम",
+  "high_risk": "उच्च जोखिम",
+  "moderate_risk": "मध्यम जोखिम",
+  "low_risk": "कम जोखिम",
+  "what_this_means": "इसका क्या मतलब है",
+  "what_to_do_next": "आगे क्या करना है",
+  "generate_report": "विस्तृत रिपोर्ट बनाएं",
+  "continue_tracking": "लक्षण ट्रैक करना जारी रखें",
+  "your_body_today": "आज आपका {style_body}",
+  "@your_body_today": {
     "placeholders": {
-      "level": {
+      "style_body": {
         "type": "String"
       }
     }
   },
-  "score": "स्कोर: {value}",
-  "@score": {
-    "placeholders": {
-      "value": {
-        "type": "int"
-      }
-    }
-  },
-  "recommendations": "सुझाव",
-  "aiInsights": "AI जानकारी",
-  "generateInsight": "जानकारी प्राप्त करें",
-  "noInsightsYet": "अभी कोई जानकारी नहीं है",
-  "noInsightsDescription": "पहले अपने लक्षण दर्ज करें, फिर सलाह के लिए 'जानकारी प्राप्त करें' पर टैप करें।",
-  "latestInsight": "नवीनतम जानकारी",
-  "cached": "सहेजा गया",
-  "aiGenerated": "AI द्वारा उत्पन्न",
-  "previousInsights": "पिछली जानकारी",
-  "disclaimer": "यह केवल जानकारी के लिए है और चिकित्सा निदान नहीं है। कृपया डॉक्टर से सलाह लें।",
-  "clearCache": "कैश साफ़ करें",
-  "viewInsights": "जानकारी देखें",
-  "offlineModeActive": "ऑफ़लाइन मोड सक्रिय",
-  "syncingData": "डेटा सिंक हो रहा है...",
-  "syncedSuccessfully": "सिंक सफल रहा",
-  "fetchingInsights": "नई जानकारी लाई जा रही है...",
-  "usingLastSaved": "पिछली सहेजी गई जानकारी दिखा रहे हैं",
-  "offlineShowingLast": "हम ऑफ़लाइन हैं। आपकी पिछली जानकारी दिखा रहे हैं।",
-  "failedToLoad": "लोड करने में विफल",
-  "failedToAdd": "जोड़ने में विफल",
-  "failedToGenerate": "बनाने में विफल",
-  "rec_track_regularly": "अपने लक्षणों पर ध्यान दें और उन्हें नियमित रूप से दर्ज करती रहें।",
-  "rec_balanced_diet": "संतुलित आहार लें और नियमित व्यायाम करें।",
-  "rec_schedule_checkup": "अपने डॉक्टर से मिलकर जांच कराने का विचार करें।",
-  "rec_monitor_cycle": "अपने मासिक धर्म पर नज़र रखें और किसी भी बदलाव को नोट करें।",
-  "rec_stress_management": "तनाव कम करने के लिए योग या ध्यान करें।",
-  "rec_consult_gynecologist": "कृपया जल्द से जल्द किसी स्त्री रोग विशेषज्ञ (Gynecologist) से सलाह लें।",
-  "rec_request_bloodwork": "खून की जांच करवाएं, जिसमें हार्मोन और इंसुलिन का स्तर शामिल हो।",
-  "rec_symptom_diary": "अपने डॉक्टर के साथ साझा करने के लिए लक्षणों की एक डायरी बनाएं।",
-  "q_irregular_cycle": "क्या आपके मासिक धर्म अनियमित हैं या छूट जाते हैं?",
-  "q_hair_growth": "क्या आपने अपने चेहरे या शरीर पर अनचाहे बाल देखे हैं?",
-  "q_family_history": "क्या आपके परिवार में किसी को पॉलीसिस्टिक ओवरी सिंड्रोम (PCOS) है?",
-  "q_weight_gain": "क्या आपका वज़न बिना किसी कारण के बढ़ रहा है?",
-  "q_acne": "क्या आपको बार-बार मुंहासे होते हैं?",
-  "q_skin_darkening": "क्या आपने अपनी त्वचा पर काले धब्बे देखे हैं?",
-  "q_hair_thinning": "क्या आपके बाल पतले हो रहे हैं या झड़ रहे हैं?",
-  "q_fatigue": "क्या आप अक्सर थका हुआ या कमज़ोर महसूस करती हैं?",
-  "q_sleep_problems": "क्या आपको सोने में परेशानी होती है?",
-  "q_bloating": "क्या आपको अक्सर पेट फूलने की समस्या होती है?",
-  "q_mood_issues": "क्या आपके मूड में बार-बार बदलाव होता है?",
-  "q_difficulty_conceiving": "क्या आपको गर्भधारण करने में परेशानी हो रही है?",
-  "q_age_verification": "क्या आपकी उम्र 18 वर्ष या उससे अधिक है?",
-  "btn_yes": "हां",
-  "btn_no": "नहीं",
-  "progress_indicator": "प्रश्न {current} / {total}",
-  "@progress_indicator": {
-    "placeholders": {
-      "current": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      }
-    }
-  },
-  "pcos_type_hint": "आपके लक्षण {type} पॉलीसिस्टिक ओवरी सिंड्रोम (PCOS) का संकेत देते हैं",
-  "@pcos_type_hint": {
-    "placeholders": {
-      "type": {
-        "type": "String"
-      }
-    }
-  },
-  "pcos_type_insulin_desc": "इसका मतलब है कि आपके शरीर को इंसुलिन का उपयोग करने में परेशानी हो रही है, जिससे वज़न बढ़ता है।",
-  "pcos_type_androgenic_desc": "इसमें पुरुष हार्मोन का स्तर बढ़ जाता है, जिससे अनचाहे बाल और मुंहासे होते हैं।",
-  "pcos_type_adrenal_desc": "यह अक्सर तनाव के कारण होता है।",
-  "type_insulin_resistant": "इंसुलिन-प्रतिरोधी (Insulin-resistant)",
-  "type_androgenic": "एंड्रोजेनिक (Androgenic)",
-  "type_adrenal": "एड्रिनल (Adrenal)",
-  "btn_save_track": "सहेजें और लक्षण ट्रैक करें",
-  "btn_generate_report": "डॉक्टर की रिपोर्ट बनाएं",
-  "log_date_header": "आज, {date}",
-  "@log_date_header": {
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
-  "log_symptoms_label": "आज के अपने लक्षण चुनें",
-  "log_notes_label": "आज के लिए कोई नोट्स?",
-  "log_save_button": "सहेजें",
-  "log_saved_success": "बचाया गया ✓",
-  "log_already_logged": "आज पहले ही दर्ज किया जा चुका है",
-  "report_patient_name": "रोगी का नाम",
-  "report_preview_title": "रिपोर्ट पूर्वावलोकन",
-  "report_share_btn": "WhatsApp पर शेयर करें",
-  "report_print_btn": "प्रिंट करें",
-  "report_offline_note": "यह रिपोर्ट सुरक्षित रूप से ऑफ़लाइन बनाई गई है।",
-  "home_hello": "नमस्ते",
-  "home_good_morning": "सुप्रभात",
-  "home_good_afternoon": "शुभ दोपहर",
-  "home_good_evening": "शुभ संध्या",
-  "home_time_today": "आज",
-  "home_time_yesterday": "कल",
-  "home_time_days_ago": "{days} दिन पहले",
-  "@home_time_days_ago": {
-    "placeholders": {
-      "days": {
-        "type": "int"
-      }
-    }
-  },
-  "home_start_assessment": "स्वास्थ्य मूल्यांकन शुरू करें",
-  "home_rerun_assessment": "फिर से मूल्यांकन करें",
-  "home_card_log": "लक्षण दर्ज करें",
-  "home_logged_done": "हो गया ✓",
-  "home_logged_today": "आज",
-  "home_card_report": "रिपोर्ट प्राप्त करें",
-  "home_card_report_sub": "डॉक्टर से साझा करें",
-  "home_card_ai": "Ovya से पूछें",
-  "home_card_ai_ready": "तैयार",
-  "home_card_ai_offline": "केवल ऑनलाइन",
-  "home_err_offline": "इस सुविधा के लिए इंटरनेट कनेक्शन की आवश्यकता है।",
-  "home_card_history": "मेरा इतिहास",
-  "home_card_history_sub": "पिछले रिकॉर्ड देखें",
-  "home_empty_risk_title": "आपका पॉलीसिस्टिक ओवरी सिंड्रोम (PCOS) जोखिम मूल्यांकन यहाँ दिखेगा",
-  "home_empty_risk_sub": "केवल 2 मिनट लगते हैं",
-  "home_pcos_risk": "जोखिम: {level}",
-  "@home_pcos_risk": {
-    "placeholders": {
-      "level": {
-        "type": "String"
-      }
-    }
-  },
-  "home_type_hint": "{hint} प्रकार",
-  "@home_type_hint": {
-    "placeholders": {
-      "hint": {
-        "type": "String"
-      }
-    }
-  },
-  "home_last_assessed": "पिछला मूल्यांकन: {time}",
-  "@home_last_assessed": {
-    "placeholders": {
-      "time": {
-        "type": "String"
-      }
-    }
-  },
-  "pdfTitle": "ओव्या — पीसीओएस स्वास्थ्य रिपोर्ट (PCOS Health Report)",
-  "pdfDateGenerated": "उत्पन्न तिथि: {date}",
-  "@pdfDateGenerated": {
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
-  "pdfDisclaimer": "यह रिपोर्ट केवल सूचनात्मक उद्देश्यों के लिए है। कृपया एक योग्य डॉक्टर से परामर्श लें।",
-  "pdfGeneratedBy": "ओव्या द्वारा उत्पन्न — महिला स्वास्थ्य साथी",
-  "patientDetails": "रोगी विवरण",
-  "patientNameLabel": "नाम: {name}",
-  "@patientNameLabel": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "reportDateLabel": "रिपोर्ट तिथि: {date}",
-  "@reportDateLabel": {
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
-  "riskAssessment": "जोखिम मूल्यांकन",
-  "riskLevelLabel": "जोखिम स्तर:",
-  "scoreLabel": "स्कोर:",
-  "pcosTypeHintLabel": "पीसीओएस (PCOS) प्रकार संकेत:",
-  "explanationLabel": "व्याख्या:",
-  "symptomsLast30Days": "पिछले 30 दिनों के लक्षण",
-  "noSymptoms30Days": "पिछले 30 दिनों में कोई लक्षण दर्ज नहीं किया गया।",
-  "tableHeaderDate": "तारीख़",
-  "tableHeaderSymptoms": "लक्षण",
-  "tableHeaderMood": "मूड/नोट्स",
-  "tableNone": "कोई नहीं",
-  "low": "कम",
-  "medium": "मध्यम",
-  "high": "उच्च",
-  "hairThinning": "बालों का पतला होना",
-  "skinDarkening": "त्वचा का काला पड़ना",
-  "fatigue": "थकान",
-  "sleepProblems": "नींद की समस्या",
-  "bloating": "पेट फूलना"
+  "energy_mood": "ऊर्जा और मूड",
+  "symptoms_sensations": "लक्षण और संवेदनाएं",
+  "journal_notes": "जर्नल नोट्स",
+  "journal_hint": "आप मानसिक और शारीरिक रूप से कैसा महसूस कर रही हैं? आज कोई विशेष कारण...",
+  "take_a_breath": "एक गहरी सांस लें।",
+  "save_log": "लॉग सहेजें",
+  "symptom_headache": "सिरदर्द",
+  "symptom_cramps": "ऐंठन",
+  "symptom_fatigue": "थकान",
+  "symptom_bloating": "पेट फूलना",
+  "symptom_nausea": "जी मिचलाना",
+  "symptom_backache": "पीठ दर्द",
+  "symptom_insomnia": "अनिद्रा"
 }

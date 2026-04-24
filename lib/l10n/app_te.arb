@@ -1,231 +1,45 @@
 {
   "@@locale": "te",
   "appTitle": "Ovya",
-  "continueText": "కొనసాగించండి",
-  "auth_sign_in": "సైన్ ఇన్ చేయండి",
-  "auth_sign_up": "సైన్ అప్ చేయండి",
-  "auth_email": "ఈమెయిల్",
-  "auth_password": "పాస్‌వర్డ్",
-  "auth_confirm_password": "పాస్‌వర్డ్‌ను నిర్ధారించండి",
-  "auth_error_passwords_no_match": "పాస్‌వర్డ్‌లు సరిపోలడం లేదు",
-  "auth_create_account": "ఖాతాను సృష్టించండి",
-  "auth_loading": "లోడ్ అవుతోంది...",
-  "logSymptoms": "లక్షణాలను నమోదు చేయండి",
-  "howAreYouFeeling": "ఈరోజు మీకు ఎలా అనిపిస్తుంది?",
-  "irregularCycle": "సక్రమంగా లేని రుతుక్రమం",
-  "acne": "మొటిమలు (Acne)",
-  "weightGain": "బరువు పెరగడం",
-  "excessHairGrowth": "అవాంఛిత రోమాలు",
-  "moodIssues": "మానసిక స్థితి మార్పులు",
-  "notesOptional": "గమనికలు (ఐచ్ఛికం)",
-  "notesHint": "మరేదైనా అదనపు సమాచారం ఉంటే...",
-  "logSymptomsButton": "లక్షణాలను నమోదు చేయండి",
-  "symptomsLoggedSuccess": "లక్షణాలు విజయవంతంగా నమోదు చేయబడ్డాయి!",
-  "history": "చరిత్ర",
-  "noSymptoms": "లక్షణాలు లేవు",
-  "riskLevel": "ప్రమాద స్థాయి: {level}",
-  "@riskLevel": {
+  "greeting_morning": "శుభోదయం,",
+  "synced_just_now": "ఇప్పుడే సింక్ అయింది",
+  "syncing": "సింక్ అవుతోంది...",
+  "elevated_risk": "పెరిగిన ప్రమాద స్థాయి",
+  "pcos_detected": "PCOS ప్రభావం గుర్తించబడింది",
+  "review_assessment": "అంచనాను సమీక్షించండి",
+  "todays_focus": "నేటి దృష్టి",
+  "log_today": "నేడు నమోదు చేయండి",
+  "doctor_report": "వైద్యుడి రిపోర్ట్",
+  "ask_ovya": "Ovya ని అడగండి",
+  "my_history": "నా చరిత్ర",
+  "mindful_moment": "సచేతన క్షణం",
+  "results_title": "ఫలితాలు",
+  "high_risk": "అధిక ప్రమాదం",
+  "moderate_risk": "మధ్యస్థ ప్రమాదం",
+  "low_risk": "తక్కువ ప్రమాదం",
+  "what_this_means": "దీని అర్థం ఏమిటి?",
+  "what_to_do_next": "తదుపరి ఏమి చేయాలి?",
+  "generate_report": "వివరమైన నివేదికను రూపొందించండి",
+  "continue_tracking": "లక్షణాలను నమోదు చేయడం కొనసాగించండి",
+  "your_body_today": "నేడు మీ {style_body}",
+  "@your_body_today": {
     "placeholders": {
-      "level": {
+      "style_body": {
         "type": "String"
       }
     }
   },
-  "score": "స్కోర్: {value}",
-  "@score": {
-    "placeholders": {
-      "value": {
-        "type": "int"
-      }
-    }
-  },
-  "recommendations": "సలహాలు",
-  "aiInsights": "AI సమాచారం",
-  "generateInsight": "సమాచారం పొందండి",
-  "noInsightsYet": "ఇంకా ఎలాంటి సమాచారం లేదు",
-  "noInsightsDescription": "ముందుగా మీ లక్షణాలను నమోదు చేసి, సలహా కోసం ట్యాప్ చేయండి.",
-  "latestInsight": "తాజా సమాచారం",
-  "cached": "సేవ్ చేయబడింది",
-  "aiGenerated": "AI ద్వార సృష్టించబడింది",
-  "previousInsights": "గతంలోని సమాచారం",
-  "disclaimer": "ఇది కేవలం సమాచారం కోసం మాత్రమే. దయచేసి వైద్యుడిని సంప్రదించండి.",
-  "clearCache": "కాష్ క్లియర్ చేయండి",
-  "viewInsights": "సమాచారం చూడండి",
-  "offlineModeActive": "ఆఫ్‌లైన్ మోడ్ యాక్టివ్‌గా ఉంది",
-  "syncingData": "డేటా సింక్ అవుతోంది...",
-  "syncedSuccessfully": "సింక్ విజయవంతమైంది",
-  "fetchingInsights": "కొత్త సమాచారాన్ని పొందుతున్నాము...",
-  "usingLastSaved": "చివరిగా సేవ్ చేసిన సమాచారాన్ని చూపిస్తున్నాము",
-  "offlineShowingLast": "మేము ఆఫ్‌లైన్‌లో ఉన్నాము. పాత సమాచారాన్ని చూపిస్తున్నాము.",
-  "failedToLoad": "లోడ్ చేయడంలో విఫలమైంది",
-  "failedToAdd": "జోడించడంలో విఫలమైంది",
-  "failedToGenerate": "సృష్టించడంలో విఫలమైంది",
-  "rec_track_regularly": "మీ లక్షణాలను గమనిస్తూ ఉండండి మరియు క్రమం తప్పకుండా నమోదు చేయండి.",
-  "rec_balanced_diet": "ఆరోగ్యకరమైన ఆహారం మరియు రోజువారీ వ్యాయామం అలవాటు చేసుకోండి.",
-  "rec_schedule_checkup": "మీ వైద్యునితో చెక్-అప్ షెడ్యూల్ చేయడం మంచిది.",
-  "rec_monitor_cycle": "మీ రుతుక్రమాన్ని పరిశీలించండి మరియు మార్పులను గుర్తించండి.",
-  "rec_stress_management": "ఒత్తిడి తగ్గించుకోవడానికి యోగా లేదా ధ్యానం చేయండి.",
-  "rec_consult_gynecologist": "దయచేసి వీలైనంత త్వరగా గైనకాలజిస్ట్‌ను (Gynecologist) సంప్రదించండి.",
-  "rec_request_bloodwork": "హార్మోన్ మరియు ఇన్సులిన్ స్థాయిలను పరిశీలించడానికి రక్త పరీక్ష చేయించండి.",
-  "rec_symptom_diary": "మీ వైద్యుడితో చర్చించడానికి లక్షణాల డైరీని పెట్టుకోండి.",
-  "q_irregular_cycle": "మీ ముట్టు సక్రమంగా లేదా అనూహ్యంగా ఉందా?",
-  "q_hair_growth": "మీ ముఖం లేదా శరీరంపై అవాంఛిత రోమాలు పెరుగుతున్నాయా?",
-  "q_family_history": "మీ కుటుంబంలో ఎవరికైనా పాలిసిస్టిక్ ఓవరీ సిండ్రోమ్ (PCOS) ఉందా?",
-  "q_weight_gain": "ఎలాంటి కారణం లేకుండా మీరు బరువు పెరుగుతున్నారా?",
-  "q_acne": "మీకు తరచుగా మొటిమలు (Acne) వస్తున్నాయా?",
-  "q_skin_darkening": "మీ చర్మంపై నల్లటి మచ్చలు కనబడుతున్నాయా?",
-  "q_hair_thinning": "మీ జుట్టు రాలుతోందా లేదా పలుచబడుతోందా?",
-  "q_fatigue": "మీరు తరచుగా అలసటగా లేదా నీరసంగా భావిస్తున్నారా?",
-  "q_sleep_problems": "మీకు నిద్రపోవడంలో ఇబ్బంది ఉందా?",
-  "q_bloating": "మీకు తరచుగా కడుపు ఉబ్బరంగా అనిపిస్తుందా?",
-  "q_mood_issues": "మీ మానసిక స్థితి (మూడ్) తరచుగా మారుతుంటుందా?",
-  "q_difficulty_conceiving": "గర్భం దాల్చడంలో మీకు ఇబ్బంది ఎదురవుతోందా?",
-  "q_age_verification": "మీ వయస్సు 18 సంవత్సరాలు లేదా అంతకంటే ఎక్కువ ఉందా?",
-  "btn_yes": "అవును",
-  "btn_no": "కాదు",
-  "progress_indicator": "ప్రశ్న {current} / {total}",
-  "@progress_indicator": {
-    "placeholders": {
-      "current": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
-      }
-    }
-  },
-  "pcos_type_hint": "లక్షణాలు మీకు {type} పాలిసిస్టిక్ ఓవరీ సిండ్రోమ్ (PCOS) ఉందని సూచిస్తున్నాయి",
-  "@pcos_type_hint": {
-    "placeholders": {
-      "type": {
-        "type": "String"
-      }
-    }
-  },
-  "pcos_type_insulin_desc": "మీ శరీరం ఇన్సులిన్‌ను సరిగ్గా వినియోగించలేకపోవడం వల్ల బరువు పెరుగుతారు.",
-  "pcos_type_androgenic_desc": "పురుష హార్మోన్ల పెరుగుదల వల్ల అవాంఛిత రోమాలు మరియు మొటిమలు వస్తాయి.",
-  "pcos_type_adrenal_desc": "ఇది తరచుగా ఒత్తిడికి ప్రతిస్పందనగా జరుగుతుంది.",
-  "type_insulin_resistant": "ఇన్సులిన్-రెసిస్టెంట్ (Insulin-resistant)",
-  "type_androgenic": "ఆండ్రోజెనిక్ (Androgenic)",
-  "type_adrenal": "అడ్రినల్ (Adrenal)",
-  "btn_save_track": "సేవ్ చేయండి",
-  "btn_generate_report": "వైద్యుడి రిపోర్ట్ సృష్టించండి",
-  "log_date_header": "ఈరోజు, {date}",
-  "@log_date_header": {
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
-  "log_symptoms_label": "ఈరోజు మీ లక్షణాలను ఎంచుకోండి",
-  "log_notes_label": "ఈరోజు గమనికలు?",
-  "log_save_button": "సేవ్ చేయండి",
-  "log_saved_success": "సేవ్ చేయబడింది ✓",
-  "log_already_logged": "ఈరోజు ఇప్పటికే నమోదు చేశారు",
-  "report_patient_name": "రోగి పేరు",
-  "report_preview_title": "రిపోర్ట్ ప్రివ్యూ",
-  "report_share_btn": "WhatsApp ద్వారా పంచుకోండి",
-  "report_print_btn": "ప్రింట్ చేయండి",
-  "report_offline_note": "ఈ రిపోర్ట్ ఆఫ్‌లైన్‌లో సురక్షితంగా రూపొందించబడింది.",
-  "home_hello": "నమస్కారం",
-  "home_good_morning": "శుభోదయం",
-  "home_good_afternoon": "శుభ మధ్యాహ్నం",
-  "home_good_evening": "శుభ సాయంత్రం",
-  "home_time_today": "ఈ రోజు",
-  "home_time_yesterday": "నిన్న",
-  "home_time_days_ago": "{days} రోజుల క్రితం",
-  "@home_time_days_ago": {
-    "placeholders": {
-      "days": {
-        "type": "int"
-      }
-    }
-  },
-  "home_start_assessment": "ఆరోగ్య అంచనా ప్రారంభించండి",
-  "home_rerun_assessment": "మళ్లీ అంచనా వేయండి",
-  "home_card_log": "లక్షణాలు నమోదు చేయండి",
-  "home_logged_done": "పూర్తయింది ✓",
-  "home_logged_today": "ఈరోజు",
-  "home_card_report": "రిపోర్ట్ పొందండి",
-  "home_card_report_sub": "వైద్యునితో పంచుకోండి",
-  "home_card_ai": "Ovya ని అడగండి",
-  "home_card_ai_ready": "సిద్ధంగా ఉంది",
-  "home_card_ai_offline": "ఆన్‌లైన్ మాత్రమే",
-  "home_err_offline": "ఈ ఫీచర్‌కు ఇంటర్నెట్ అవసరం.",
-  "home_card_history": "నా చరిత్ర",
-  "home_card_history_sub": "పాత రికార్డులు",
-  "home_empty_risk_title": "మీ పాలిసిస్టిక్ ఓవరీ సిండ్రోమ్ (PCOS) అంచనా ఇక్కడ కనిపిస్తుంది",
-  "home_empty_risk_sub": "కేవలం 2 నిమిషాలు పడుతుంది",
-  "home_pcos_risk": "ప్రమాదం: {level}",
-  "@home_pcos_risk": {
-    "placeholders": {
-      "level": {
-        "type": "String"
-      }
-    }
-  },
-  "home_type_hint": "{hint} రకం",
-  "@home_type_hint": {
-    "placeholders": {
-      "hint": {
-        "type": "String"
-      }
-    }
-  },
-  "home_last_assessed": "చివరి అంచనా: {time}",
-  "@home_last_assessed": {
-    "placeholders": {
-      "time": {
-        "type": "String"
-      }
-    }
-  },
-  "pdfTitle": "ఓవ్యా — PCOS ఆరోగ్య నివేదిక",
-  "pdfDateGenerated": "సృష్టించబడిన తేదీ: {date}",
-  "@pdfDateGenerated": {
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
-  "pdfDisclaimer": "ఈ నివేదిక కేవలం సమాచారం కోసం మాత్రమే. దయచేసి అర్హత కలిగిన వైద్యుడిని సంప్రదించండి.",
-  "pdfGeneratedBy": "ఓవ్యా ద్వారా రూపొందించబడింది — మహిళా ఆరోగ్య భాగస్వామి",
-  "patientDetails": "రోగి వివరాలు",
-  "patientNameLabel": "పేరు: {name}",
-  "@patientNameLabel": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "reportDateLabel": "నివేదిక తేదీ: {date}",
-  "@reportDateLabel": {
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
-  "riskAssessment": "ప్రమాద అంచనా",
-  "riskLevelLabel": "ప్రమాద స్థాయి:",
-  "scoreLabel": "స్కోరు:",
-  "pcosTypeHintLabel": "PCOS రకం సూచన:",
-  "explanationLabel": "వివరణ:",
-  "symptomsLast30Days": "గత 30 రోజుల లక్షణాలు",
-  "noSymptoms30Days": "గత 30 రోజుల్లో ఎటువంటి లక్షణాలు నమోదు కాలేదు.",
-  "tableHeaderDate": "తేదీ",
-  "tableHeaderSymptoms": "లక్షణాలు",
-  "tableHeaderMood": "మూడ్/గమనికలు",
-  "tableNone": "ఏదీ లేదు",
-  "low": "తక్కువ",
-  "medium": "మధ్యస్థం",
-  "high": "ఎక్కువ",
-  "hairThinning": "జుట్టు రాలడం",
-  "skinDarkening": "చర్మం నల్లబడటం",
-  "fatigue": "అలసట",
-  "sleepProblems": "నిద్ర సమస్యలు",
-  "bloating": "కడుపు ఉబ్బరం"
+  "energy_mood": "శక్తి మరియు మూడ్",
+  "symptoms_sensations": "లక్షణాలు మరియు అనుభూతులు",
+  "journal_notes": "జర్నల్ గమనికలు",
+  "journal_hint": "మానసిక మరియు శారీరక అనుభూతి ఎలా ఉంది? ఏదైనా నిర్దిష్ట కారణాలు...",
+  "take_a_breath": "ఒకసారి దీర్ఘంగా ఊపిరి తీసుకోండి.",
+  "save_log": "లాగ్‌ను సేవ్ చేయండి",
+  "symptom_headache": "తలనొప్పి",
+  "symptom_cramps": "కడుపు నొప్పి/నొప్పులు",
+  "symptom_fatigue": "అలసట",
+  "symptom_bloating": "కడుపు ఉబ్బరం",
+  "symptom_nausea": "కడుపులో తిప్పడం",
+  "symptom_backache": "నడుము నొప్పి",
+  "symptom_insomnia": "నిద్రలేమి"
 }
