@@ -7,6 +7,9 @@ import '../features/auth/presentation/auth_screen.dart';
 import '../features/onboarding/presentation/onboarding_screen.dart';
 import '../features/results/results_screen.dart';
 import '../features/log/log_screen.dart';
+import '../features/chat/presentation/chat_screen.dart';
+import '../features/reports/presentation/report_screen.dart';
+import '../features/history/history_screen.dart';
 import 'home_shell.dart';
 import 'app_scaffold.dart';
 
@@ -78,6 +81,60 @@ final GoRouter appRouter = GoRouter(
           );
         },
         transitionDuration: const Duration(milliseconds: 300),
+      ),
+    ),
+    GoRoute(
+      path: '/report',
+      name: 'report',
+      pageBuilder: (context, state) => CustomTransitionPage(
+        child: const ReportScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final curved = CurvedAnimation(parent: animation, curve: Curves.easeOutCubic);
+          return FadeTransition(
+            opacity: curved,
+            child: ScaleTransition(
+              scale: Tween<double>(begin: 0.92, end: 1.0).animate(curved),
+              child: child,
+            ),
+          );
+        },
+        transitionDuration: const Duration(milliseconds: 350),
+      ),
+    ),
+    GoRoute(
+      path: '/chat',
+      name: 'chat',
+      pageBuilder: (context, state) => CustomTransitionPage(
+        child: const ChatScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final curved = CurvedAnimation(parent: animation, curve: Curves.easeOutCubic);
+          return FadeTransition(
+            opacity: curved,
+            child: ScaleTransition(
+              scale: Tween<double>(begin: 0.92, end: 1.0).animate(curved),
+              child: child,
+            ),
+          );
+        },
+        transitionDuration: const Duration(milliseconds: 350),
+      ),
+    ),
+    GoRoute(
+      path: '/history',
+      name: 'history',
+      pageBuilder: (context, state) => CustomTransitionPage(
+        child: const HistoryScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final curved = CurvedAnimation(parent: animation, curve: Curves.easeOutCubic);
+          return FadeTransition(
+            opacity: curved,
+            child: ScaleTransition(
+              scale: Tween<double>(begin: 0.92, end: 1.0).animate(curved),
+              child: child,
+            ),
+          );
+        },
+        transitionDuration: const Duration(milliseconds: 350),
       ),
     ),
 

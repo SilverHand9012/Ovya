@@ -173,7 +173,7 @@ abstract class AppLocalizations {
   /// No description provided for @my_history.
   ///
   /// In en, this message translates to:
-  /// **'My history'**
+  /// **'My Health History'**
   String get my_history;
 
   /// No description provided for @mindful_moment.
@@ -775,6 +775,222 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'High'**
   String get high;
+
+  /// No description provided for @your_body_prefix.
+  ///
+  /// In en, this message translates to:
+  /// **'Your '**
+  String get your_body_prefix;
+
+  /// No description provided for @your_body_word.
+  ///
+  /// In en, this message translates to:
+  /// **'body'**
+  String get your_body_word;
+
+  /// No description provided for @your_body_suffix.
+  ///
+  /// In en, this message translates to:
+  /// **' today'**
+  String get your_body_suffix;
+
+  /// No description provided for @mindful_ashwagandha_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Ashwagandha Tea'**
+  String get mindful_ashwagandha_title;
+
+  /// No description provided for @mindful_ashwagandha_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Known to help lower cortisol levels and balance hormones.'**
+  String get mindful_ashwagandha_desc;
+
+  /// No description provided for @chat_ask_ovya_title.
+  ///
+  /// In en, this message translates to:
+  /// **'AskOvya'**
+  String get chat_ask_ovya_title;
+
+  /// No description provided for @chat_personal_guide.
+  ///
+  /// In en, this message translates to:
+  /// **'PERSONAL GUIDE'**
+  String get chat_personal_guide;
+
+  /// No description provided for @chat_wellness_sanctuary.
+  ///
+  /// In en, this message translates to:
+  /// **'Your\nWellness\nSanctuary'**
+  String get chat_wellness_sanctuary;
+
+  /// No description provided for @chat_wellness_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Handcrafted insights tailored to your unique cycle and rhythm.'**
+  String get chat_wellness_subtitle;
+
+  /// No description provided for @chat_ovya_label.
+  ///
+  /// In en, this message translates to:
+  /// **'OVYA'**
+  String get chat_ovya_label;
+
+  /// No description provided for @chat_greeting.
+  ///
+  /// In en, this message translates to:
+  /// **'Based on your logs, your sleep has been a bit irregular this week. Would you like some gentle tips to help you rest better?'**
+  String get chat_greeting;
+
+  /// No description provided for @chat_thinking.
+  ///
+  /// In en, this message translates to:
+  /// **'Thinking...'**
+  String get chat_thinking;
+
+  /// No description provided for @chat_chip_sleep.
+  ///
+  /// In en, this message translates to:
+  /// **'SLEEP HYGIENE'**
+  String get chat_chip_sleep;
+
+  /// No description provided for @chat_chip_stress.
+  ///
+  /// In en, this message translates to:
+  /// **'STRESS RELIEF'**
+  String get chat_chip_stress;
+
+  /// No description provided for @chat_chip_hormonal.
+  ///
+  /// In en, this message translates to:
+  /// **'HORMONAL BALANCE'**
+  String get chat_chip_hormonal;
+
+  /// No description provided for @chat_chip_diet.
+  ///
+  /// In en, this message translates to:
+  /// **'DIET TIPS'**
+  String get chat_chip_diet;
+
+  /// No description provided for @chat_input_placeholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Share how you\'re feeling...'**
+  String get chat_input_placeholder;
+
+  /// No description provided for @chat_companion_note.
+  ///
+  /// In en, this message translates to:
+  /// **'OVYA IS YOUR COMPANION. NOT A DOCTOR.'**
+  String get chat_companion_note;
+
+  /// No description provided for @chat_suggest_sleep.
+  ///
+  /// In en, this message translates to:
+  /// **'Give me tips for better sleep hygiene'**
+  String get chat_suggest_sleep;
+
+  /// No description provided for @chat_suggest_stress.
+  ///
+  /// In en, this message translates to:
+  /// **'How can I manage stress with PCOS?'**
+  String get chat_suggest_stress;
+
+  /// No description provided for @chat_suggest_hormonal.
+  ///
+  /// In en, this message translates to:
+  /// **'Tips for hormonal balance'**
+  String get chat_suggest_hormonal;
+
+  /// No description provided for @chat_suggest_diet.
+  ///
+  /// In en, this message translates to:
+  /// **'What should I eat for PCOS?'**
+  String get chat_suggest_diet;
+
+  /// No description provided for @report_preview_demographics.
+  ///
+  /// In en, this message translates to:
+  /// **'Demographics & generated date'**
+  String get report_preview_demographics;
+
+  /// No description provided for @report_preview_risk.
+  ///
+  /// In en, this message translates to:
+  /// **'Computed risk score & PCOS type hint'**
+  String get report_preview_risk;
+
+  /// No description provided for @report_preview_logs.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 30 days of symptom logs table'**
+  String get report_preview_logs;
+
+  /// No description provided for @report_preview_recs.
+  ///
+  /// In en, this message translates to:
+  /// **'Personalised recommendations'**
+  String get report_preview_recs;
+
+  /// No description provided for @report_enter_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter patient name'**
+  String get report_enter_name;
+
+  /// No description provided for @log_saved.
+  ///
+  /// In en, this message translates to:
+  /// **'Log saved ✓'**
+  String get log_saved;
+
+  /// No description provided for @no_risk_data.
+  ///
+  /// In en, this message translates to:
+  /// **'No risk data available. Please log symptoms first.'**
+  String get no_risk_data;
+
+  /// No description provided for @history_title.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get history_title;
+
+  /// No description provided for @history_recent_assessments.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Assessments'**
+  String get history_recent_assessments;
+
+  /// No description provided for @history_daily_logs.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Logs'**
+  String get history_daily_logs;
+
+  /// No description provided for @history_no_assessments.
+  ///
+  /// In en, this message translates to:
+  /// **'No assessments yet. Log your symptoms to get started.'**
+  String get history_no_assessments;
+
+  /// No description provided for @history_no_logs.
+  ///
+  /// In en, this message translates to:
+  /// **'No logs yet. Start tracking to see your history.'**
+  String get history_no_logs;
+
+  /// No description provided for @history_general_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'General Profile'**
+  String get history_general_profile;
+
+  /// No description provided for @history_no_symptoms_tag.
+  ///
+  /// In en, this message translates to:
+  /// **'NO SYMPTOMS LOGGED'**
+  String get history_no_symptoms_tag;
 }
 
 class _AppLocalizationsDelegate

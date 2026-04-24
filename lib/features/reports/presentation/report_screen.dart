@@ -189,7 +189,7 @@ class _ReportScreenState extends ConsumerState<ReportScreen> {
                   ),
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
-                      return 'Please enter patient name';
+                      return loc.report_enter_name;
                     }
                     return null;
                   },
@@ -218,13 +218,13 @@ class _ReportScreenState extends ConsumerState<ReportScreen> {
                         ],
                       ),
                       const Divider(height: 24),
-                      const _PreviewRow(icon: Icons.personal_injury, text: 'Demographics & generated date'),
+                      _PreviewRow(icon: Icons.personal_injury, text: loc.report_preview_demographics),
                       const SizedBox(height: 12),
-                      const _PreviewRow(icon: Icons.analytics_outlined, text: 'Computed risk score & PCOS type hint'),
+                      _PreviewRow(icon: Icons.analytics_outlined, text: loc.report_preview_risk),
                       const SizedBox(height: 12),
-                      const _PreviewRow(icon: Icons.list_alt, text: 'Last 30 days of symptom logs table'),
+                      _PreviewRow(icon: Icons.list_alt, text: loc.report_preview_logs),
                       const SizedBox(height: 12),
-                      const _PreviewRow(icon: Icons.health_and_safety, text: 'Personalised recommendations'),
+                      _PreviewRow(icon: Icons.health_and_safety, text: loc.report_preview_recs),
                     ],
                   ),
                 ),

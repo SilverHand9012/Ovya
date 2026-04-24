@@ -35,12 +35,8 @@ class _SanctuaryScreenState extends ConsumerState<SanctuaryScreen> {
             floating: true,
             backgroundColor: kBackground,
             elevation: 0,
-            leading: IconButton(
-              icon: const Icon(Icons.menu, color: kTextPrimary),
-              onPressed: () {
-                // Drawer placeholder
-              },
-            ),
+            leading: const SizedBox.shrink(),
+            leadingWidth: 0,
             centerTitle: true,
             title: const Text(
               "Ovya",
@@ -144,21 +140,45 @@ class _SanctuaryScreenState extends ConsumerState<SanctuaryScreen> {
                   title: l10n.log_today,
                   bgColor: kPurpleCard,
                   route: '/log',
+                  illustration: Image.asset(
+                    'assets/images/illustrations/hand.png',
+                    width: 165,
+                    height: 165,
+                    fit: BoxFit.contain,
+                  ),
                 ),
                 FocusCard(
                   title: l10n.doctor_report,
                   bgColor: kYellowCard,
                   route: '/report',
+                  illustration: Image.asset(
+                    'assets/images/illustrations/face1.png',
+                    width: 165,
+                    height: 165,
+                    fit: BoxFit.contain,
+                  ),
                 ),
                 FocusCard(
                   title: l10n.ask_ovya,
-                  bgColor: Colors.white,
+                  bgColor: kGreenCard,
                   route: '/chat',
+                  illustration: Image.asset(
+                    'assets/images/illustrations/face2.png',
+                    width: 165,
+                    height: 165,
+                    fit: BoxFit.contain,
+                  ),
                 ),
                 FocusCard(
                   title: l10n.my_history,
                   bgColor: Colors.white,
                   route: '/history',
+                  illustration: Image.asset(
+                    'assets/images/illustrations/flower1.png',
+                    width: 165,
+                    height: 165,
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ]),
             ),
@@ -177,18 +197,19 @@ class _SanctuaryScreenState extends ConsumerState<SanctuaryScreen> {
             ),
           ),
           
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
               child: MindfulMomentCard(
-                title: "Ashwagandha Tea",
-                description: "Known to help lower cortisol levels and balance hormones.",
+                title: l10n.mindful_ashwagandha_title,
+                description: l10n.mindful_ashwagandha_desc,
               ),
             ),
           ),
           
-          // Bottom padding
-          const SliverPadding(padding: EdgeInsets.only(bottom: 40)),
+
+          // Bottom padding — enough clearance for floating navbar
+          const SliverPadding(padding: EdgeInsets.only(bottom: 120)),
         ],
       ),
       // ── 8. Bottom Nav is now in HomeShell (IndexedStack) ─────

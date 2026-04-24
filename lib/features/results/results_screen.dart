@@ -162,28 +162,52 @@ class _ResultsScreenState extends State<ResultsScreen> with SingleTickerProvider
           ),
 
           // ── 4. Staggered Action Items ────────────────────────────
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: StaggeredActionItem(
               index: 0,
               title: "Check Glucose",
               subtitle: "Best done fasting in the morning.",
               bgColor: kYellowCard,
+              illustration: Opacity(
+                opacity: 0.8,
+                child: Image.asset(
+                  'assets/images/illustrations/hand.png',
+                  height: 48,
+                  fit: BoxFit.contain,
+                ),
+              ),
             ),
           ),
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: StaggeredActionItem(
               index: 1,
               title: "Gentle Movement",
               subtitle: "A 20-min walk can help stabilize insulin.",
               bgColor: kGreenCard,
+              illustration: Opacity(
+                opacity: 0.8,
+                child: Image.asset(
+                  'assets/images/illustrations/flower1.png',
+                  height: 48,
+                  fit: BoxFit.contain,
+                ),
+              ),
             ),
           ),
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: StaggeredActionItem(
               index: 2,
               title: "High-Protein Snack",
               subtitle: "Helps prevent late-day energy crashes.",
               bgColor: Colors.white,
+              illustration: Opacity(
+                opacity: 0.8,
+                child: Image.asset(
+                  'assets/images/illustrations/face1.png',
+                  height: 48,
+                  fit: BoxFit.contain,
+                ),
+              ),
             ),
           ),
 

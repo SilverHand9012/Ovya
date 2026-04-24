@@ -42,17 +42,17 @@ class AppTheme {
 
   static TextTheme buildTextTheme(Locale locale) {
     final family = switch (locale.languageCode) {
-      'kn' => 'Baloo Tamma 2',
-      'te' => 'Baloo Tammudu 2',
-      _    => 'Baloo 2',
+      'hi' => 'Noto Sans Devanagari',
+      _    => 'Noto Sans',
     };
-    return GoogleFonts.getTextTheme(family).copyWith(
-      displayLarge : GoogleFonts.getFont(family, fontSize: 34, fontWeight: FontWeight.w700, color: kTextPrimary),
-      titleLarge   : GoogleFonts.getFont(family, fontSize: 22, fontWeight: FontWeight.w700, color: kTextPrimary),
-      titleMedium  : GoogleFonts.getFont(family, fontSize: 17, fontWeight: FontWeight.w600, color: kTextPrimary),
-      bodyLarge    : GoogleFonts.getFont(family, fontSize: 15, fontWeight: FontWeight.w400, color: kTextPrimary),
-      bodyMedium   : GoogleFonts.getFont(family, fontSize: 13, fontWeight: FontWeight.w400, color: kTextPrimary),
-      labelSmall   : GoogleFonts.getFont(family, fontSize: 11, fontWeight: FontWeight.w500, color: kTextSecondary),
+    
+    return TextTheme(
+      displayLarge : TextStyle(fontFamily: family, fontSize: 34, fontWeight: FontWeight.w700, color: kTextPrimary),
+      titleLarge   : TextStyle(fontFamily: family, fontSize: 22, fontWeight: FontWeight.w700, color: kTextPrimary),
+      titleMedium  : TextStyle(fontFamily: family, fontSize: 17, fontWeight: FontWeight.w600, color: kTextPrimary),
+      bodyLarge    : TextStyle(fontFamily: family, fontSize: 15, fontWeight: FontWeight.w400, color: kTextPrimary),
+      bodyMedium   : TextStyle(fontFamily: family, fontSize: 13, fontWeight: FontWeight.w400, color: kTextPrimary),
+      labelSmall   : TextStyle(fontFamily: family, fontSize: 11, fontWeight: FontWeight.w500, color: kTextSecondary),
     );
   }
 }

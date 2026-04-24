@@ -42,7 +42,7 @@ class AppLocalizationsMr extends AppLocalizations {
   String get ask_ovya => 'Ovya ला विचारा';
 
   @override
-  String get my_history => 'माझा इतिहास';
+  String get my_history => 'माझा आरोग्य इतिहास';
 
   @override
   String get mindful_moment => 'सचेत क्षण';
@@ -360,4 +360,118 @@ class AppLocalizationsMr extends AppLocalizations {
 
   @override
   String get high => 'High';
+
+  @override
+  String get your_body_prefix => 'आज तुमचे ';
+
+  @override
+  String get your_body_word => 'शरीर';
+
+  @override
+  String get your_body_suffix => '';
+
+  @override
+  String get mindful_ashwagandha_title => 'अश्वगंधा चहा';
+
+  @override
+  String get mindful_ashwagandha_desc =>
+      'कोर्टिसॉल पातळी कमी करण्यात आणि हार्मोन्स संतुलित करण्यात मदत करते.';
+
+  @override
+  String get chat_ask_ovya_title => 'Ovya ला विचारा';
+
+  @override
+  String get chat_personal_guide => 'वैयक्तिक मार्गदर्शक';
+
+  @override
+  String get chat_wellness_sanctuary => 'तुमचे\nस्वास्थ्य\nआश्रय';
+
+  @override
+  String get chat_wellness_subtitle =>
+      'तुमच्या अनोख्या चक्र आणि लयनुसार तयार केलेली माहिती.';
+
+  @override
+  String get chat_ovya_label => 'ओव्या';
+
+  @override
+  String get chat_greeting =>
+      'तुमच्या लॉगनुसार, या आठवड्यात तुमची झोप थोडी अनियमित आहे. चांगल्या विश्रांतीसाठी काही सूचना हव्या का?';
+
+  @override
+  String get chat_thinking => 'विचार करतेय...';
+
+  @override
+  String get chat_chip_sleep => 'झोपेची स्वच्छता';
+
+  @override
+  String get chat_chip_stress => 'ताण निवारण';
+
+  @override
+  String get chat_chip_hormonal => 'हार्मोनल संतुलन';
+
+  @override
+  String get chat_chip_diet => 'आहार सूचना';
+
+  @override
+  String get chat_input_placeholder => 'तुम्हाला कसे वाटते ते सांगा...';
+
+  @override
+  String get chat_companion_note => 'ओव्या तुमची साथीदार आहे, डॉक्टर नाही.';
+
+  @override
+  String get chat_suggest_sleep => 'चांगल्या झोपेसाठी सूचना द्या';
+
+  @override
+  String get chat_suggest_stress => 'PCOS सोबत ताण कसा व्यवस्थापित करायचा?';
+
+  @override
+  String get chat_suggest_hormonal => 'हार्मोनल संतुलनासाठी सूचना';
+
+  @override
+  String get chat_suggest_diet => 'PCOS साठी काय खावे?';
+
+  @override
+  String get report_preview_demographics => 'लोकसंख्या तपशील आणि तारीख';
+
+  @override
+  String get report_preview_risk => 'धोक्याचा स्कोर आणि PCOS प्रकार';
+
+  @override
+  String get report_preview_logs => 'मागील 30 दिवसांची लक्षणे तक्ता';
+
+  @override
+  String get report_preview_recs => 'वैयक्तिक शिफारसी';
+
+  @override
+  String get report_enter_name => 'कृपया रुग्णाचे नाव प्रविष्ट करा';
+
+  @override
+  String get log_saved => 'लॉग सेव्ह झाले ✓';
+
+  @override
+  String get no_risk_data =>
+      'धोक्याचा डेटा उपलब्ध नाही. कृपया आधी लक्षणे नोंदवा.';
+
+  @override
+  String get history_title => 'इतिहास';
+
+  @override
+  String get history_recent_assessments => 'अलीकडील मूल्यांकन';
+
+  @override
+  String get history_daily_logs => 'दैनिक लॉग';
+
+  @override
+  String get history_no_assessments =>
+      'अद्याप कोणतेही मूल्यांकन नाही. सुरू करण्यासाठी तुमची लक्षणे नोंदवा.';
+
+  @override
+  String get history_no_logs =>
+      'अद्याप कोणताही लॉग नाही. तुमचा इतिहास पाहण्यासाठी ट्रॅकिंग सुरू करा.';
+
+  @override
+  String get history_general_profile => 'सामान्य प्रोफाइल';
+
+  @override
+  String get history_no_symptoms_tag => 'लक्षणे नोंदवली नाहीत';
 }

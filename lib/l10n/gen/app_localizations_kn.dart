@@ -42,7 +42,7 @@ class AppLocalizationsKn extends AppLocalizations {
   String get ask_ovya => 'Ovya ಕೇಳಿ';
 
   @override
-  String get my_history => 'ನನ್ನ ಇತಿಹಾಸ';
+  String get my_history => 'ನನ್ನ ಆರೋಗ್ಯ ಇತಿಹಾಸ';
 
   @override
   String get mindful_moment => 'ಸಚೇತ ಕ್ಷಣ';
@@ -360,4 +360,118 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get high => 'High';
+
+  @override
+  String get your_body_prefix => 'ಇಂದು ನಿಮ್ಮ ';
+
+  @override
+  String get your_body_word => 'ದೇಹ';
+
+  @override
+  String get your_body_suffix => '';
+
+  @override
+  String get mindful_ashwagandha_title => 'ಅಶ್ವಗಂಧ ಚಹಾ';
+
+  @override
+  String get mindful_ashwagandha_desc =>
+      'ಕಾರ್ಟಿಸೋಲ್ ಮಟ್ಟವನ್ನು ಕಡಿಮೆ ಮಾಡಲು ಮತ್ತು ಹಾರ್ಮೋನ್‌ಗಳನ್ನು ಸಮತೋಲನಗೊಳಿಸಲು ಸಹಾಯಕ.';
+
+  @override
+  String get chat_ask_ovya_title => 'Ovya ಕೇಳಿ';
+
+  @override
+  String get chat_personal_guide => 'ವೈಯಕ್ತಿಕ ಮಾರ್ಗದರ್ಶಿ';
+
+  @override
+  String get chat_wellness_sanctuary => 'ನಿಮ್ಮ\nಆರೋಗ್ಯ\nಆಶ್ರಯ';
+
+  @override
+  String get chat_wellness_subtitle =>
+      'ನಿಮ್ಮ ವಿಶಿಷ್ಟ ಚಕ್ರ ಮತ್ತು ಲಯಕ್ಕೆ ಅನುಗುಣವಾಗಿ ಸಿದ್ಧಪಡಿಸಿದ ಒಳನೋಟಗಳು.';
+
+  @override
+  String get chat_ovya_label => 'ಓವ್ಯಾ';
+
+  @override
+  String get chat_greeting =>
+      'ನಿಮ್ಮ ಲಾಗ್‌ಗಳ ಪ್ರಕಾರ, ಈ ವಾರ ನಿಮ್ಮ ನಿದ್ರೆ ಸ್ವಲ್ಪ ಅನಿಯಮಿತವಾಗಿದೆ. ಉತ್ತಮ ವಿಶ್ರಾಂತಿಗೆ ಕೆಲವು ಸಲಹೆಗಳು ಬೇಕೇ?';
+
+  @override
+  String get chat_thinking => 'ಯೋಚಿಸುತ್ತಿದ್ದೇನೆ...';
+
+  @override
+  String get chat_chip_sleep => 'ನಿದ್ರೆ ಶುಚಿತ್ವ';
+
+  @override
+  String get chat_chip_stress => 'ಒತ್ತಡ ನಿವಾರಣೆ';
+
+  @override
+  String get chat_chip_hormonal => 'ಹಾರ್ಮೋನ್ ಸಮತೋಲನ';
+
+  @override
+  String get chat_chip_diet => 'ಆಹಾರ ಸಲಹೆ';
+
+  @override
+  String get chat_input_placeholder => 'ನಿಮಗೆ ಹೇಗನಿಸುತ್ತಿದೆ ಹೇಳಿ...';
+
+  @override
+  String get chat_companion_note => 'ಓವ್ಯಾ ನಿಮ್ಮ ಸಂಗಾತಿ, ವೈದ್ಯರಲ್ಲ.';
+
+  @override
+  String get chat_suggest_sleep => 'ಉತ್ತಮ ನಿದ್ರೆಗೆ ಸಲಹೆ ನೀಡಿ';
+
+  @override
+  String get chat_suggest_stress => 'PCOS ಜೊತೆ ಒತ್ತಡ ಹೇಗೆ ನಿರ್ವಹಿಸುವುದು?';
+
+  @override
+  String get chat_suggest_hormonal => 'ಹಾರ್ಮೋನ್ ಸಮತೋಲನಕ್ಕೆ ಸಲಹೆ';
+
+  @override
+  String get chat_suggest_diet => 'PCOS ಗೆ ಏನು ತಿನ್ನಬೇಕು?';
+
+  @override
+  String get report_preview_demographics => 'ಜನಸಂಖ್ಯಾ ವಿವರ ಮತ್ತು ದಿನಾಂಕ';
+
+  @override
+  String get report_preview_risk => 'ಅಪಾಯ ಸ್ಕೋರ್ ಮತ್ತು PCOS ಪ್ರಕಾರ';
+
+  @override
+  String get report_preview_logs => 'ಕಳೆದ 30 ದಿನಗಳ ಲಕ್ಷಣ ಪಟ್ಟಿ';
+
+  @override
+  String get report_preview_recs => 'ವೈಯಕ್ತಿಕ ಶಿಫಾರಸುಗಳು';
+
+  @override
+  String get report_enter_name => 'ದಯವಿಟ್ಟು ರೋಗಿಯ ಹೆಸರು ನಮೂದಿಸಿ';
+
+  @override
+  String get log_saved => 'ಲಾಗ್ ಉಳಿಸಲಾಯಿತು ✓';
+
+  @override
+  String get no_risk_data =>
+      'ಅಪಾಯ ಡೇಟಾ ಲಭ್ಯವಿಲ್ಲ. ದಯವಿಟ್ಟು ಮೊದಲು ಲಕ್ಷಣಗಳನ್ನು ದಾಖಲಿಸಿ.';
+
+  @override
+  String get history_title => 'ಇತಿಹಾಸ';
+
+  @override
+  String get history_recent_assessments => 'ಇತ್ತೀಚಿನ ಮೌಲ್ಯಮಾಪನಗಳು';
+
+  @override
+  String get history_daily_logs => 'ದೈನಂದಿನ ಲಾಗ್‌ಗಳು';
+
+  @override
+  String get history_no_assessments =>
+      'ಇನ್ನೂ ಮೌಲ್ಯಮಾಪನಗಳಿಲ್ಲ. ಪ್ರಾರಂಭಿಸಲು ನಿಮ್ಮ ಲಕ್ಷಣಗಳನ್ನು ದಾಖಲಿಸಿ.';
+
+  @override
+  String get history_no_logs =>
+      'ಇನ್ನೂ ಲಾಗ್‌ಗಳಿಲ್ಲ. ನಿಮ್ಮ ಇತಿಹಾಸ ನೋಡಲು ಟ್ರ್ಯಾಕಿಂಗ್ ಪ್ರಾರಂಭಿಸಿ.';
+
+  @override
+  String get history_general_profile => 'ಸಾಮಾನ್ಯ ಪ್ರೊಫೈಲ್';
+
+  @override
+  String get history_no_symptoms_tag => 'ಲಕ್ಷಣಗಳು ದಾಖಲಾಗಿಲ್ಲ';
 }

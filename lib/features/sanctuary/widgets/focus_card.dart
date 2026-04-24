@@ -57,7 +57,7 @@ class _FocusCardState extends State<FocusCard> {
               ),
               if (widget.illustration != null)
                 Positioned(
-                  right: 8,
+                  left: 8,
                   bottom: 8,
                   child: RepaintBoundary(child: widget.illustration!),
                 ),

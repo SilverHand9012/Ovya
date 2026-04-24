@@ -39,7 +39,14 @@ class MindfulMomentCard extends StatelessWidget {
                 color: kYellowCard,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.local_florist, color: kAccentDeep), // Placeholder for herb icon
+              child: ClipOval(
+                child: Image.asset(
+                  'assets/images/illustrations/flower1.png',
+                  width: 48,
+                  height: 48,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
             const SizedBox(width: 16),
             Expanded(

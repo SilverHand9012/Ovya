@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:firebase_ai/firebase_ai.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../features/symptom_tracking/domain/symptom_entity.dart';
 import '../constants.dart';
@@ -17,17 +18,20 @@ import '../services/language_service.dart';
 class GeminiService {
   GenerativeModel? _model;
 
-  /// Lazily initialises the Gemini model. Returns `null` if the
-  /// API key has not been configured yet.
+  /// Lazily initialises the Gemini model via Firebase AI.
+  /// Returns `null` if Firebase is not initialised.
   GenerativeModel? get _generativeModel {
-    const apiKey = AppConstants.geminiApiKey;
-    if (apiKey.isEmpty) return null;
-
-    _model ??= GenerativeModel(
-      model: AppConstants.geminiModel,
-      apiKey: apiKey,
-    );
-    return _model;
+    try {
+      _model ??= FirebaseAI.googleAI(
+        auth: FirebaseAuth.instance,
+      ).generativeModel(
+        model: AppConstants.geminiModel,
+      );
+      return _model;
+    } catch (e) {
+      debugPrint('[AI] Failed to initialise Gemini model: $e');
+      return null;
+    }
   }
 
   // ── Public API ───────────────────────────────────────────────
@@ -54,8 +58,8 @@ class GeminiService {
     final model = _generativeModel;
     if (model == null) {
       throw const GeminiServiceException(
-        'Gemini API key is not configured. '
-        'Set AppConstants.geminiApiKey to enable AI insights.',
+        'Gemini API is not available. '
+        'Ensure Firebase is configured and the Gemini API is enabled.',
       );
     }
 

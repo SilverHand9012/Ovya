@@ -42,7 +42,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ask_ovya => 'Ask Ovya';
 
   @override
-  String get my_history => 'My history';
+  String get my_history => 'My Health History';
 
   @override
   String get mindful_moment => 'Mindful Moment';
@@ -360,4 +360,118 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get high => 'High';
+
+  @override
+  String get your_body_prefix => 'Your ';
+
+  @override
+  String get your_body_word => 'body';
+
+  @override
+  String get your_body_suffix => ' today';
+
+  @override
+  String get mindful_ashwagandha_title => 'Ashwagandha Tea';
+
+  @override
+  String get mindful_ashwagandha_desc =>
+      'Known to help lower cortisol levels and balance hormones.';
+
+  @override
+  String get chat_ask_ovya_title => 'AskOvya';
+
+  @override
+  String get chat_personal_guide => 'PERSONAL GUIDE';
+
+  @override
+  String get chat_wellness_sanctuary => 'Your\nWellness\nSanctuary';
+
+  @override
+  String get chat_wellness_subtitle =>
+      'Handcrafted insights tailored to your unique cycle and rhythm.';
+
+  @override
+  String get chat_ovya_label => 'OVYA';
+
+  @override
+  String get chat_greeting =>
+      'Based on your logs, your sleep has been a bit irregular this week. Would you like some gentle tips to help you rest better?';
+
+  @override
+  String get chat_thinking => 'Thinking...';
+
+  @override
+  String get chat_chip_sleep => 'SLEEP HYGIENE';
+
+  @override
+  String get chat_chip_stress => 'STRESS RELIEF';
+
+  @override
+  String get chat_chip_hormonal => 'HORMONAL BALANCE';
+
+  @override
+  String get chat_chip_diet => 'DIET TIPS';
+
+  @override
+  String get chat_input_placeholder => 'Share how you\'re feeling...';
+
+  @override
+  String get chat_companion_note => 'OVYA IS YOUR COMPANION. NOT A DOCTOR.';
+
+  @override
+  String get chat_suggest_sleep => 'Give me tips for better sleep hygiene';
+
+  @override
+  String get chat_suggest_stress => 'How can I manage stress with PCOS?';
+
+  @override
+  String get chat_suggest_hormonal => 'Tips for hormonal balance';
+
+  @override
+  String get chat_suggest_diet => 'What should I eat for PCOS?';
+
+  @override
+  String get report_preview_demographics => 'Demographics & generated date';
+
+  @override
+  String get report_preview_risk => 'Computed risk score & PCOS type hint';
+
+  @override
+  String get report_preview_logs => 'Last 30 days of symptom logs table';
+
+  @override
+  String get report_preview_recs => 'Personalised recommendations';
+
+  @override
+  String get report_enter_name => 'Please enter patient name';
+
+  @override
+  String get log_saved => 'Log saved ✓';
+
+  @override
+  String get no_risk_data =>
+      'No risk data available. Please log symptoms first.';
+
+  @override
+  String get history_title => 'History';
+
+  @override
+  String get history_recent_assessments => 'Recent Assessments';
+
+  @override
+  String get history_daily_logs => 'Daily Logs';
+
+  @override
+  String get history_no_assessments =>
+      'No assessments yet. Log your symptoms to get started.';
+
+  @override
+  String get history_no_logs =>
+      'No logs yet. Start tracking to see your history.';
+
+  @override
+  String get history_general_profile => 'General Profile';
+
+  @override
+  String get history_no_symptoms_tag => 'NO SYMPTOMS LOGGED';
 }

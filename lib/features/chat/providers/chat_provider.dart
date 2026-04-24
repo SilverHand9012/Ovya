@@ -1,6 +1,8 @@
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:firebase_ai/firebase_ai.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/constants.dart';
@@ -92,7 +94,8 @@ class ChatNotifier extends Notifier<ChatState> {
       final cached = await _cacheService.getLatestInsight();
       state = state.copyWith(
         isLoading: false,
-        lastResponse: cached?.insightText,
+        lastResponse: cached?.insightText ?? 
+            'You are currently offline. Your question has been saved and I\'ll respond when you\'re back online. 💜',
       );
       return;
     }
@@ -112,14 +115,24 @@ Always end with: consult a gynecologist for diagnosis.
 User Question: $question
 ''';
 
-      final model = GenerativeModel(
-        model: AppConstants.geminiModel,
-        apiKey: AppConstants.geminiApiKey,
+      final modelName = AppConstants.geminiModel;
+      debugPrint('[Chat] Sending request to Gemini via Firebase AI (model: $modelName)...');
+
+      // Use Firebase AI with Google AI backend
+      // Firebase handles the API key via google-services.json / Firebase config
+      final model = FirebaseAI.googleAI(
+        auth: FirebaseAuth.instance,
+      ).generativeModel(
+        model: modelName,
       );
 
-      final response = await model.generateContent([Content.text(promptText)]).timeout(const Duration(seconds: 30));
+      final response = await model.generateContent([
+        Content.text(promptText),
+      ]).timeout(const Duration(seconds: 30));
       
       final text = response.text;
+      debugPrint('[Chat] Response received: ${text?.substring(0, (text != null && text.length > 50 ? 50 : (text?.length ?? 0)))}...');
+      
       if (text != null && text.isNotEmpty) {
         // Cache success
         await _cacheService.saveInsight(text, isFromAi: true);
@@ -127,12 +140,19 @@ User Question: $question
       } else {
         throw Exception("Empty response");
       }
-    } catch (e) {
-      // Load last cached on failure
+    } catch (e, stackTrace) {
+      // Log the actual error for debugging
+      debugPrint('[Chat] ERROR: $e');
+      debugPrint('[Chat] Stack: $stackTrace');
+      
+      // Load last cached on failure, or show a friendly fallback
       final cached = await _cacheService.getLatestInsight();
       state = state.copyWith(
         isLoading: false,
-        lastResponse: cached?.insightText,
+        lastResponse: cached?.insightText ?? 
+            'I wasn\'t able to process that right now, but I\'m still here for you. 💜 '
+            'Try again in a moment, or check your internet connection. '
+            'Always consult a gynecologist for medical advice.',
       );
     }
   }

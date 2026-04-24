@@ -20,102 +20,104 @@ class HomeShell extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: kBackground,
-      body: IndexedStack(
-        index: currentIndex,
-        children: const [
-          SanctuaryScreen(),
-          _PlaceholderTab(label: 'Insights', icon: Icons.auto_graph),
-          _PlaceholderTab(label: 'Journal', icon: Icons.book),
-          _PlaceholderTab(label: 'Profile', icon: Icons.person),
+      body: Stack(
+        children: [
+          // ── Tab content ──────────────────────────────────────
+          IndexedStack(
+            index: currentIndex,
+            children: const [
+              SanctuaryScreen(),
+              _PlaceholderTab(label: 'Insights', icon: Icons.auto_graph),
+            ],
+          ),
+
+          // ── Floating bottom nav bar ──────────────────────────
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: SafeArea(
+              top: false,
+              child: _FloatingBottomNav(
+                currentIndex: currentIndex,
+                onTap: (index) {
+                  ref.read(bottomNavIndexProvider.notifier).state = index;
+                },
+              ),
+            ),
+          ),
         ],
-      ),
-      bottomNavigationBar: _OvyaBottomNav(
-        currentIndex: currentIndex,
-        onTap: (index) {
-          ref.read(bottomNavIndexProvider.notifier).state = index;
-        },
       ),
     );
   }
 }
 
-/// Custom BottomNavigationBar — avoids Flutter's default BottomNavigationBar
-/// which triggers full rebuilds.  Uses a simple Row of tappable icons
-/// with an animated dot indicator above the active tab.
-class _OvyaBottomNav extends StatelessWidget {
+/// Floating pill-shaped bottom navigation with two tabs.
+/// Active tab gets a dark rounded-square highlight with white icon;
+/// inactive tab shows an outlined icon in dark color.
+class _FloatingBottomNav extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
 
-  const _OvyaBottomNav({
+  const _FloatingBottomNav({
     required this.currentIndex,
     required this.onTap,
   });
 
   static const _items = [
-    _NavItem(Icons.spa_outlined, Icons.spa, 'Sanctuary'),
-    _NavItem(Icons.auto_graph_outlined, Icons.auto_graph, 'Insights'),
-    _NavItem(Icons.book_outlined, Icons.book, 'Journal'),
-    _NavItem(Icons.person_outline, Icons.person, 'Profile'),
+    _NavItem(Icons.home_outlined, Icons.home_rounded, 'Sanctuary'),
+    _NavItem(Icons.grid_view_outlined, Icons.grid_view_rounded, 'Insights'),
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        border: Border(top: BorderSide(color: Color(0xFFEEEEEE), width: 0.5)),
-      ),
-      child: SafeArea(
-        top: false,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: List.generate(_items.length, (i) {
-              final isActive = currentIndex == i;
-              final item = _items[i];
-              return Expanded(
-                child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () => onTap(i),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // Dot indicator above icon
-                      AnimatedOpacity(
-                        opacity: isActive ? 1.0 : 0.0,
-                        duration: const Duration(milliseconds: 200),
-                        child: Container(
-                          width: 6,
-                          height: 6,
-                          decoration: const BoxDecoration(
-                            color: kAccent,
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Icon(
-                        isActive ? item.activeIcon : item.icon,
-                        color: isActive ? kAccent : kTextSecondary,
-                        size: 24,
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        item.label,
-                        style: TextStyle(
-                          fontFamily: 'Baloo 2',
-                          fontSize: 11,
-                          fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
-                          color: isActive ? kAccent : kTextSecondary,
-                        ),
-                      ),
-                    ],
+    return Center(
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 16),
+        padding: const EdgeInsets.all(6),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(28),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.08),
+              blurRadius: 20,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: List.generate(_items.length, (i) {
+            final isActive = currentIndex == i;
+            final item = _items[i];
+            return GestureDetector(
+              onTap: () => onTap(i),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 250),
+                curve: Curves.easeOutCubic,
+                width: 56,
+                height: 56,
+                decoration: BoxDecoration(
+                  color: isActive ? kTextPrimary : Colors.transparent,
+                  borderRadius: BorderRadius.circular(22),
+                ),
+                child: Center(
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 200),
+                    switchInCurve: Curves.easeOut,
+                    switchOutCurve: Curves.easeIn,
+                    child: Icon(
+                      isActive ? item.activeIcon : item.icon,
+                      key: ValueKey('${item.label}_$isActive'),
+                      color: isActive ? Colors.white : kTextSecondary,
+                      size: 26,
+                    ),
                   ),
                 ),
-              );
-            }),
-          ),
+              ),
+            );
+          }),
         ),
       ),
     );

@@ -57,8 +57,8 @@ class _LogScreenState extends State<LogScreen> {
     if (mounted) {
       Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Log saved ✓'),
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.log_saved),
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -68,7 +68,7 @@ class _LogScreenState extends State<LogScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final dateStr = DateFormat('MMM d').format(DateTime.now());
+    final dateStr = DateFormat.MMMd(Localizations.localeOf(context).toString()).format(DateTime.now());
 
     return Scaffold(
       backgroundColor: kBackground,
@@ -102,16 +102,16 @@ class _LogScreenState extends State<LogScreen> {
                                     fontWeight: FontWeight.w400,
                                   ),
                               children: [
-                                const TextSpan(text: 'Your '),
+                                TextSpan(text: l10n.your_body_prefix),
                                 TextSpan(
-                                  text: 'body',
+                                  text: l10n.your_body_word,
                                   style: TextStyle(
                                     fontStyle: FontStyle.italic,
                                     color: kAccent,
                                     fontFamily: Theme.of(context).textTheme.titleLarge?.fontFamily,
                                   ),
                                 ),
-                                const TextSpan(text: ' today'),
+                                TextSpan(text: l10n.your_body_suffix),
                               ],
                             ),
                           ),

@@ -21,7 +21,7 @@ final languageService = LanguageService();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  GoogleFonts.config.allowRuntimeFetching = false;
+  GoogleFonts.config.allowRuntimeFetching = true;
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
