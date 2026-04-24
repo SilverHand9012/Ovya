@@ -1,136 +1,204 @@
-# 🌸 Ovya — AI-Powered PCOS Companion for Underserved Women
+# 🌸 Ovya — Offline-First AI PCOS Health Companion
 
-> Built for Google Solution Challenge 2026
-> SDG 3: Good Health & Well-being · SDG 5: Gender Equality · SDG 10: Reduced Inequalities
+![Flutter](https://img.shields.io/badge/Flutter-3.x-blue?logo=flutter)
+![Firebase](https://img.shields.io/badge/Firebase-Firestore%20%7C%20Auth-orange?logo=firebase)
+![AI](https://img.shields.io/badge/AI-Gemini%202.5%20Flash-purple)
+![Offline First](https://img.shields.io/badge/Architecture-Offline--First-green)
+![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20iOS-lightgrey)
+![Status](https://img.shields.io/badge/Status-Production--Ready-success)
+
+> Built for **Google Solution Challenge 2026**  
+> 🌍 SDG 3 · SDG 5 · SDG 10
 
 ---
 
-## 🚨 The Problem
+# 🧠 Problem
 
 PCOS affects **1 in 5 women in India**, yet diagnosis often takes **2+ years**.
 
-For women in rural and low-resource settings:
+For women in rural and underserved areas:
 
-* ❌ No nearby specialists
-* ❌ Consultations cost ₹800–2000
-* ❌ Health apps are English-only
-* ❌ Most tools fail without internet
+- 📶 Limited or no internet access  
+- 🏥 Lack of nearby specialists  
+- 💰 High consultation costs  
+- 🌐 Language barriers (most apps are English-only)
 
-👉 The result: **delayed diagnosis, unmanaged symptoms, and long-term health risks**
-
-**Ovya is built specifically for this reality.**
+👉 Result: **Delayed diagnosis, unmanaged symptoms, long-term health risks**
 
 ---
 
-## 🌱 What Ovya Does
+# 🌱 Solution — Ovya
 
-Ovya is an **offline-first, multilingual PCOS early detection and health companion** — designed to work anywhere.
+Ovya is an **offline-first, AI-powered women’s health companion** designed specifically for **low-connectivity environments**.
 
-* 🧠 **Early Detection (Offline)**
+It enables:
+- Early PCOS risk detection  
+- Continuous symptom tracking  
+- AI-driven guidance  
+- Doctor-ready reports  
 
-  * Rule-based screening engine (12-question model)
-  * Instant PCOS risk scoring
-  * Works 100% on-device — no internet required
-
-* 📊 **Symptom Tracking**
-
-  * Log symptoms locally using Isar DB
-  * Automatic sync to Firestore when online
-  * Zero data loss with sync queue system
-
-* 🤖 **AI Health Insights**
-
-  * Gemini-powered personalized guidance
-  * Delivered in user's selected language
-  * Cached for offline access
-
-* 📄 **Doctor-Ready Report**
-
-  * Structured clinical summary
-  * Share via WhatsApp or print
-  * Designed for real doctor handoff
-
-* 🌍 **Multilingual by Design**
-
-  * English, Hindi, Marathi, Kannada, Telugu
-  * Built using Flutter localization system
+— all **without requiring internet access**
 
 ---
 
-## ⚡ Why Ovya Stands Out
+# 🏆 Why Ovya Stands Out (GSC Impact)
 
-| Feature                 | Existing Apps         | Ovya                      |
-| ----------------------- | --------------------- | ------------------------- |
-| Offline functionality   | ❌                     | ✅ Fully offline-first     |
-| Indian language support | ❌ English-only        | ✅ 5 languages             |
-| PCOS detection          | ❌ Post-diagnosis only | ✅ Pre-diagnosis screening |
-| Doctor integration      | ❌                     | ✅ Clinical report         |
-| Target users            | Urban                 | ✅ Rural & underserved     |
+| Criteria        | How Ovya Delivers |
+|----------------|------------------|
+| **Impact**     | Targets underserved women with real access gaps |
+| **Innovation** | Offline-first AI + sync queue architecture |
+| **Feasibility**| Built with scalable Firebase + Flutter stack |
+| **Scalability**| Multi-language + cloud sync + modular architecture |
 
 ---
 
-## 🎬 Demo Flow
+# ✨ Core Features
+
+## 🧠 Offline PCOS Detection
+- Rule-based screening engine  
+- Instant results  
+- Works 100% offline  
+
+---
+
+## 📊 Symptom Tracking
+- Local-first logging (Isar DB)  
+- No data loss  
+- Rich symptom + mood tracking  
+
+---
+
+## 🔄 Intelligent Sync Engine
+- Queue-based architecture  
+- Exponential backoff (2G-safe)  
+- Idempotent writes using `clientId`  
+- Multi-device safe  
+
+---
+
+## 🤖 AI Health Assistant (Ask Ovya)
+- Powered by Gemini 1.5 Flash  
+- Context-aware responses  
+- Cached insights for offline use  
+
+---
+
+## 📄 Clinical Report Generator
+- Fully on-device PDF generation  
+- Structured for doctor consultations  
+- Multilingual + Unicode-safe  
+
+---
+
+## 🌍 Multilingual by Design
+- English, Hindi, Marathi, Kannada, Telugu  
+- Native font rendering  
+- Emotionally adaptive translations  
+
+---
+
+# 🎬 Demo Flow
 
 1. Turn **OFF internet**
-2. Complete screener → get **instant risk result**
-3. Log symptoms
+2. Complete PCOS screener → get **instant result**
+3. Log symptoms offline
 4. Turn internet **ON**
-5. Watch data **sync live to Firestore**
+5. Watch seamless **auto-sync to Firebase**
+6. Generate **doctor-ready report**
+7. Use **Ask Ovya AI assistant**
+
+👉 Fully functional even in low-connectivity scenarios
 
 ---
 
-## 🏗️ Architecture
+# 🏗️ Architecture (Offline-First Core)
 
-```text
-UI (Flutter + Riverpod)
-        ↓
+
+Flutter UI (Riverpod)
+↓
 Connectivity Orchestrator
-   ↙                ↘
-Isar DB        Firestore
-(always)      (when online)
-   ↖                ↗
-       Sync Queue
-            ↓
-      Gemini API
-   (cached to local)
-```
+↙ ↘
+Isar DB Firestore
+(always) (when online)
+↖ ↗
+Sync Queue
+↓
+Gemini AI (cached locally)
 
-* Clean architecture
-* Feature-first structure
-* Fully offline-capable
 
 ---
 
-## 🛠️ Tech Stack
+# 🔐 Security & Data Integrity
 
-| Layer            | Technology                |
-| ---------------- | ------------------------- |
-| Frontend         | Flutter (Material 3)      |
-| State Management | Riverpod + Codegen        |
-| Local Storage    | Isar                      |
-| Cloud            | Firebase Firestore + Auth |
-| AI               | Gemini 1.5 Flash          |
-| Connectivity     | connectivity_plus         |
-| Localization     | Flutter l10n              |
-| Reports          | PDF generation            |
+- Firebase Authentication (user isolation)
+- Strict Firestore Rules (field validation)
+- Queue clearing on logout (prevents leaks)
+- Idempotent sync with `clientId`
 
 ---
 
-## 🌍 SDG Alignment
+# 🛠️ Tech Stack
 
-* **SDG 3** — Early detection improves long-term health outcomes
-* **SDG 5** — Focuses on a widely underdiagnosed women's condition
-* **SDG 10** — Bridges healthcare access gap in low-connectivity areas
+| Layer            | Technology |
+|------------------|-----------|
+| Frontend         | Flutter (Material 3) |
+| State Management | Riverpod |
+| Local Storage    | Isar |
+| Backend          | Firebase Firestore + Auth |
+| AI               | Gemini 1.5 Flash |
+| Connectivity     | connectivity_plus |
+| Reports          | PDF + Printing |
 
 ---
 
-## ⚠️ Disclaimer
+# 🌍 SDG Alignment
+
+### 🟢 SDG 3 — Good Health
+Early detection improves long-term outcomes
+
+### 🟣 SDG 5 — Gender Equality
+Addresses underdiagnosed women’s health issues
+
+### 🟡 SDG 10 — Reduced Inequalities
+Works in low-resource, low-connectivity regions
+
+---
+
+# ⚠️ Disclaimer
 
 Ovya provides **informational guidance only** and does not replace professional medical advice.
-Users should consult a qualified healthcare provider for diagnosis and treatment.
 
 ---
 
-## 🚀 Vision
+# 🚀 Vision
 
-To make **intelligent, private, and accessible healthcare tools available to every woman — regardless of language, location, or internet access.**
+To build a future where:
+> Healthcare is **accessible, intelligent, and private** — regardless of internet, language, or geography.
+
+---
+
+# ⭐ What Makes This Project Special
+
+Ovya is not a prototype.
+
+It is a **production-ready system** that proves:
+- Offline-first design can scale  
+- AI can work without constant connectivity  
+- Healthcare tools can be inclusive by default  
+
+---
+
+# 👩‍💻 Built For
+
+- Women in rural and underserved regions  
+- Low-connectivity environments  
+- Real-world healthcare constraints  
+
+---
+
+# 💬 Final Thought
+
+> The problem was never lack of technology.  
+> It was lack of accessibility.
+
+Ovya fixes that.
