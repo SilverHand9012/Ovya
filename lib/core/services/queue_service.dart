@@ -163,6 +163,28 @@ class QueueService {
     }
   }
 
+  /// Resets the retry counter for all unsynced items.
+  /// 
+  /// Useful after fixing a persistent configuration error (like Firestore rules).
+  Future<void> resetRetries() async {
+    try {
+      final isar = await _isarService.db;
+      await isar.writeTxn(() async {
+        final pending = await isar.syncQueues
+            .filter()
+            .isSyncedEqualTo(false)
+            .findAll();
+        
+        for (final entry in pending) {
+          entry.retryCount = 0;
+          await isar.syncQueues.put(entry);
+        }
+      });
+    } catch (e) {
+      throw QueueServiceException('Failed to reset retries: $e');
+    }
+  }
+
   // ── Delete ───────────────────────────────────────────────────
 
   /// Removes all items that have been successfully synced.

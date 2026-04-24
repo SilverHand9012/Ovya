@@ -47,7 +47,10 @@ Future<void> main() async {
     ],
   );
   
-  final syncService = SyncService(ref: container);
+  final syncService = SyncService(
+    ref: container,
+    orchestrator: connectivityOrchestrator,
+  );
 
   final mainContainer = ProviderContainer(
     parent: container,

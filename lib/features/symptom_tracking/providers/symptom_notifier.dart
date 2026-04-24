@@ -103,7 +103,7 @@ class SymptomNotifier extends StateNotifier<SymptomState> {
         },
       );
       
-      debugPrint('[Queue] Added symptom to queue');
+      debugPrint('[Symptom] Successfully enqueued for sync (clientId: $clientId)');
 
       // 4. Trigger realtime sync.
       _triggerSync();

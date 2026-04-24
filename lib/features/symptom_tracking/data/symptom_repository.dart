@@ -168,10 +168,13 @@ class SymptomRepositoryImpl implements SymptomRepository {
       final log = _toSchema(symptom);
 
       // Try to find existing by clientId first
-      final existingByClient = await isar.symptomLogs
-          .filter()
-          .clientIdEqualTo(symptom.clientId)
-          .findFirst();
+      SymptomLog? existingByClient;
+      if (symptom.clientId != null) {
+        existingByClient = await isar.symptomLogs
+            .filter()
+            .clientIdEqualTo(symptom.clientId)
+            .findFirst();
+      }
       
       if (existingByClient != null) {
         log.id = existingByClient.id;

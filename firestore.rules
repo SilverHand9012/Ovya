@@ -14,10 +14,13 @@ service cloud.firestore {
                      && request.auth.uid == userId
                      && request.resource.data.keys().hasOnly([
                           'clientId',
-                          'clientTimestamp',
+                          'timestamp',
+                          'updatedAt',
+                          'isDeleted',
+                          'deviceId',
                           'syncedAt',
+                          'docId',
                           'notes',
-                          'action',
                           'irregularCycle',
                           'acne',
                           'weightGain',
@@ -29,11 +32,9 @@ service cloud.firestore {
                           'sleepProblems',
                           'bloating',
                           'familyHistory',
-                          'difficultyConceiving',
-                          'mood'
+                          'difficultyConceiving'
                         ])
-                     && request.resource.data.clientId is string
-                     && request.resource.data.clientTimestamp is string;
+                     && request.resource.data.clientId is string;
       }
 
       // Covers all future subcollections

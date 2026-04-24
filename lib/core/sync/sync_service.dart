@@ -56,6 +56,13 @@ class SyncService {
   /// Starts listening for connectivity changes and sets up
   /// the periodic sync timer.
   void start() {
+    // Reset retries once on start to recover from any persistent rule failures.
+    _queueService.resetRetries().then((_) {
+      debugPrint('[Sync] Queue retries reset.');
+    }).catchError((e) {
+      debugPrint('[Sync] Failed to reset queue retries: $e');
+    });
+
     // React to connectivity transitions.
     _orchestrator.addListener(_onConnectivityChanged);
 
@@ -105,7 +112,8 @@ class SyncService {
 
       // 2. Push pending queue items to Firestore.
       final pending = await _queueService.getPending();
-      debugPrint('[Sync] Found ${pending.length} pending items.');
+      final totalUnsynced = await _queueService.pendingCount;
+      debugPrint('[Sync] Found ${pending.length} items ready to sync (out of $totalUnsynced pending).');
 
       for (final item in pending) {
         try {
@@ -236,7 +244,7 @@ class SyncService {
     final clientId = payload['clientId'] as String?;
     if (clientId == null) {
       debugPrint('[Sync] Critical: Missing clientId in symptom payload');
-      return;
+      throw Exception('Missing clientId in sync payload');
     }
 
     try {
@@ -272,7 +280,7 @@ class SyncService {
       final clientId = data['clientId'] as String?;
       if (clientId == null) continue;
 
-      final remoteUpdatedAtStr = data['updatedAt'] as String?;
+      final remoteUpdatedAtStr = (data['updatedAt'] ?? data['timestamp']) as String?;
       if (remoteUpdatedAtStr == null) continue;
       final remoteUpdatedAt = DateTime.parse(remoteUpdatedAtStr);
       
@@ -325,10 +333,23 @@ class SyncService {
     for (final log in legacyLogs) {
       final updated = log.copyWith(
         clientId: Uuid().v4(),
-        updatedAt: log.timestamp, // Best guess for legacy
+        updatedAt: log.timestamp, 
         deviceId: deviceId,
       );
+      // We use upsertLog which handles existing ID matching via clientId.
+      // Since clientId was null, it will create a NEW record or match incorrectly 
+      // if multiple are null. Better to use put directly if we have the Isar ID.
       await repository.upsertLog(updated);
+
+      // CRITICAL: We must also enqueue these for sync, otherwise they stay local-only!
+      await _queueService.enqueue(
+        action: 'add_symptom',
+        payload: {
+          ...updated.toJson(),
+          'updatedAt': updated.updatedAt.toIso8601String(),
+        },
+      );
+      debugPrint('[Sync] Backfilled and enqueued record ${updated.id}');
     }
     debugPrint('[Sync] Backfill complete');
   }
