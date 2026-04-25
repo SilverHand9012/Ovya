@@ -44,29 +44,35 @@ class _FocusCardState extends State<FocusCard> {
           decoration: BoxDecoration(
             color: widget.bgColor,
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Colors.white.withOpacity(0.6), width: 1),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.6), width: 1),
           ),
-          child: Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  widget.title,
-                  style: Theme.of(context).textTheme.titleMedium,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Stack(
+              children: [
+                if (widget.illustration != null)
+                  Positioned(
+                    left: -20,
+                    bottom: -20,
+                    child: Opacity(
+                      opacity: 0.9,
+                      child: RepaintBoundary(child: widget.illustration!),
+                    ),
+                  ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    widget.title,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
                 ),
-              ),
-              if (widget.illustration != null)
-                Positioned(
-                  left: 8,
-                  bottom: 8,
-                  child: RepaintBoundary(child: widget.illustration!),
+                const Positioned(
+                  right: 16,
+                  bottom: 16,
+                  child: Icon(Icons.north_east, size: 18, color: kTextSecondary),
                 ),
-              const Positioned(
-                right: 16,
-                bottom: 16,
-                child: Icon(Icons.north_east, size: 18, color: kTextSecondary),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

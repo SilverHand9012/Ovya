@@ -28,17 +28,17 @@ class _DetectionScreenState extends ConsumerState<DetectionScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _baseQuestions = [
-      _QuestionDef('irregularCycle', (loc) => loc.q_irregular_cycle),
-      _QuestionDef('hairGrowth', (loc) => loc.q_hair_growth),
-      _QuestionDef('familyHistory', (loc) => loc.q_family_history),
-      _QuestionDef('weightGain', (loc) => loc.q_weight_gain),
-      _QuestionDef('acne', (loc) => loc.q_acne),
-      _QuestionDef('skinDarkening', (loc) => loc.q_skin_darkening),
-      _QuestionDef('hairThinning', (loc) => loc.q_hair_thinning),
-      _QuestionDef('fatigue', (loc) => loc.q_fatigue),
-      _QuestionDef('sleepProblems', (loc) => loc.q_sleep_problems),
-      _QuestionDef('bloating', (loc) => loc.q_bloating),
-      _QuestionDef('moodIssues', (loc) => loc.q_mood_issues),
+      _QuestionDef('irregularCycle', (loc) => 'Do you have irregular cycles?'),
+      _QuestionDef('hairGrowth', (loc) => 'Do you have excess body or facial hair?'),
+      _QuestionDef('familyHistory', (loc) => 'Do you have a family history of PCOS?'),
+      _QuestionDef('weightGain', (loc) => 'Have you experienced unexplained weight gain?'),
+      _QuestionDef('acne', (loc) => 'Do you struggle with severe acne?'),
+      _QuestionDef('skinDarkening', (loc) => 'Do you have darkening of skin (e.g., around neck)?'),
+      _QuestionDef('hairThinning', (loc) => 'Are you experiencing hair thinning?'),
+      _QuestionDef('fatigue', (loc) => 'Do you often feel unusually fatigued?'),
+      _QuestionDef('sleepProblems', (loc) => 'Do you have trouble sleeping?'),
+      _QuestionDef('bloating', (loc) => 'Do you frequently experience bloating?'),
+      _QuestionDef('moodIssues', (loc) => 'Do you experience frequent mood swings?'),
     ];
   }
 
@@ -92,9 +92,9 @@ class _DetectionScreenState extends ConsumerState<DetectionScreen> {
     if (_currentIndex < _baseQuestions.length) {
       return _baseQuestions[_currentIndex].getLabel(loc);
     } else if (_currentIndex == _baseQuestions.length) {
-      return loc.q_age_verification;
+      return 'Are you over 18 years old?';
     } else {
-      return loc.q_difficulty_conceiving;
+      return 'Are you having difficulty conceiving?';
     }
   }
 
@@ -114,7 +114,7 @@ class _DetectionScreenState extends ConsumerState<DetectionScreen> {
           onPressed: _handleBack,
         ),
         title: Text(
-          loc.progress_indicator(displayIndex, _totalSteps),
+          "Question $displayIndex of $_totalSteps",
           style: TextStyle(
             color: colors.primary,
             fontWeight: FontWeight.w600,
@@ -132,7 +132,7 @@ class _DetectionScreenState extends ConsumerState<DetectionScreen> {
               // Progress indicator
               LinearProgressIndicator(
                 value: displayIndex / _totalSteps,
-                backgroundColor: colors.primary.withOpacity(0.1),
+                backgroundColor: colors.primary.withValues(alpha: 0.1),
                 valueColor: AlwaysStoppedAnimation<Color>(colors.primary),
                 borderRadius: BorderRadius.circular(4),
                 minHeight: 8,
@@ -160,7 +160,7 @@ class _DetectionScreenState extends ConsumerState<DetectionScreen> {
                 children: [
                   Expanded(
                     child: _AnswerCard(
-                      label: loc.btn_yes,
+                      label: "Yes",
                       icon: Icons.check_circle_outline,
                       onTap: () => _handleAnswer(true),
                     ),
@@ -168,7 +168,7 @@ class _DetectionScreenState extends ConsumerState<DetectionScreen> {
                   const SizedBox(width: 16),
                   Expanded(
                     child: _AnswerCard(
-                      label: loc.btn_no,
+                      label: "No",
                       icon: Icons.cancel_outlined,
                       onTap: () => _handleAnswer(false),
                     ),
@@ -205,7 +205,7 @@ class _AnswerCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 24),
         decoration: BoxDecoration(
-          color: colors.surfaceContainerHighest.withOpacity(0.4),
+          color: colors.surfaceContainerHighest.withValues(alpha: 0.4),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: colors.outlineVariant,

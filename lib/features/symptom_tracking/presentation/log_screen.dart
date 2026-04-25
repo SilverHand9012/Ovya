@@ -31,16 +31,16 @@ class _LogScreenState extends ConsumerState<LogScreen> {
 
   String _getSymptomLabel(String key, AppLocalizations loc) {
     switch (key) {
-      case 'irregularCycle': return loc.q_irregular_cycle.replaceAll('Do you have ', '').replaceAll('?', ''); // Simplified
-      case 'hairGrowth': return 'Excess hair growth';
-      case 'hairThinning': return 'Hair thinning';
-      case 'weightGain': return 'Weight gain';
-      case 'acne': return 'Acne';
-      case 'skinDarkening': return 'Skin darkening';
-      case 'fatigue': return 'Fatigue';
-      case 'moodIssues': return 'Mood swings';
-      case 'sleepProblems': return 'Sleep problems';
-      case 'bloating': return 'Bloating';
+      case 'irregularCycle': return loc.irregularCycle;
+      case 'hairGrowth': return loc.excessHairGrowth;
+      case 'hairThinning': return loc.hairThinning;
+      case 'weightGain': return loc.weightGain;
+      case 'acne': return loc.acne;
+      case 'skinDarkening': return loc.skinDarkening;
+      case 'fatigue': return loc.fatigue;
+      case 'moodIssues': return loc.moodIssues;
+      case 'sleepProblems': return loc.sleepProblems;
+      case 'bloating': return loc.bloating;
       case 'familyHistory': return 'Family history';
       case 'difficultyConceiving': return 'Difficulty conceiving';
       default: return key;
@@ -105,7 +105,7 @@ class _LogScreenState extends ConsumerState<LogScreen> {
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(loc.log_saved_success),
+          content: Text(loc.log_saved),
           backgroundColor: Colors.green,
           behavior: SnackBarBehavior.floating,
         ),
@@ -126,29 +126,32 @@ class _LogScreenState extends ConsumerState<LogScreen> {
 
     final now = DateTime.now();
     final dateString = DateFormat('MMMM d').format(now);
-    final headerDate = loc.log_date_header(dateString);
+    final headerDate = dateString;
 
     final alreadyLogged = _isAlreadyLoggedToday();
 
     return Scaffold(
       backgroundColor: colors.surface,
       appBar: AppBar(
-        title: Text(loc.logSymptoms, style: const TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(loc.log_today, style: const TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: colors.surface,
         elevation: 0,
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              if (alreadyLogged) ...[
+        child: CustomScrollView(
+          slivers: [
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+              sliver: SliverToBoxAdapter(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    if (alreadyLogged) ...[
                 Container(
                   padding: const EdgeInsets.all(16),
                   margin: const EdgeInsets.only(bottom: 24),
                   decoration: BoxDecoration(
-                    color: colors.primaryContainer.withOpacity(0.5),
+                    color: colors.primaryContainer.withValues(alpha: 0.5),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
@@ -157,7 +160,7 @@ class _LogScreenState extends ConsumerState<LogScreen> {
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
-                          loc.log_already_logged,
+                          "You have already logged today.",
                           style: TextStyle(
                             color: colors.onPrimaryContainer,
                             fontWeight: FontWeight.bold,
@@ -182,7 +185,7 @@ class _LogScreenState extends ConsumerState<LogScreen> {
 
               // Mood Section
               Text(
-                loc.howAreYouFeeling,
+                loc.energy_mood,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -209,7 +212,7 @@ class _LogScreenState extends ConsumerState<LogScreen> {
                         padding: const EdgeInsets.all(4),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: isSelected ? colors.primary.withOpacity(0.2) : Colors.transparent,
+                          color: isSelected ? colors.primary.withValues(alpha: 0.2) : Colors.transparent,
                         ),
                         child: Text(
                           _emojis[index],
@@ -224,7 +227,7 @@ class _LogScreenState extends ConsumerState<LogScreen> {
 
               // Symptoms Section
               Text(
-                loc.log_symptoms_label,
+                loc.symptoms_sensations,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -249,13 +252,13 @@ class _LogScreenState extends ConsumerState<LogScreen> {
                         }
                       });
                     },
-                    selectedColor: colors.primary.withOpacity(0.2),
+                    selectedColor: colors.primary.withValues(alpha: 0.2),
                     checkmarkColor: colors.primary,
                     labelStyle: TextStyle(
                       color: isSelected ? colors.primary : colors.onSurface,
                       fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                     ),
-                    backgroundColor: colors.surfaceContainerHighest.withOpacity(0.5),
+                    backgroundColor: colors.surfaceContainerHighest.withValues(alpha: 0.5),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                       side: BorderSide(
@@ -269,7 +272,7 @@ class _LogScreenState extends ConsumerState<LogScreen> {
 
               // Notes Section
               Text(
-                loc.log_notes_label,
+                loc.journal_notes,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -282,12 +285,12 @@ class _LogScreenState extends ConsumerState<LogScreen> {
                 maxLength: 300,
                 maxLines: 4,
                 decoration: InputDecoration(
-                  hintText: loc.notesHint,
+                  hintText: loc.journal_hint,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
                   filled: true,
-                  fillColor: colors.surfaceContainerHighest.withOpacity(0.3),
+                  fillColor: colors.surfaceContainerHighest.withValues(alpha: 0.3),
                 ),
               ),
               const SizedBox(height: 32),
@@ -314,7 +317,7 @@ class _LogScreenState extends ConsumerState<LogScreen> {
                         ),
                       )
                     : Text(
-                        loc.log_save_button,
+                        loc.save_log,
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -329,7 +332,7 @@ class _LogScreenState extends ConsumerState<LogScreen> {
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
-                    color: colors.onSurface.withOpacity(0.5),
+                    color: colors.onSurface.withValues(alpha: 0.5),
                   ),
                 ),
               ],
@@ -338,6 +341,9 @@ class _LogScreenState extends ConsumerState<LogScreen> {
           ),
         ),
       ),
-    );
+    ],
+  ),
+),
+);
   }
 }

@@ -138,18 +138,21 @@ class _ReportScreenState extends ConsumerState<ReportScreen> {
         elevation: 0,
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // Info Banner
+        child: CustomScrollView(
+          slivers: [
+            SliverPadding(
+              padding: const EdgeInsets.all(24.0),
+              sliver: SliverToBoxAdapter(
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // Info Banner
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: colors.primaryContainer.withOpacity(0.4),
+                    color: colors.primaryContainer.withValues(alpha: 0.4),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Row(
@@ -184,7 +187,7 @@ class _ReportScreenState extends ConsumerState<ReportScreen> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     filled: true,
-                    fillColor: colors.surfaceContainerHighest.withOpacity(0.3),
+                    fillColor: colors.surfaceContainerHighest.withValues(alpha: 0.3),
                     prefixIcon: const Icon(Icons.person_outline),
                   ),
                   validator: (value) {
@@ -292,9 +295,12 @@ class _ReportScreenState extends ConsumerState<ReportScreen> {
                     ),
                   ),
                 ],
-              ],
+                    ],
+                  ),
+                ),
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );
@@ -318,7 +324,7 @@ class _PreviewRow extends StatelessWidget {
             text,
             style: TextStyle(
               fontSize: 14,
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
             ),
           ),
         ),

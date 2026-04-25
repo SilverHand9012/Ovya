@@ -44,4 +44,21 @@ flutter:
   assets:
     - assets/fonts/NotoSans-Regular.ttf
     - assets/fonts/NotoSansDevanagari-Regular.ttf
+    - assets/fonts/Baloo2-Regular.ttf
+    - assets/fonts/BalooTamma2-Regular.ttf
+    - assets/fonts/BalooTammudu2-Regular.ttf
     - assets/images/illustrations/
+
+  fonts:
+    - family: Baloo 2
+      fonts:
+        - asset: assets/fonts/Baloo2-Regular.ttf
+    - family: Baloo Tamma 2
+      fonts:
+        - asset: assets/fonts/BalooTamma2-Regular.ttf
+    - family: Baloo Tammudu 2
+      fonts:
+        - asset: assets/fonts/BalooTammudu2-Regular.ttf
+    - family: Noto Sans Devanagari
+      fonts:
+        - asset: assets/fonts/NotoSansDevanagari-Regular.ttf

@@ -28,7 +28,7 @@ class _MoodSelectorState extends State<MoodSelector> {
       decoration: BoxDecoration(
         color: kPurpleCard,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.white.withOpacity(0.6), width: 1),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.6), width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

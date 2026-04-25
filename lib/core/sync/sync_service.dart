@@ -36,7 +36,7 @@ class SyncService {
   final QueueService _queueService;
   final ConnectivityOrchestrator _orchestrator;
   final InsightCacheService _insightCacheService;
-  final ProviderContainer? ref;
+  final dynamic ref;
 
   Timer? _periodicTimer;
   bool _isSyncing = false;

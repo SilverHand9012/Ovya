@@ -10,7 +10,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'app/router.dart';
 import 'app/theme.dart';
 import 'core/isar/isar_service.dart';
-import 'core/sync/sync_service.dart';
 import 'core/services/language_service.dart';
 import 'core/connectivity/connectivity_orchestrator.dart';
 import 'shared/providers/connectivity_provider.dart';
@@ -21,7 +20,7 @@ final languageService = LanguageService();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  GoogleFonts.config.allowRuntimeFetching = true;
+  GoogleFonts.config.allowRuntimeFetching = false;
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -40,47 +39,33 @@ Future<void> main() async {
   // 3. Initialize connectivity orchestrator safely before anything else
   final connectivityOrchestrator = ConnectivityOrchestrator();
 
-  // 4. Start the background sync service.
-  final container = ProviderContainer(
-    overrides: [
-      connectivityOrchestratorProvider.overrideWithValue(connectivityOrchestrator),
-    ],
-  );
-  
-  final syncService = SyncService(
-    ref: container,
-    orchestrator: connectivityOrchestrator,
-  );
-
-  final mainContainer = ProviderContainer(
-    parent: container,
-    overrides: [
-      syncServiceProvider.overrideWithValue(syncService),
-    ],
-  );
-  
-  syncService.start();
-
+  // 4. Run app with a single ProviderScope.
   runApp(
-    UncontrolledProviderScope(
-      container: mainContainer,
+    ProviderScope(
+      overrides: [
+        connectivityOrchestratorProvider.overrideWithValue(connectivityOrchestrator),
+      ],
       child: const OvyaApp(),
     ),
   );
 }
 
-class OvyaApp extends StatefulWidget {
+class OvyaApp extends ConsumerStatefulWidget {
   const OvyaApp({super.key});
 
   @override
-  State<OvyaApp> createState() => _OvyaAppState();
+  ConsumerState<OvyaApp> createState() => _OvyaAppState();
 }
 
-class _OvyaAppState extends State<OvyaApp> {
+class _OvyaAppState extends ConsumerState<OvyaApp> {
   @override
   void initState() {
     super.initState();
     languageService.addListener(_onLanguageChanged);
+    // Trigger eager initialization of SyncService
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(syncServiceProvider);
+    });
   }
 
   @override

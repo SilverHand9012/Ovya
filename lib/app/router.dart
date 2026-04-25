@@ -10,7 +10,8 @@ import '../features/log/log_screen.dart';
 import '../features/chat/presentation/chat_screen.dart';
 import '../features/reports/presentation/report_screen.dart';
 import '../features/history/history_screen.dart';
-import 'home_shell.dart';
+import '../features/cycle_tracking/presentation/cycle_screen.dart';
+import '../features/sanctuary/sanctuary_screen.dart';
 import 'app_scaffold.dart';
 
 /// Application router configuration using GoRouter.
@@ -137,15 +138,33 @@ final GoRouter appRouter = GoRouter(
         transitionDuration: const Duration(milliseconds: 350),
       ),
     ),
+    GoRoute(
+      path: '/cycle',
+      name: 'cycle',
+      pageBuilder: (context, state) => CustomTransitionPage(
+        child: const CycleScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final curved = CurvedAnimation(parent: animation, curve: Curves.easeOutCubic);
+          return FadeTransition(
+            opacity: curved,
+            child: ScaleTransition(
+              scale: Tween<double>(begin: 0.92, end: 1.0).animate(curved),
+              child: child,
+            ),
+          );
+        },
+        transitionDuration: const Duration(milliseconds: 350),
+      ),
+    ),
 
-    // ── Main shell: IndexedStack bottom nav ──────────────────────
+    // ── Main shell: AppScaffold (offline banner) ──────────────────
     ShellRoute(
       builder: (context, state, child) => AppScaffold(child: child),
       routes: [
         GoRoute(
           path: '/',
           name: 'home',
-          builder: (context, state) => const HomeShell(),
+          builder: (context, state) => const SanctuaryScreen(),
         ),
       ],
     ),

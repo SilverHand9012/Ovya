@@ -16,7 +16,6 @@ class _ResultsScreenState extends State<ResultsScreen> with SingleTickerProvider
   late AnimationController _analysisCardController;
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
-  bool _isGenerating = false;
 
   @override
   void initState() {
@@ -53,30 +52,7 @@ class _ResultsScreenState extends State<ResultsScreen> with SingleTickerProvider
     super.dispose();
   }
 
-  void _generateReport() async {
-    setState(() => _isGenerating = true);
 
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => const Center(
-        child: CircularProgressIndicator(color: kAccent),
-      ),
-    );
-
-    await Future.delayed(const Duration(milliseconds: 1500));
-
-    if (mounted) {
-      Navigator.pop(context); // Close loader
-      setState(() => _isGenerating = false);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Report generated successfully!'),
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,25 +60,56 @@ class _ResultsScreenState extends State<ResultsScreen> with SingleTickerProvider
 
     return Scaffold(
       backgroundColor: kBackground,
-      // ── 1. AppBar ──────────────────────────────────────────────
+      // ── 1. Custom AppBar for AI Insights ────────────────────────
       appBar: AppBar(
         backgroundColor: kBackground,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: kTextPrimary),
+          icon: const Icon(Icons.arrow_back, color: kTextPrimary),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
-          l10n.results_title,
-          style: Theme.of(context).textTheme.titleLarge,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              l10n.results_title,
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: kTextPrimary,
+                  ),
+            ),
+            Text(
+              l10n.results_subtitle,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: kTextSecondary,
+                  ),
+            ),
+          ],
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: CircleAvatar(
+              backgroundColor: kPurpleCard,
+              child: ClipOval(
+                child: Image.asset(
+                  'assets/images/illustrations/face1.png', // Assuming user avatar or similar placeholder
+                  width: 32,
+                  height: 32,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => const Icon(Icons.person, color: kAccent),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
-      // ── Body: CustomScrollView + Slivers (never SingleChildScrollView) ─
+      // ── Body: CustomScrollView + Slivers ────────────────────────
       body: CustomScrollView(
         slivers: [
           // ── 2. Hero Risk Banner ──────────────────────────────────
           const SliverToBoxAdapter(
-            child: RiskBanner(riskLevel: 2), // High Risk for demo
+            child: RiskBanner(riskLevel: 2), // High Risk/Moderate for demo
           ),
 
           // ── 3. "What this means" Card ────────────────────────────
@@ -112,31 +119,34 @@ class _ResultsScreenState extends State<ResultsScreen> with SingleTickerProvider
               child: SlideTransition(
                 position: _slideAnimation,
                 child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: kPurpleCard,
+                    color: const Color(0xFFE8E4FF), // Light purple
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Colors.white.withOpacity(0.6), width: 1),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
-                          const Icon(Icons.lightbulb_outline, color: kAccent),
+                          const Icon(Icons.psychology, color: Color(0xFF2C1A6E)), // Dark purple icon
                           const SizedBox(width: 8),
                           Text(
                             l10n.what_this_means,
-                            style: Theme.of(context).textTheme.titleMedium,
+                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              color: const Color(0xFF2C1A6E),
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ],
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        'Your symptoms show patterns common in Insulin Resistant PCOS. This is often linked to metabolic shifts.',
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: kTextPrimary,
+                        l10n.insight_explanation_insulin,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: const Color(0xFF2C1A6E),
+                          height: 1.5,
                         ),
                       ),
                     ],
@@ -149,9 +159,9 @@ class _ResultsScreenState extends State<ResultsScreen> with SingleTickerProvider
           // ── 4. "What to do next" Section Header ──────────────────
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 32, 20, 12),
+              padding: const EdgeInsets.fromLTRB(20, 24, 20, 12),
               child: Text(
-                l10n.what_to_do_next,
+                l10n.what_to_do_next.toUpperCase(),
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
                   color: kTextSecondary,
                   fontWeight: FontWeight.bold,
@@ -161,91 +171,97 @@ class _ResultsScreenState extends State<ResultsScreen> with SingleTickerProvider
             ),
           ),
 
-          // ── 4. Staggered Action Items ────────────────────────────
+          // ── 5. Staggered Action Items ────────────────────────────
           SliverToBoxAdapter(
             child: StaggeredActionItem(
               index: 0,
-              title: "Check Glucose",
-              subtitle: "Best done fasting in the morning.",
-              bgColor: kYellowCard,
-              illustration: Opacity(
-                opacity: 0.8,
-                child: Image.asset(
-                  'assets/images/illustrations/hand.png',
-                  height: 48,
-                  fit: BoxFit.contain,
-                ),
-              ),
+              title: l10n.action_balanced_meals_title,
+              subtitle: l10n.action_balanced_meals_subtitle,
+              bgColor: const Color(0xFFE8F5E9), // Light green tint instead of yellow in the mockup, or keep yellow
+              illustration: null,
             ),
           ),
           SliverToBoxAdapter(
             child: StaggeredActionItem(
               index: 1,
-              title: "Gentle Movement",
-              subtitle: "A 20-min walk can help stabilize insulin.",
-              bgColor: kGreenCard,
-              illustration: Opacity(
-                opacity: 0.8,
-                child: Image.asset(
-                  'assets/images/illustrations/flower1.png',
-                  height: 48,
-                  fit: BoxFit.contain,
-                ),
-              ),
+              title: l10n.action_light_movement_title,
+              subtitle: l10n.action_light_movement_subtitle,
+              bgColor: const Color(0xFFE0F2F1), // Light teal
+              illustration: null,
             ),
           ),
           SliverToBoxAdapter(
             child: StaggeredActionItem(
               index: 2,
-              title: "High-Protein Snack",
-              subtitle: "Helps prevent late-day energy crashes.",
+              title: l10n.action_sleep_title,
+              subtitle: l10n.action_sleep_subtitle,
               bgColor: Colors.white,
-              illustration: Opacity(
-                opacity: 0.8,
-                child: Image.asset(
-                  'assets/images/illustrations/face1.png',
-                  height: 48,
-                  fit: BoxFit.contain,
+              illustration: null,
+            ),
+          ),
+
+          // ── 6. Wellness Tip Card ───────────────────────────────
+          SliverToBoxAdapter(
+            child: Container(
+              margin: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                border: Border(
+                  left: BorderSide(color: const Color(0xFF2E7D32), width: 6), // Green edge
                 ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
               ),
-            ),
-          ),
-
-          // ── 5. Generate Report CTA ───────────────────────────────
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 32, 20, 0),
-              child: OvyaButton(
-                text: l10n.generate_report,
-                icon: Icons.description_outlined,
-                backgroundColor: kTextPrimary,
-                onPressed: _generateReport,
-                isLoading: _isGenerating,
-              ),
-            ),
-          ),
-
-          // ── 6. "Continue Tracking Symptoms" text button ──────────
-          SliverToBoxAdapter(
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text(
-                    l10n.continue_tracking,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: kAccent,
-                      decoration: TextDecoration.underline,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Icon(Icons.eco, color: Color(0xFF2E7D32), size: 24),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: RichText(
+                      text: TextSpan(
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: kTextPrimary,
+                          height: 1.5,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: '${l10n.wellness_tip_intro} ',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          TextSpan(text: l10n.wellness_tip_body),
+                        ],
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
             ),
           ),
 
-          // Bottom padding
-          const SliverPadding(padding: EdgeInsets.only(bottom: 40)),
+          // ── 7. Ask Ovya Button ───────────────────────────────
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 40),
+              child: OvyaButton(
+                text: l10n.ask_ovya_anything,
+                icon: Icons.chat_bubble_outline,
+                backgroundColor: const Color(0xFF6B52AE), // Purple button
+                onPressed: () {
+                  // Navigate to chat
+                  Navigator.pushNamed(context, '/chat');
+                },
+                isLoading: false,
+              ),
+            ),
+          ),
         ],
       ),
     );

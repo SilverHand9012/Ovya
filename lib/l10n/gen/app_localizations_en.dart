@@ -15,61 +15,64 @@ class AppLocalizationsEn extends AppLocalizations {
   String get greeting_morning => 'Good morning,';
 
   @override
-  String get synced_just_now => 'SYNCED JUST NOW';
+  String get synced_just_now => 'ALL SYNCED';
 
   @override
-  String get syncing => 'SYNCING';
+  String get syncing => 'SYNCING...';
 
   @override
-  String get elevated_risk => 'ELEVATED RISK';
+  String get elevated_risk => 'NEEDS ATTENTION';
 
   @override
-  String get pcos_detected => 'PCOS Flare-up Detected';
+  String get pcos_detected => 'Your body is showing signs';
 
   @override
-  String get review_assessment => 'Review Assessment';
+  String get review_assessment => 'See what\'s going on';
 
   @override
-  String get todays_focus => 'Today\'s Focus';
+  String get todays_focus => 'Your Day';
 
   @override
-  String get log_today => 'Log today';
+  String get log_today => 'How are you today?';
 
   @override
   String get doctor_report => 'Doctor report';
 
   @override
-  String get ask_ovya => 'Ask Ovya';
+  String get ask_ovya => 'Talk to Ovya';
 
   @override
-  String get my_history => 'My Health History';
+  String get my_history => 'My Journey';
 
   @override
-  String get mindful_moment => 'Mindful Moment';
+  String get mindful_moment => 'A Moment for You';
 
   @override
-  String get results_title => 'Results';
+  String get results_title => 'Your Insights';
 
   @override
-  String get high_risk => 'HIGH RISK';
+  String get results_subtitle => 'Here\'s what your body is telling us';
 
   @override
-  String get moderate_risk => 'MODERATE RISK';
+  String get high_risk => 'HIGH';
 
   @override
-  String get low_risk => 'LOW RISK';
+  String get moderate_risk => 'MODERATE';
 
   @override
-  String get what_this_means => 'What this means';
+  String get low_risk => 'LOW';
 
   @override
-  String get what_to_do_next => 'WHAT TO DO NEXT';
+  String get what_this_means => 'What this means for you';
 
   @override
-  String get generate_report => 'Generate Detailed Report';
+  String get what_to_do_next => 'SMALL STEPS THAT HELP';
 
   @override
-  String get continue_tracking => 'Continue Tracking Symptoms';
+  String get generate_report => 'Create a detailed report';
+
+  @override
+  String get continue_tracking => 'Keep tracking your symptoms';
 
   @override
   String your_body_today(String style_body) {
@@ -77,23 +80,23 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get energy_mood => 'Energy & Mood';
+  String get energy_mood => 'How\'s your energy?';
 
   @override
-  String get symptoms_sensations => 'Symptoms & Sensations';
+  String get symptoms_sensations => 'What are you feeling?';
 
   @override
-  String get journal_notes => 'JOURNAL NOTES';
+  String get journal_notes => 'YOUR NOTES';
 
   @override
   String get journal_hint =>
-      'How are you feeling mentally and physically? Any specific triggers today...';
+      'How are you feeling today? Anything on your mind...';
 
   @override
-  String get take_a_breath => 'Take a breath.';
+  String get take_a_breath => 'You\'re doing great. Take a breath.';
 
   @override
-  String get save_log => 'Save Log';
+  String get save_log => 'Save';
 
   @override
   String get symptom_headache => 'Headache';
@@ -102,7 +105,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get symptom_cramps => 'Cramps';
 
   @override
-  String get symptom_fatigue => 'Fatigue';
+  String get symptom_fatigue => 'Tired';
 
   @override
   String get symptom_bloating => 'Bloating';
@@ -111,31 +114,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get symptom_nausea => 'Nausea';
 
   @override
-  String get symptom_backache => 'Backache';
+  String get symptom_backache => 'Back pain';
 
   @override
-  String get symptom_insomnia => 'Insomnia';
+  String get symptom_insomnia => 'Can\'t sleep';
 
   @override
-  String get logout_dialog_title => 'Log Out';
+  String get logout_dialog_title => 'Leaving so soon?';
 
   @override
   String logout_dialog_content(String pendingCount) {
-    return 'You have $pendingCount unsynced logs. If you log out, they might be lost. Are you sure?';
+    return 'You have $pendingCount entries that haven\'t synced yet. They might be lost if you log out now.';
   }
 
   @override
-  String get logout_dialog_confirm => 'Log Out Anyway';
+  String get logout_dialog_confirm => 'Log out anyway';
 
   @override
   String get logout_dialog_stay => 'Stay';
 
   @override
-  String get sync_dialog_title => 'Sync Needed';
+  String get sync_dialog_title => 'Time to sync';
 
   @override
   String sync_dialog_content(String pendingCount) {
-    return 'You have $pendingCount offline logs. Would you like to sync them now?';
+    return 'You have $pendingCount entries saved offline. Want to sync them now?';
   }
 
   @override
@@ -145,7 +148,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get later => 'Later';
 
   @override
-  String get syncNow => 'Sync Now';
+  String get syncNow => 'Sync now';
 
   @override
   String get auth_sign_in => 'Sign In';
@@ -160,10 +163,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get auth_password => 'Password';
 
   @override
-  String get auth_confirm_password => 'Confirm Password';
+  String get auth_confirm_password => 'Confirm password';
 
   @override
-  String get auth_error_passwords_no_match => 'Passwords do not match';
+  String get auth_error_passwords_no_match => 'Passwords don\'t match';
 
   @override
   String get auth_create_account => 'Create Account';
@@ -180,40 +183,41 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get chat_offline_banner => 'Offline mode';
+  String get chat_offline_banner => 'You\'re offline right now';
 
   @override
-  String get chat_disclaimer => 'Disclaimer';
+  String get chat_disclaimer => 'For awareness, not diagnosis';
 
   @override
-  String get chat_suggested_title => 'Suggested';
+  String get chat_suggested_title => 'Try asking';
 
   @override
-  String get chat_suggestion_1 => 'Suggestion 1';
+  String get chat_suggestion_1 => 'How can I sleep better?';
 
   @override
-  String get chat_suggestion_2 => 'Suggestion 2';
+  String get chat_suggestion_2 => 'Tips for managing stress';
 
   @override
-  String get chat_suggestion_3 => 'Suggestion 3';
+  String get chat_suggestion_3 => 'What should I eat today?';
 
   @override
   String get chat_offline_tooltip => 'Offline';
 
   @override
-  String get chat_input_hint => 'Type a message';
+  String get chat_input_hint => 'Type something...';
 
   @override
   String get btn_generate_report => 'Generate Report';
 
   @override
-  String get report_offline_note => 'Offline Note';
+  String get report_offline_note =>
+      'Your report is created locally. Nothing leaves your phone.';
 
   @override
-  String get report_patient_name => 'Patient Name';
+  String get report_patient_name => 'Your name';
 
   @override
-  String get report_preview_title => 'Preview';
+  String get report_preview_title => 'What\'s in the report';
 
   @override
   String get report_share_btn => 'Share';
@@ -222,21 +226,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get report_print_btn => 'Print';
 
   @override
-  String get pdfTitle => 'PDF Title';
+  String get pdfTitle => 'Ovya Health Report';
 
   @override
   String pdfDateGenerated(String dateStr) {
-    return 'Generated on $dateStr';
+    return 'Created on $dateStr';
   }
 
   @override
-  String get pdfDisclaimer => 'Disclaimer';
+  String get pdfDisclaimer =>
+      'This report is for informational purposes only and does not replace medical advice.';
 
   @override
-  String get pdfGeneratedBy => 'Generated by';
+  String get pdfGeneratedBy => 'Generated by Ovya';
 
   @override
-  String get patientDetails => 'Patient Details';
+  String get patientDetails => 'About You';
 
   @override
   String patientNameLabel(String patientName) {
@@ -249,7 +254,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get riskAssessment => 'Risk Assessment';
+  String get riskAssessment => 'Risk Overview';
 
   @override
   String get riskLevelLabel => 'Risk Level';
@@ -258,24 +263,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scoreLabel => 'Score';
 
   @override
-  String get pcosTypeHintLabel => 'PCOS Type Hint';
+  String get pcosTypeHintLabel => 'PCOS Pattern';
 
   @override
   String pcos_type_hint(String hint) {
-    return 'Hint: $hint';
+    return 'Pattern: $hint';
   }
 
   @override
-  String get explanationLabel => 'Explanation';
+  String get explanationLabel => 'What it means';
 
   @override
-  String get recommendations => 'Recommendations';
+  String get recommendations => 'What you can do';
 
   @override
-  String get symptomsLast30Days => 'Symptoms in last 30 days';
+  String get symptomsLast30Days => 'Your symptoms — last 30 days';
 
   @override
-  String get noSymptoms30Days => 'No symptoms in last 30 days';
+  String get noSymptoms30Days => 'No symptoms logged in the last 30 days';
 
   @override
   String get tableHeaderDate => 'Date';
@@ -287,31 +292,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tableHeaderMood => 'Mood';
 
   @override
-  String get irregularCycle => 'Irregular Cycle';
+  String get irregularCycle => 'Irregular periods';
 
   @override
   String get acne => 'Acne';
 
   @override
-  String get weightGain => 'Weight Gain';
+  String get weightGain => 'Weight changes';
 
   @override
-  String get excessHairGrowth => 'Excess Hair Growth';
+  String get excessHairGrowth => 'Excess hair growth';
 
   @override
-  String get moodIssues => 'Mood Issues';
+  String get moodIssues => 'Mood swings';
 
   @override
-  String get hairThinning => 'Hair Thinning';
+  String get hairThinning => 'Hair thinning';
 
   @override
-  String get skinDarkening => 'Skin Darkening';
+  String get skinDarkening => 'Skin darkening';
 
   @override
   String get fatigue => 'Fatigue';
 
   @override
-  String get sleepProblems => 'Sleep Problems';
+  String get sleepProblems => 'Sleep trouble';
 
   @override
   String get bloating => 'Bloating';
@@ -320,28 +325,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tableNone => 'None';
 
   @override
-  String get rec_track_regularly => 'Track regularly';
+  String get rec_track_regularly => 'Keep tracking regularly';
 
   @override
-  String get rec_balanced_diet => 'Balanced diet';
+  String get rec_balanced_diet => 'Eat balanced meals';
 
   @override
-  String get rec_schedule_checkup => 'Schedule checkup';
+  String get rec_schedule_checkup => 'Schedule a check-up';
 
   @override
-  String get rec_monitor_cycle => 'Monitor cycle';
+  String get rec_monitor_cycle => 'Keep an eye on your cycle';
 
   @override
-  String get rec_stress_management => 'Stress management';
+  String get rec_stress_management => 'Find ways to de-stress';
 
   @override
-  String get rec_consult_gynecologist => 'Consult gynecologist';
+  String get rec_consult_gynecologist => 'Talk to a gynaecologist';
 
   @override
-  String get rec_request_bloodwork => 'Request bloodwork';
+  String get rec_request_bloodwork => 'Consider a blood test';
 
   @override
-  String get rec_symptom_diary => 'Symptom diary';
+  String get rec_symptom_diary => 'Maintain a symptom diary';
 
   @override
   String get type_insulin_resistant => 'Insulin Resistant';
@@ -375,54 +380,54 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mindful_ashwagandha_desc =>
-      'Known to help lower cortisol levels and balance hormones.';
+      'Helps calm your mind and bring your hormones into balance.';
 
   @override
-  String get chat_ask_ovya_title => 'AskOvya';
+  String get chat_ask_ovya_title => 'Talk to Ovya';
 
   @override
-  String get chat_personal_guide => 'PERSONAL GUIDE';
+  String get chat_personal_guide => 'YOUR WELLNESS BUDDY';
 
   @override
-  String get chat_wellness_sanctuary => 'Your\nWellness\nSanctuary';
+  String get chat_wellness_sanctuary => 'Your\nSafe\nSpace';
 
   @override
   String get chat_wellness_subtitle =>
-      'Handcrafted insights tailored to your unique cycle and rhythm.';
+      'Gentle guidance shaped around your unique rhythm.';
 
   @override
   String get chat_ovya_label => 'OVYA';
 
   @override
   String get chat_greeting =>
-      'Based on your logs, your sleep has been a bit irregular this week. Would you like some gentle tips to help you rest better?';
+      'Hey! I noticed your sleep has been a bit off this week. Want some gentle tips to help you rest better?';
 
   @override
   String get chat_thinking => 'Thinking...';
 
   @override
-  String get chat_chip_sleep => 'SLEEP HYGIENE';
+  String get chat_chip_sleep => 'SLEEP';
 
   @override
-  String get chat_chip_stress => 'STRESS RELIEF';
+  String get chat_chip_stress => 'STRESS';
 
   @override
-  String get chat_chip_hormonal => 'HORMONAL BALANCE';
+  String get chat_chip_hormonal => 'HORMONES';
 
   @override
-  String get chat_chip_diet => 'DIET TIPS';
+  String get chat_chip_diet => 'FOOD';
 
   @override
-  String get chat_input_placeholder => 'Share how you\'re feeling...';
+  String get chat_input_placeholder => 'Tell me how you\'re feeling...';
 
   @override
-  String get chat_companion_note => 'OVYA IS YOUR COMPANION. NOT A DOCTOR.';
+  String get chat_companion_note => 'OVYA IS YOUR COMPANION, NOT A DOCTOR.';
 
   @override
-  String get chat_suggest_sleep => 'Give me tips for better sleep hygiene';
+  String get chat_suggest_sleep => 'Help me sleep better';
 
   @override
-  String get chat_suggest_stress => 'How can I manage stress with PCOS?';
+  String get chat_suggest_stress => 'How do I manage stress with PCOS?';
 
   @override
   String get chat_suggest_hormonal => 'Tips for hormonal balance';
@@ -431,47 +436,169 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chat_suggest_diet => 'What should I eat for PCOS?';
 
   @override
-  String get report_preview_demographics => 'Demographics & generated date';
+  String get report_preview_demographics => 'Your details and report date';
 
   @override
-  String get report_preview_risk => 'Computed risk score & PCOS type hint';
+  String get report_preview_risk => 'Risk score and PCOS pattern';
 
   @override
-  String get report_preview_logs => 'Last 30 days of symptom logs table';
+  String get report_preview_logs => '30-day symptom overview';
 
   @override
-  String get report_preview_recs => 'Personalised recommendations';
+  String get report_preview_recs => 'Personalised suggestions';
 
   @override
-  String get report_enter_name => 'Please enter patient name';
+  String get report_enter_name => 'Please enter your name';
 
   @override
-  String get log_saved => 'Log saved ✓';
+  String get log_saved => 'Saved! You\'re doing great ✓';
 
   @override
   String get no_risk_data =>
-      'No risk data available. Please log symptoms first.';
+      'No data yet. Log your symptoms first to see insights.';
 
   @override
-  String get history_title => 'History';
+  String get history_title => 'My Journey';
 
   @override
-  String get history_recent_assessments => 'Recent Assessments';
+  String get history_recent_assessments => 'Recent Check-ins';
 
   @override
   String get history_daily_logs => 'Daily Logs';
 
   @override
   String get history_no_assessments =>
-      'No assessments yet. Log your symptoms to get started.';
+      'No check-ins yet. Start logging to see how you\'re doing!';
 
   @override
   String get history_no_logs =>
-      'No logs yet. Start tracking to see your history.';
+      'Nothing here yet. Start tracking to build your story.';
 
   @override
   String get history_general_profile => 'General Profile';
 
   @override
   String get history_no_symptoms_tag => 'NO SYMPTOMS LOGGED';
+
+  @override
+  String get analysis_complete => 'YOUR RESULTS ARE READY';
+
+  @override
+  String get insulin_resistant_pcos_indicator => 'Insulin-Resistant Pattern';
+
+  @override
+  String get androgenic_pcos_indicator => 'Androgenic Pattern';
+
+  @override
+  String get adrenal_pcos_indicator => 'Adrenal Pattern';
+
+  @override
+  String get general_pcos_indicator => 'General Pattern';
+
+  @override
+  String get hormonal_imbalance_detected => 'We noticed some hormonal shifts';
+
+  @override
+  String get risk_explanation_high =>
+      'Based on what you\'ve shared — fatigue, irregular periods, and other signs — your body might be going through some hormonal changes. This is common and manageable.';
+
+  @override
+  String get risk_explanation_medium =>
+      'Some of your symptoms show patterns worth keeping an eye on. Regular tracking will help us understand better.';
+
+  @override
+  String get risk_explanation_low =>
+      'Things look steady! Keep tracking so we can catch any changes early.';
+
+  @override
+  String get insight_explanation_insulin =>
+      'Your body might be finding it hard to process sugar smoothly, which can cause energy dips and mood shifts during the day. This is really common and can be managed with small lifestyle tweaks.';
+
+  @override
+  String get insight_explanation_androgenic =>
+      'Your symptoms suggest slightly elevated androgen levels, which can show up as skin or hair changes. This is one of the most common PCOS patterns and responds well to gentle care.';
+
+  @override
+  String get insight_explanation_adrenal =>
+      'Your pattern points to stress-related hormonal shifts. The good news? This type responds really well to relaxation, good sleep, and stress management.';
+
+  @override
+  String get insight_explanation_general =>
+      'Your symptoms show some common PCOS patterns. With consistent tracking and the right guidance, these are very manageable.';
+
+  @override
+  String get action_balanced_meals_title => 'Eat balanced, nourishing meals';
+
+  @override
+  String get action_balanced_meals_subtitle =>
+      'Think protein, fibre, and healthy fats with every meal.';
+
+  @override
+  String get action_light_movement_title => 'Move a little every day';
+
+  @override
+  String get action_light_movement_subtitle =>
+      'Even a 15-min walk after meals can help with insulin.';
+
+  @override
+  String get action_sleep_title => 'Give your body proper rest';
+
+  @override
+  String get action_sleep_subtitle =>
+      'Aim for 7-8 hours — your hormones will thank you.';
+
+  @override
+  String get action_skin_care_title => 'Be gentle with your skin';
+
+  @override
+  String get action_skin_care_subtitle =>
+      'Mild cleansers and targeted treatments can help a lot.';
+
+  @override
+  String get action_anti_inflammatory_title => 'Add anti-inflammatory foods';
+
+  @override
+  String get action_anti_inflammatory_subtitle =>
+      'Turmeric, omega-3s, and leafy greens are your friends.';
+
+  @override
+  String get action_consult_title => 'Talk to a specialist';
+
+  @override
+  String get action_consult_subtitle =>
+      'An endocrinologist can help check your hormone levels.';
+
+  @override
+  String get action_stress_title => 'Find your calm';
+
+  @override
+  String get action_stress_subtitle =>
+      'Try yoga, meditation, or just some deep breaths daily.';
+
+  @override
+  String get action_cortisol_title => 'Balance your cortisol';
+
+  @override
+  String get action_cortisol_subtitle =>
+      'Less caffeine, more restful sleep. Small changes, big impact.';
+
+  @override
+  String get action_adaptogens_title => 'Try natural adaptogens';
+
+  @override
+  String get action_adaptogens_subtitle =>
+      'Ashwagandha and tulsi can help your body handle stress.';
+
+  @override
+  String get wellness_tip_intro => 'Start your morning with warm herbal tea';
+
+  @override
+  String get wellness_tip_body =>
+      '— it can ease bloating and help your tummy feel calmer.';
+
+  @override
+  String get ask_ovya_anything => 'Ask Ovya anything';
+
+  @override
+  String get report_generated_success => 'Your report is ready!';
 }

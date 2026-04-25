@@ -133,69 +133,75 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
-                            color: Colors.white.withOpacity(0.6),
+                            color: Colors.white.withValues(alpha: 0.6),
                             width: 1,
                           ),
                         ),
-                        child: Row(
-                          children: [
-                            // Left text
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    loc.chat_personal_guide,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelSmall
-                                        ?.copyWith(
-                                          color: kAccent,
-                                          fontWeight: FontWeight.bold,
-                                          letterSpacing: 0.8,
-                                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                left: -10,
+                                bottom: -10,
+                                child: Container(
+                                  width: 100,
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    color: kPurpleCard.withValues(alpha: 0.4),
+                                    shape: BoxShape.circle,
                                   ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    loc.chat_wellness_sanctuary,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleLarge
-                                        ?.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          height: 1.2,
-                                        ),
+                                  child: ClipOval(
+                                    child: Image.asset(
+                                      'assets/images/illustrations/face1.png',
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
-                                  const SizedBox(height: 10),
-                                  Text(
-                                    loc.chat_wellness_subtitle,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium
-                                        ?.copyWith(
-                                          color: kTextSecondary,
-                                          height: 1.4,
-                                        ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            // Right illustration
-                            Container(
-                              width: 90,
-                              height: 90,
-                              decoration: BoxDecoration(
-                                color: kPurpleCard.withOpacity(0.4),
-                                shape: BoxShape.circle,
-                              ),
-                              child: ClipOval(
-                                child: Image.asset(
-                                  'assets/images/illustrations/face1.png',
-                                  fit: BoxFit.cover,
                                 ),
                               ),
-                            ),
-                          ],
+                              Padding(
+                                padding: const EdgeInsets.only(left: 64),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      loc.chat_personal_guide,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall
+                                          ?.copyWith(
+                                            color: kAccent,
+                                            fontWeight: FontWeight.bold,
+                                            letterSpacing: 0.8,
+                                          ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      loc.chat_wellness_sanctuary,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            height: 1.2,
+                                          ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      loc.chat_wellness_subtitle,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.copyWith(
+                                            color: kTextSecondary,
+                                            height: 1.4,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -311,7 +317,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(28),
                       border: Border.all(
-                        color: Colors.white.withOpacity(0.6),
+                        color: Colors.white.withValues(alpha: 0.6),
                         width: 1,
                       ),
                     ),
@@ -325,7 +331,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                             decoration: InputDecoration(
                               hintText: loc.chat_input_placeholder,
                               hintStyle: TextStyle(
-                                color: kTextSecondary.withOpacity(0.6),
+                                color: kTextSecondary.withValues(alpha: 0.6),
                                 fontSize: 14,
                               ),
                               border: InputBorder.none,
@@ -353,7 +359,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                               decoration: BoxDecoration(
                                 color: (chatState.isOffline ||
                                         chatState.isLoading)
-                                    ? kTextSecondary.withOpacity(0.3)
+                                    ? kTextSecondary.withValues(alpha: 0.3)
                                     : kAccent,
                                 shape: BoxShape.circle,
                               ),
@@ -380,7 +386,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen>
                   Text(
                     loc.chat_companion_note,
                     style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                          color: kTextSecondary.withOpacity(0.6),
+                          color: kTextSecondary.withValues(alpha: 0.6),
                           letterSpacing: 0.5,
                           fontSize: 10,
                         ),
@@ -427,7 +433,7 @@ class _OvyaBubble extends StatelessWidget {
           margin: const EdgeInsets.only(right: 40),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           decoration: BoxDecoration(
-            color: kPurpleCard.withOpacity(0.35),
+            color: kPurpleCard.withValues(alpha: 0.35),
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(4),
               topRight: Radius.circular(18),
@@ -469,7 +475,7 @@ class _UserBubble extends StatelessWidget {
             bottomLeft: Radius.circular(18),
           ),
           border: Border.all(
-            color: Colors.white.withOpacity(0.6),
+            color: Colors.white.withValues(alpha: 0.6),
             width: 1,
           ),
         ),
@@ -500,7 +506,7 @@ class _SuggestionChip extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: kAccent.withOpacity(0.3), width: 1),
+          border: Border.all(color: kAccent.withValues(alpha: 0.3), width: 1),
         ),
         child: Text(
           label,

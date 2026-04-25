@@ -36,7 +36,7 @@ class _SymptomChipGridState extends State<SymptomChipGrid> {
       decoration: BoxDecoration(
         color: kGreenCard,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.white.withOpacity(0.6), width: 1),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.6), width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +67,7 @@ class _SymptomChipGridState extends State<SymptomChipGrid> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                   side: BorderSide(
-                    color: isSelected ? kAccent : kTextSecondary.withOpacity(0.3),
+                    color: isSelected ? kAccent : kTextSecondary.withValues(alpha: 0.3),
                     width: 0.5,
                   ),
                 ),

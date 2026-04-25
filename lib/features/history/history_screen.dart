@@ -285,13 +285,7 @@ class _CalendarCard extends StatelessWidget {
           ],
         ),
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: kAccent.withOpacity(0.06),
-            blurRadius: 16,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        border: Border.all(color: kAccent.withValues(alpha: 0.15), width: 1),
       ),
       child: Column(
         children: [
@@ -313,7 +307,7 @@ class _CalendarCard extends StatelessWidget {
                       width: 32,
                       height: 32,
                       decoration: BoxDecoration(
-                        color: kPurpleCard.withOpacity(0.3),
+                        color: kPurpleCard.withValues(alpha: 0.3),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: const Icon(Icons.chevron_left, size: 20, color: kAccent),
@@ -326,7 +320,7 @@ class _CalendarCard extends StatelessWidget {
                       width: 32,
                       height: 32,
                       decoration: BoxDecoration(
-                        color: kPurpleCard.withOpacity(0.3),
+                        color: kPurpleCard.withValues(alpha: 0.3),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: const Icon(Icons.chevron_right, size: 20, color: kAccent),
@@ -342,7 +336,7 @@ class _CalendarCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(vertical: 8),
             decoration: BoxDecoration(
-              color: kPurpleCard.withOpacity(0.2),
+              color: kPurpleCard.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Row(
@@ -372,7 +366,7 @@ class _CalendarCard extends StatelessWidget {
               margin: const EdgeInsets.symmetric(vertical: 2),
               padding: const EdgeInsets.symmetric(vertical: 2),
               decoration: BoxDecoration(
-                color: pastelBg.withOpacity(0.45),
+                color: pastelBg.withValues(alpha: 0.45),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Row(
@@ -409,13 +403,13 @@ class _CalendarCard extends StatelessWidget {
                               color: isSelected
                                   ? kAccent
                                   : isToday
-                                      ? kAccent.withOpacity(0.15)
+                                      ? kAccent.withValues(alpha: 0.15)
                                       : Colors.transparent,
                               shape: BoxShape.circle,
                               boxShadow: isSelected
                                   ? [
                                       BoxShadow(
-                                        color: kAccent.withOpacity(0.3),
+                                        color: kAccent.withValues(alpha: 0.3),
                                         blurRadius: 6,
                                         offset: const Offset(0, 2),
                                       ),
@@ -449,7 +443,7 @@ class _CalendarCard extends StatelessWidget {
                                 shape: BoxShape.circle,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: kAccent.withOpacity(0.3),
+                                    color: kAccent.withValues(alpha: 0.3),
                                     blurRadius: 3,
                                   ),
                                 ],
@@ -517,70 +511,75 @@ class _AssessmentCard extends StatelessWidget {
 
     return Container(
       width: 180,
-      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withOpacity(0.6), width: 1),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.6), width: 1),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Risk badge
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: badgeColor,
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: Text(
-                    badgeText,
-                    style: TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                      color: badgeTextColor,
-                      letterSpacing: 0.5,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: Stack(
+          children: [
+            Positioned(
+              left: -8,
+              bottom: -8,
+              child: Container(
+                width: 48,
+                height: 48,
+                decoration: BoxDecoration(
+                  color: kPurpleCard.withValues(alpha: 0.3),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.psychology_outlined, size: 20, color: kAccent),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Risk badge
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: badgeColor,
+                      borderRadius: BorderRadius.circular(6),
                     ),
+                    child: Text(
+                      badgeText,
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                        color: badgeTextColor,
+                        letterSpacing: 0.5,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  const Spacer(),
+                  Text(
+                    title,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                ),
+                  const SizedBox(height: 4),
+                  Text(
+                    dateStr,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: kTextSecondary,
+                          fontSize: 12,
+                        ),
+                  ),
+                ],
               ),
-              const SizedBox(width: 8),
-              Container(
-                width: 28,
-                height: 28,
-                decoration: BoxDecoration(
-                  color: kPurpleCard.withOpacity(0.4),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(Icons.psychology_outlined, size: 16, color: kAccent),
-              ),
-            ],
-          ),
-          const Spacer(),
-          Text(
-            title,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          const SizedBox(height: 4),
-          Text(
-            dateStr,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: kTextSecondary,
-                  fontSize: 12,
-                ),
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -605,39 +604,48 @@ class _DailyLogCard extends StatelessWidget {
     final dateStr = DateFormat.MMMd(locale).format(symptom.timestamp);
 
     return Container(
-      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.white.withOpacity(0.6), width: 1),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.6), width: 1),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Header row
-          Row(
-            children: [
-              Container(
-                width: 36,
-                height: 36,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: Stack(
+          children: [
+            Positioned(
+              left: -10,
+              bottom: -10,
+              child: Container(
+                width: 56,
+                height: 56,
                 decoration: BoxDecoration(
-                  color: kPurpleCard.withOpacity(0.4),
+                  color: kPurpleCard.withValues(alpha: 0.3),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.spa_outlined, size: 18, color: kAccent),
+                child: const Icon(Icons.spa_outlined, size: 24, color: kAccent),
               ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  dateStr,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Header row
+                  Row(
+                    children: [
+                      const SizedBox(width: 4),
+                      Expanded(
+                        child: Text(
+                          dateStr,
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                        ),
                       ),
-                ),
-              ),
-            ],
-          ),
+                    ],
+                  ),
 
           // Symptom tags as chips (always show)
           if (activeSymptoms.isNotEmpty) ...[
@@ -649,7 +657,7 @@ class _DailyLogCard extends StatelessWidget {
                 return Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   decoration: BoxDecoration(
-                    color: kPurpleCard.withOpacity(0.3),
+                    color: kPurpleCard.withValues(alpha: 0.3),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -713,7 +721,7 @@ class _DailyLogCard extends StatelessWidget {
                     return Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                       decoration: BoxDecoration(
-                        color: kGreenCard.withOpacity(0.5),
+                        color: kGreenCard.withValues(alpha: 0.5),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
@@ -731,6 +739,10 @@ class _DailyLogCard extends StatelessWidget {
             }),
           ],
         ],
+      ),
+    ),
+  ],
+),
       ),
     );
   }

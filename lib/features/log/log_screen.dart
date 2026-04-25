@@ -158,7 +158,7 @@ class _LogScreenState extends State<LogScreen> {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(20),
-                              border: Border.all(color: Colors.white.withOpacity(0.6), width: 1),
+                              border: Border.all(color: Colors.white.withValues(alpha: 0.6), width: 1),
                             ),
                             padding: const EdgeInsets.all(16),
                             child: Column(

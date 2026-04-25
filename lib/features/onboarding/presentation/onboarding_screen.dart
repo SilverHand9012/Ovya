@@ -81,7 +81,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,
-                  color: onSurfaceColor.withOpacity(0.7),
+                  color: onSurfaceColor.withValues(alpha: 0.7),
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -103,8 +103,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                         decoration: BoxDecoration(
                           color: isSelected 
-                              ? primaryColor.withOpacity(0.1) 
-                              : surfaceColor.withOpacity(0.5),
+                              ? primaryColor.withValues(alpha: 0.1) 
+                              : surfaceColor.withValues(alpha: 0.5),
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
                             color: isSelected ? primaryColor : Colors.transparent,
@@ -130,7 +130,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                                     lang['englishName']!,
                                     style: TextStyle(
                                       fontSize: 14,
-                                      color: onSurfaceColor.withOpacity(0.6),
+                                      color: onSurfaceColor.withValues(alpha: 0.6),
                                     ),
                                   ),
                                 ],
@@ -145,7 +145,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                             else
                               Icon(
                                 Icons.radio_button_unchecked,
-                                color: onSurfaceColor.withOpacity(0.3),
+                                color: onSurfaceColor.withValues(alpha: 0.3),
                                 size: 28,
                               ),
                           ],
@@ -164,8 +164,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: primaryColor,
                   foregroundColor: colors.onPrimary,
-                  disabledBackgroundColor: onSurfaceColor.withOpacity(0.12),
-                  disabledForegroundColor: onSurfaceColor.withOpacity(0.38),
+                  disabledBackgroundColor: onSurfaceColor.withValues(alpha: 0.12),
+                  disabledForegroundColor: onSurfaceColor.withValues(alpha: 0.38),
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),

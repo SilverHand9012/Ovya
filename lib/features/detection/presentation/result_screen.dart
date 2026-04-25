@@ -100,11 +100,11 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
   String _getPcosTypeDesc(AppLocalizations loc, String type) {
     switch (type) {
       case 'Insulin-resistant':
-        return loc.pcos_type_insulin_desc;
+        return loc.insight_explanation_insulin;
       case 'Androgenic':
-        return loc.pcos_type_androgenic_desc;
+        return loc.insight_explanation_androgenic;
       case 'Adrenal':
-        return loc.pcos_type_adrenal_desc;
+        return loc.insight_explanation_adrenal;
       default:
         return '';
     }
@@ -140,10 +140,10 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                 transform: Matrix4.translationValues(0, _showAnimation ? 0 : 50, 0),
                 padding: const EdgeInsets.all(32),
                 decoration: BoxDecoration(
-                  color: riskColor.withOpacity(_showAnimation ? 0.1 : 0),
+                  color: riskColor.withValues(alpha: _showAnimation ? 0.1 : 0),
                   borderRadius: BorderRadius.circular(24),
                   border: Border.all(
-                    color: riskColor.withOpacity(_showAnimation ? 0.5 : 0),
+                    color: riskColor.withValues(alpha: _showAnimation ? 0.5 : 0),
                     width: 2,
                   ),
                 ),
@@ -160,7 +160,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      loc.riskLevel(_result.level),
+                      "Risk Level: ${_result.level}",
                       style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
@@ -192,7 +192,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
               if (_result.pcosTypeHint != null) ...[
                 Container(
                   decoration: BoxDecoration(
-                    color: colors.primaryContainer.withOpacity(0.5),
+                    color: colors.primaryContainer.withValues(alpha: 0.5),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   padding: const EdgeInsets.all(20),
@@ -218,7 +218,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                               _getPcosTypeDesc(loc, _result.pcosTypeHint!),
                               style: TextStyle(
                                 fontSize: 14,
-                                color: colors.onPrimaryContainer.withOpacity(0.8),
+                                color: colors.onPrimaryContainer.withValues(alpha: 0.8),
                               ),
                             ),
                           ],
@@ -266,7 +266,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                           _getRecommendation(loc, key),
                           style: TextStyle(
                             fontSize: 16,
-                            color: colors.onSurface.withOpacity(0.9),
+                            color: colors.onSurface.withValues(alpha: 0.9),
                             height: 1.4,
                           ),
                         ),
@@ -293,7 +293,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                   elevation: 0,
                 ),
                 child: Text(
-                  loc.btn_save_track,
+                  loc.continue_tracking,
                   style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),

@@ -78,13 +78,7 @@ class _FloatingBottomNav extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(28),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.08),
-              blurRadius: 20,
-              offset: const Offset(0, 4),
-            ),
-          ],
+          border: Border.all(color: Colors.black.withValues(alpha: 0.1), width: 1),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,

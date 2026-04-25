@@ -38,7 +38,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
           toolbarHeight: 0, // Hide the actual app bar for a cleaner look
           bottom: TabBar(
             labelColor: colors.primary,
-            unselectedLabelColor: colors.onSurface.withOpacity(0.6),
+            unselectedLabelColor: colors.onSurface.withValues(alpha: 0.6),
             indicatorColor: colors.primary,
             dividerColor: Colors.transparent,
             tabs: [

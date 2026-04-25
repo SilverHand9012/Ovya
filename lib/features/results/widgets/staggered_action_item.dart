@@ -73,52 +73,58 @@ class _StaggeredActionItemState extends State<StaggeredActionItem>
           decoration: BoxDecoration(
             color: widget.bgColor,
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Colors.white.withOpacity(0.6), width: 1),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.6), width: 1),
           ),
-          child: Row(
+          child: Stack(
             children: [
-              Container(
-                width: 32,
-                height: 32,
-                decoration: const BoxDecoration(
-                  color: kAccent,
-                  shape: BoxShape.circle,
+              if (widget.illustration != null)
+                Positioned(
+                  left: -10,
+                  bottom: -10,
+                  child: widget.illustration!,
                 ),
-                child: Center(
-                  child: Text(
-                    '${widget.index + 1}',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
+              Row(
+                children: [
+                  Container(
+                    width: 32,
+                    height: 32,
+                    decoration: const BoxDecoration(
+                      color: kAccent,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: Text(
+                        '${widget.index + 1}',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.title,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontSize: 16,
-                          ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.title,
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                fontSize: 16,
+                              ),
+                        ),
+                        Text(
+                          widget.subtitle,
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                color: kTextSecondary,
+                              ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      widget.subtitle,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: kTextSecondary,
-                          ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              if (widget.illustration != null) ...[
-                const SizedBox(width: 8),
-                widget.illustration!,
-              ],
             ],
           ),
         ),
