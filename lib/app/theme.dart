@@ -42,10 +42,9 @@ class AppTheme {
 
   static TextTheme buildTextTheme(Locale locale) {
     final family = switch (locale.languageCode) {
-      'hi' => 'Noto Sans Devanagari',
       'kn' => 'Baloo Tamma 2',
       'te' => 'Baloo Tammudu 2',
-      _    => 'Baloo 2',
+      _    => 'Baloo 2', // Includes en, hi, mr
     };
     
     return TextTheme(

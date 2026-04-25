@@ -608,4 +608,101 @@ class AppLocalizationsTe extends AppLocalizations {
 
   @override
   String get report_generated_success => 'మీ రిపోర్ట్ సిద్ధంగా ఉంది!';
+
+  @override
+  String get q_irregular_cycle => 'మీకు క్రమరహిత పీరియడ్స్ ఉన్నాయా?';
+
+  @override
+  String get q_hair_growth => 'మీ ముఖం లేదా శరీరంపై అవాంఛిత రోమాలు ఉన్నాయా?';
+
+  @override
+  String get q_family_history => 'మీ కుటుంబంలో ఎవరికైనా PCOS సమస్య ఉందా?';
+
+  @override
+  String get q_weight_gain => 'కారణం లేకుండా మీ బరువు పెరుగుతోందా?';
+
+  @override
+  String get q_acne => 'మీకు తీవ్రమైన మొటిమల సమస్య ఉందా?';
+
+  @override
+  String get q_skin_darkening => 'మీ చర్మం (ఉదాహరణకు మెడ చుట్టూ) నల్లబడుతోందా?';
+
+  @override
+  String get q_hair_thinning => 'మీ జుట్టు రాలిపోతోందా లేదా పలచబడుతోందా?';
+
+  @override
+  String get q_fatigue => 'మీరు తరచుగా చాలా అలసటగా భావిస్తారా?';
+
+  @override
+  String get q_sleep_problems => 'మీకు నిద్రపోవడంలో ఇబ్బంది ఉందా?';
+
+  @override
+  String get q_bloating => 'మీకు తరచుగా కడుపు ఉబ్బరంగా అనిపిస్తుందా?';
+
+  @override
+  String get q_mood_issues =>
+      'మీకు తరచుగా మూడ్ స్వింగ్స్ (మానసిక స్థితిలో మార్పులు) వస్తున్నాయా?';
+
+  @override
+  String get q_over_18 => 'మీకు 18 ఏళ్లు పైబడి ఉన్నాయా?';
+
+  @override
+  String get q_difficulty_conceiving =>
+      'మీరు గర్భం దాల్చడంలో ఇబ్బంది పడుతున్నారా?';
+
+  @override
+  String get trackCycle => 'సైకిల్ ట్రాక్ చేయండి';
+
+  @override
+  String get logPeriodDates => 'మీ పీరియడ్ తేదీలను లాగ్ చేయండి';
+
+  @override
+  String get auth_welcome_title => 'ఓవ్యాకు స్వాగతం';
+
+  @override
+  String get auth_welcome_subtitle =>
+      'మీ ఆరోగ్యాన్ని అర్థం చేసుకోవడానికి మరియు నిర్వహించడానికి మీ తోడు';
+
+  @override
+  String get auth_login_signup_btn => 'లాగిన్ / సైన్ అప్';
+
+  @override
+  String get auth_guest_btn => 'అతిథిగా కొనసాగండి';
+
+  @override
+  String get auth_private_secure =>
+      'మీ డేటా ప్రైవేట్‌గా మరియు సురక్షితంగా ఉంటుంది';
+
+  @override
+  String get auth_gently_guided => 'మీ ఆరోగ్యం, సున్నితంగా మార్గనిర్దేశం';
+
+  @override
+  String get auth_email_hint => 'you@example.com';
+
+  @override
+  String get auth_password_hint => '........';
+
+  @override
+  String get auth_forgot_password => 'పాస్‌వర్డ్ మర్చిపోయారా?';
+
+  @override
+  String get auth_or => 'లేదా';
+
+  @override
+  String get auth_continue_google => 'Google తో కొనసాగండి';
+
+  @override
+  String get auth_dont_have_account => 'ఖాతా లేదా? ';
+
+  @override
+  String get auth_full_name => 'పూర్తి పేరు';
+
+  @override
+  String get auth_name_hint => 'Jane Doe';
+
+  @override
+  String get auth_email_address => 'ఇమెయిల్ చిరునామా';
+
+  @override
+  String get auth_already_have_account => 'ఇప్పటికే ఖాతా ఉందా? ';
 }

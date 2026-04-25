@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ovya/l10n/gen/app_localizations.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../app/theme.dart';
 import 'widgets/sync_badge.dart';
 import 'widgets/risk_alert_card.dart';
@@ -64,11 +66,36 @@ class _SanctuaryScreenState extends ConsumerState<SanctuaryScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 16.0),
-                child: CircleAvatar(
-                  backgroundColor: kAccent,
-                  child: Text(
-                    userName.isNotEmpty ? userName[0].toUpperCase() : '?',
-                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                child: PopupMenuButton<String>(
+                  tooltip: 'Profile Options',
+                  onSelected: (value) async {
+                    if (value == 'logout') {
+                      final prefs = await SharedPreferences.getInstance();
+                      await prefs.remove('is_guest');
+                      await FirebaseAuth.instance.signOut();
+                      if (context.mounted) {
+                        context.go('/auth');
+                      }
+                    }
+                  },
+                  itemBuilder: (context) => [
+                    const PopupMenuItem(
+                      value: 'logout',
+                      child: Row(
+                        children: [
+                          Icon(Icons.logout, color: Colors.redAccent, size: 20),
+                          SizedBox(width: 12),
+                          Text('Log Out'),
+                        ],
+                      ),
+                    ),
+                  ],
+                  child: CircleAvatar(
+                    backgroundColor: kAccent,
+                    child: Text(
+                      userName.isNotEmpty ? userName[0].toUpperCase() : '?',
+                      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ),
               ),
@@ -221,14 +248,14 @@ class _SanctuaryScreenState extends ConsumerState<SanctuaryScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Track Cycle',
+                              l10n.trackCycle,
                               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              'Log your period dates',
+                              l10n.logPeriodDates,
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                     color: kTextSecondary,
                                   ),

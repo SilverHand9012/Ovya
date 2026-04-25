@@ -598,4 +598,103 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get report_generated_success => 'रिपोर्ट तैयार है!';
+
+  @override
+  String get q_irregular_cycle =>
+      'क्या आपके मासिक धर्म (पीरियड्स) अनियमित हैं?';
+
+  @override
+  String get q_hair_growth => 'क्या आपके चेहरे या शरीर पर अनचाहे बाल हैं?';
+
+  @override
+  String get q_family_history =>
+      'क्या आपके परिवार में किसी को PCOS की समस्या है?';
+
+  @override
+  String get q_weight_gain => 'क्या आपका वजन बिना किसी कारण के बढ़ रहा है?';
+
+  @override
+  String get q_acne => 'क्या आपको गंभीर मुंहासों की समस्या है?';
+
+  @override
+  String get q_skin_darkening =>
+      'क्या आपकी त्वचा (जैसे गर्दन के आसपास) काली पड़ रही है?';
+
+  @override
+  String get q_hair_thinning => 'क्या आपके बाल झड़ रहे हैं या पतले हो रहे हैं?';
+
+  @override
+  String get q_fatigue => 'क्या आपको अक्सर बहुत अधिक थकान महसूस होती है?';
+
+  @override
+  String get q_sleep_problems => 'क्या आपको सोने में परेशानी होती है?';
+
+  @override
+  String get q_bloating => 'क्या आपको अक्सर पेट फूलने की समस्या होती है?';
+
+  @override
+  String get q_mood_issues =>
+      'क्या आपको अक्सर मूड स्विंग्स (मिज़ाज बदलना) की समस्या होती है?';
+
+  @override
+  String get q_over_18 => 'क्या आपकी उम्र 18 वर्ष से अधिक है?';
+
+  @override
+  String get q_difficulty_conceiving =>
+      'क्या आपको गर्भधारण करने में परेशानी हो रही है?';
+
+  @override
+  String get trackCycle => 'साइकिल ट्रैक करें';
+
+  @override
+  String get logPeriodDates => 'अपनी पीरियड की तारीखें दर्ज करें';
+
+  @override
+  String get auth_welcome_title => 'ओव्या में आपका स्वागत है';
+
+  @override
+  String get auth_welcome_subtitle =>
+      'आपके स्वास्थ्य को समझने और प्रबंधित करने में आपका साथी';
+
+  @override
+  String get auth_login_signup_btn => 'लॉग इन / साइन अप';
+
+  @override
+  String get auth_guest_btn => 'अतिथि के रूप में जारी रखें';
+
+  @override
+  String get auth_private_secure => 'आपका डेटा निजी और सुरक्षित रहता है';
+
+  @override
+  String get auth_gently_guided => 'आपका स्वास्थ्य, कोमलता से निर्देशित';
+
+  @override
+  String get auth_email_hint => 'you@example.com';
+
+  @override
+  String get auth_password_hint => '........';
+
+  @override
+  String get auth_forgot_password => 'पासवर्ड भूल गए?';
+
+  @override
+  String get auth_or => 'या';
+
+  @override
+  String get auth_continue_google => 'Google के साथ जारी रखें';
+
+  @override
+  String get auth_dont_have_account => 'खाता नहीं है? ';
+
+  @override
+  String get auth_full_name => 'पूरा नाम';
+
+  @override
+  String get auth_name_hint => 'Jane Doe';
+
+  @override
+  String get auth_email_address => 'ईमेल पता';
+
+  @override
+  String get auth_already_have_account => 'क्या आपके पास पहले से खाता है? ';
 }

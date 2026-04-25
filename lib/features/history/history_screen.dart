@@ -521,7 +521,7 @@ class _AssessmentCard extends StatelessWidget {
         child: Stack(
           children: [
             Positioned(
-              left: -8,
+              right: -8,
               bottom: -8,
               child: Container(
                 width: 48,
@@ -614,7 +614,7 @@ class _DailyLogCard extends StatelessWidget {
         child: Stack(
           children: [
             Positioned(
-              left: -10,
+              right: -10,
               bottom: -10,
               child: Container(
                 width: 56,

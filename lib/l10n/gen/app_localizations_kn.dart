@@ -608,4 +608,103 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get report_generated_success => 'ನಿಮ್ಮ ವರದಿ ಸಿದ್ಧವಾಗಿದೆ!';
+
+  @override
+  String get q_irregular_cycle => 'ನಿಮಗೆ ಅನಿಯಮಿತ ಋತುಚಕ್ರವಿದೆಯೇ?';
+
+  @override
+  String get q_hair_growth =>
+      'ನಿಮ್ಮ ಮುಖ ಅಥವಾ ದೇಹದ ಮೇಲೆ ಅನಗತ್ಯ ಕೂದಲು ಬೆಳೆಯುತ್ತಿದೆಯೇ?';
+
+  @override
+  String get q_family_history =>
+      'ನಿಮ್ಮ ಕುಟುಂಬದಲ್ಲಿ ಯಾರಿಗಾದರೂ PCOS ಸಮಸ್ಯೆ ಇದೆಯೇ?';
+
+  @override
+  String get q_weight_gain => 'ಕಾರಣವಿಲ್ಲದೆ ನಿಮ್ಮ ತೂಕ ಹೆಚ್ಚಾಗುತ್ತಿದೆಯೇ?';
+
+  @override
+  String get q_acne => 'ನಿಮಗೆ ತೀವ್ರವಾದ ಮೊಡವೆಗಳ ಸಮಸ್ಯೆಯಿದೆಯೇ?';
+
+  @override
+  String get q_skin_darkening =>
+      'ನಿಮ್ಮ ಚರ್ಮವು (ಉದಾಹರಣೆಗೆ ಕುತ್ತಿಗೆಯ ಸುತ್ತ) ಕಪ್ಪಾಗುತ್ತಿದೆಯೇ?';
+
+  @override
+  String get q_hair_thinning =>
+      'ನಿಮ್ಮ ಕೂದಲು ಉದುರುತ್ತಿದೆಯೇ ಅಥವಾ ತೆಳುವಾಗುತ್ತಿದೆಯೇ?';
+
+  @override
+  String get q_fatigue => 'ನಿಮಗೆ ಆಗಾಗ್ಗೆ ಅತಿಯಾದ ಆಯಾಸವಾಗುತ್ತದೆಯೇ?';
+
+  @override
+  String get q_sleep_problems => 'ನಿಮಗೆ ನಿದ್ರಿಸಲು ತೊಂದರೆಯಾಗುತ್ತಿದೆಯೇ?';
+
+  @override
+  String get q_bloating => 'ನಿಮಗೆ ಆಗಾಗ್ಗೆ ಹೊಟ್ಟೆ ಉಬ್ಬರವಾಗುತ್ತಿದೆಯೇ?';
+
+  @override
+  String get q_mood_issues =>
+      'ನಿಮಗೆ ಆಗಾಗ್ಗೆ ಮೂಡ್ ಸ್ವಿಂಗ್ (ಮನಸ್ಥಿತಿ ಬದಲಾವಣೆ) ಆಗುತ್ತಿದೆಯೇ?';
+
+  @override
+  String get q_over_18 => 'ನಿಮಗೆ 18 ವರ್ಷಕ್ಕಿಂತ ಮೇಲ್ಪಟ್ಟ ವಯಸ್ಸಾಗಿದೆಯೇ?';
+
+  @override
+  String get q_difficulty_conceiving => 'ನಿಮಗೆ ಗರ್ಭಧರಿಸಲು ತೊಂದರೆಯಾಗುತ್ತಿದೆಯೇ?';
+
+  @override
+  String get trackCycle => 'ಸೈಕಲ್ ಟ್ರ್ಯಾಕ್ ಮಾಡಿ';
+
+  @override
+  String get logPeriodDates => 'ನಿಮ್ಮ ಮುಟ್ಟಿನ ದಿನಾಂಕಗಳನ್ನು ಲಾಗ್ ಮಾಡಿ';
+
+  @override
+  String get auth_welcome_title => 'ಓವ್ಯಾಗೆ ಸ್ವಾಗತ';
+
+  @override
+  String get auth_welcome_subtitle =>
+      'ನಿಮ್ಮ ಆರೋಗ್ಯವನ್ನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳಲು ಮತ್ತು ನಿರ್ವಹಿಸಲು ನಿಮ್ಮ ಒಡನಾಡಿ';
+
+  @override
+  String get auth_login_signup_btn => 'ಲಾಗಿನ್ / ಸೈನ್ ಅಪ್';
+
+  @override
+  String get auth_guest_btn => 'ಅತಿಥಿಯಾಗಿ ಮುಂದುವರಿಯಿರಿ';
+
+  @override
+  String get auth_private_secure => 'ನಿಮ್ಮ ಡೇಟಾ ಖಾಸಗಿ ಮತ್ತು ಸುರಕ್ಷಿತವಾಗಿರಲಿದೆ';
+
+  @override
+  String get auth_gently_guided => 'ನಿಮ್ಮ ಆರೋಗ್ಯ, ಮೃದುವಾಗಿ ಮಾರ್ಗದರ್ಶನ';
+
+  @override
+  String get auth_email_hint => 'you@example.com';
+
+  @override
+  String get auth_password_hint => '........';
+
+  @override
+  String get auth_forgot_password => 'ಪಾಸ್‌ವರ್ಡ್ ಮರೆತಿರಾ?';
+
+  @override
+  String get auth_or => 'ಅಥವಾ';
+
+  @override
+  String get auth_continue_google => 'Google ನೊಂದಿಗೆ ಮುಂದುವರಿಯಿರಿ';
+
+  @override
+  String get auth_dont_have_account => 'ಖಾತೆ ಇಲ್ಲವೇ? ';
+
+  @override
+  String get auth_full_name => 'ಪೂರ್ಣ ಹೆಸರು';
+
+  @override
+  String get auth_name_hint => 'Jane Doe';
+
+  @override
+  String get auth_email_address => 'ಇಮೇಲ್ ವಿಳಾಸ';
+
+  @override
+  String get auth_already_have_account => 'ಈಗಾಗಲೇ ಖಾತೆಯನ್ನು ಹೊಂದಿದ್ದೀರಾ? ';
 }

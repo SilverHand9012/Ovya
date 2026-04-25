@@ -2,18 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ovya/l10n/gen/app_localizations.dart';
-
-import '../../../shared/providers/sync_service_provider.dart';
-import '../../../shared/providers/locale_provider.dart';
-
-import '../data/auth_repository.dart';
-
-/// Provider for AuthRepository. Provide your actual implementation here.
-final authRepositoryProvider = Provider<AuthRepository>((ref) {
-  final prefs = ref.watch(sharedPreferencesProvider);
-  return FirebaseAuthRepository(prefs: prefs);
-});
 
 class AuthScreen extends ConsumerStatefulWidget {
   const AuthScreen({super.key});
@@ -23,114 +13,30 @@ class AuthScreen extends ConsumerStatefulWidget {
 }
 
 class _AuthScreenState extends ConsumerState<AuthScreen> {
-  @override
-  Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
-    final loc = AppLocalizations.of(context)!;
-
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        backgroundColor: colors.surface,
-        appBar: AppBar(
-          backgroundColor: colors.surface,
-          elevation: 0,
-          toolbarHeight: 0, // Hide the actual app bar for a cleaner look
-          bottom: TabBar(
-            labelColor: colors.primary,
-            unselectedLabelColor: colors.onSurface.withValues(alpha: 0.6),
-            indicatorColor: colors.primary,
-            dividerColor: Colors.transparent,
-            tabs: [
-              Tab(text: loc.auth_sign_in),
-              Tab(text: loc.auth_sign_up),
-            ],
-          ),
-        ),
-        body: const TabBarView(
-          children: [
-            _SignInTab(),
-            _SignUpTab(),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-// ─────────────────────────────────────────────────────────────
-// Sign In Tab
-// ─────────────────────────────────────────────────────────────
-
-class _SignInTab extends ConsumerStatefulWidget {
-  const _SignInTab();
-
-  @override
-  ConsumerState<_SignInTab> createState() => _SignInTabState();
-}
-
-class _SignInTabState extends ConsumerState<_SignInTab> {
-  final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-
-  bool _obscurePassword = true;
   bool _isLoading = false;
 
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
-
-  Future<void> _handleSignIn() async {
-    if (!_formKey.currentState!.validate()) return;
-
-    setState(() {
-      _isLoading = true;
-    });
-
+  Future<void> _handleGuestLogin() async {
+    setState(() => _isLoading = true);
+    
     try {
-      await ref.read(authRepositoryProvider).signInWithEmail(
-            _emailController.text.trim(),
-            _passwordController.text,
-          );
-      
-      if (!mounted) return;
-      
-      try {
-        await ref.read(syncServiceProvider).syncPendingData();
-        await ref.read(syncServiceProvider).syncNow();
-      } catch (e) {
-        debugPrint('[Auth] Sync failed post-login: $e');
-      }
-      
-      _navigateToNextScreen();
+      await FirebaseAuth.instance.signInAnonymously().timeout(const Duration(seconds: 3));
     } catch (e) {
+      debugPrint("Guest login failed: $e");
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(e.toString().replaceAll('Exception: ', '')),
-            backgroundColor: Theme.of(context).colorScheme.error,
-          ),
+          SnackBar(content: Text('Firebase Auth failed, continuing as offline guest...')),
         );
       }
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
     }
-  }
-
-  Future<void> _navigateToNextScreen() async {
+    
     final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('is_guest', true);
+    
     if (!mounted) return;
+    setState(() => _isLoading = false);
     
     if (prefs.containsKey('selected_language')) {
-      context.go('/home');
+      context.go('/');
     } else {
       context.go('/onboarding');
     }
@@ -138,307 +44,272 @@ class _SignInTabState extends ConsumerState<_SignInTab> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
+    final size = MediaQuery.of(context).size;
     final loc = AppLocalizations.of(context)!;
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
-      child: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-
-
-              TextFormField(
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  labelText: loc.auth_email,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  prefixIcon: const Icon(Icons.email_outlined),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-
-              TextFormField(
-                controller: _passwordController,
-                obscureText: _obscurePassword,
-                decoration: InputDecoration(
-                  labelText: loc.auth_password,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  prefixIcon: const Icon(Icons.lock_outline),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      _obscurePassword ? Icons.visibility_off : Icons.visibility,
+    return Scaffold(
+      backgroundColor: const Color(0xFFFFDDE6), // Soft pastel pink background
+      body: Stack(
+        children: [
+          // Background curves
+          Positioned.fill(
+            child: CustomPaint(
+              painter: _CurvedBackgroundPainter(),
+            ),
+          ),
+          
+          SafeArea(
+            child: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Spacer(flex: 2),
+                  
+                  // Circular Image Container
+                  Container(
+                    width: size.width * 0.6,
+                    height: size.width * 0.6,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white.withValues(alpha: 0.4),
                     ),
-                    onPressed: () {
-                      setState(() {
-                        _obscurePassword = !_obscurePassword;
-                      });
+                    child: Center(
+                      child: Image.asset(
+                        'assets/images/illustrations/flower1.png', // Placeholder for the actual image
+                        width: size.width * 0.45,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ),
+                  
+                  const SizedBox(height: 48),
+                  
+                  // Title
+                  Text(
+                    loc.auth_welcome_title,
+                    style: const TextStyle(
+                      fontSize: 36,
+                      fontWeight: FontWeight.w900,
+                      color: Color(0xFF33001B), // Very dark burgundy/purple
+                      letterSpacing: -0.5,
+                      fontFamily: 'Baloo 2', // Assuming this font is available
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  
+                  const SizedBox(height: 16),
+                  
+                  // Subtitle
+                  Text(
+                    loc.auth_welcome_subtitle,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFF5D2E46), // Dark desaturated pink/purple
+                      height: 1.4,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  
+                  const Spacer(flex: 3),
+                  
+                  // Email Button
+                  _PrimaryButton(
+                    onTap: () {
+                      context.push('/login');
                     },
+                    isLoading: false,
+                    label: loc.auth_login_signup_btn,
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF6B5B95), Color(0xFF8878B5)],
+                    ),
+                    textColor: Colors.white,
                   ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 32),
-
-              ElevatedButton(
-                onPressed: _isLoading ? null : _handleSignIn,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: colors.primary,
-                  foregroundColor: colors.onPrimary,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                  
+                  const SizedBox(height: 16),
+                  
+                  // Guest Button
+                  _PrimaryButton(
+                    onTap: _handleGuestLogin,
+                    isLoading: false,
+                    label: loc.auth_guest_btn,
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFFE4E0FA), Color(0xFFD4CFF0)],
+                    ),
+                    textColor: const Color(0xFF2C1A2E),
                   ),
-                  elevation: 0,
-                ),
-                child: _isLoading
-                    ? SizedBox(
-                        height: 24,
-                        width: 24,
-                        child: CircularProgressIndicator(
-                          color: colors.onPrimary,
-                          strokeWidth: 2,
-                        ),
-                      )
-                    : Text(
-                        loc.auth_sign_in,
-                        style: const TextStyle(
-                          fontSize: 18,
+                  
+                  const SizedBox(height: 32),
+                  
+                  // Bottom security text
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.lock_outline, size: 14, color: Color(0xFF7A4A62)),
+                      const SizedBox(width: 6),
+                      Text(
+                        loc.auth_private_secure,
+                        style: TextStyle(
+                          fontSize: 10,
                           fontWeight: FontWeight.bold,
+                          color: const Color(0xFF7A4A62).withValues(alpha: 0.8),
+                          letterSpacing: 0.5,
                         ),
                       ),
+                    ],
+                  ),
+                  
+                  const SizedBox(height: 24),
+                ],
               ),
-            ],
+                ),
+                // Back Button
+                Positioned(
+                  top: 16,
+                  left: 16,
+                  child: IconButton(
+                    icon: const Icon(Icons.arrow_back_ios_new, color: Color(0xFF2C1A2E)),
+                    onPressed: () => context.go('/onboarding'),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
 }
 
-// ─────────────────────────────────────────────────────────────
-// Sign Up Tab
-// ─────────────────────────────────────────────────────────────
+class _PrimaryButton extends StatelessWidget {
+  final VoidCallback onTap;
+  final String label;
+  final Gradient gradient;
+  final Color textColor;
+  final Widget? icon;
+  final bool isLoading;
 
-class _SignUpTab extends ConsumerStatefulWidget {
-  const _SignUpTab();
-
-  @override
-  ConsumerState<_SignUpTab> createState() => _SignUpTabState();
-}
-
-class _SignUpTabState extends ConsumerState<_SignUpTab> {
-  final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
-
-  bool _obscurePassword = true;
-  bool _isLoading = false;
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    _confirmPasswordController.dispose();
-    super.dispose();
-  }
-
-  Future<void> _handleSignUp() async {
-    if (!_formKey.currentState!.validate()) return;
-
-    setState(() {
-      _isLoading = true;
-    });
-
-    try {
-      await ref.read(authRepositoryProvider).signUpWithEmail(
-            _emailController.text.trim(),
-            _passwordController.text,
-          );
-      
-      if (!mounted) return;
-      
-      try {
-        await ref.read(syncServiceProvider).syncPendingData();
-        await ref.read(syncServiceProvider).syncNow();
-      } catch (e) {
-        debugPrint('[Auth] Sync failed post-signup: $e');
-      }
-      
-      _navigateToNextScreen();
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(e.toString().replaceAll('Exception: ', '')),
-            backgroundColor: Theme.of(context).colorScheme.error,
-          ),
-        );
-      }
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    }
-  }
-
-  Future<void> _navigateToNextScreen() async {
-    final prefs = await SharedPreferences.getInstance();
-    if (!mounted) return;
-    
-    if (prefs.containsKey('selected_language')) {
-      context.go('/home');
-    } else {
-      context.go('/onboarding');
-    }
-  }
+  const _PrimaryButton({
+    required this.onTap,
+    required this.label,
+    required this.gradient,
+    required this.textColor,
+    this.icon,
+    this.isLoading = false,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
-    final loc = AppLocalizations.of(context)!;
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
-      child: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-
-
-              TextFormField(
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  labelText: loc.auth_email,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  prefixIcon: const Icon(Icons.email_outlined),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  // Basic email validation
-                  if (!value.contains('@') || !value.contains('.')) {
-                    return 'Please enter a valid email';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-
-              TextFormField(
-                controller: _passwordController,
-                obscureText: _obscurePassword,
-                decoration: InputDecoration(
-                  labelText: loc.auth_password,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  prefixIcon: const Icon(Icons.lock_outline),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      _obscurePassword ? Icons.visibility_off : Icons.visibility,
+    return Container(
+      width: double.infinity,
+      height: 56,
+      decoration: BoxDecoration(
+        gradient: gradient,
+        borderRadius: BorderRadius.circular(28),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: isLoading ? null : onTap,
+          borderRadius: BorderRadius.circular(28),
+          child: Center(
+            child: isLoading
+                ? SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: CircularProgressIndicator(
+                      color: textColor,
+                      strokeWidth: 2,
                     ),
-                    onPressed: () {
-                      setState(() {
-                        _obscurePassword = !_obscurePassword;
-                      });
-                    },
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
-                  }
-                  if (value.length < 6) {
-                    return 'Password must be at least 6 characters';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-
-              TextFormField(
-                controller: _confirmPasswordController,
-                obscureText: _obscurePassword,
-                decoration: InputDecoration(
-                  labelText: loc.auth_confirm_password,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  prefixIcon: const Icon(Icons.lock_outline),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please confirm your password';
-                  }
-                  if (value != _passwordController.text) {
-                    return loc.auth_error_passwords_no_match;
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 32),
-
-              ElevatedButton(
-                onPressed: _isLoading ? null : _handleSignUp,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: colors.primary,
-                  foregroundColor: colors.onPrimary,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  elevation: 0,
-                ),
-                child: _isLoading
-                    ? SizedBox(
-                        height: 24,
-                        width: 24,
-                        child: CircularProgressIndicator(
-                          color: colors.onPrimary,
-                          strokeWidth: 2,
-                        ),
-                      )
-                    : Text(
-                        loc.auth_create_account,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (icon != null) ...[
+                        icon!,
+                        const SizedBox(width: 12),
+                      ],
+                      Text(
+                        label,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: textColor,
                         ),
                       ),
-              ),
+                    ],
+                  ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _GoogleIcon extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // A simple approximation of the Google "G" icon using a colored rich text or an icon
+    return Container(
+      width: 20,
+      height: 20,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
+      ),
+      child: Center(
+        child: RichText(
+          text: const TextSpan(
+            children: [
+              TextSpan(text: 'G', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 14)),
             ],
           ),
         ),
       ),
     );
   }
+}
+
+class _CurvedBackgroundPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = const Color(0xFFD49CAE).withValues(alpha: 0.3)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.5;
+
+    final path1 = Path()
+      ..moveTo(0, size.height * 0.4)
+      ..quadraticBezierTo(size.width * 0.4, size.height * 0.5, size.width, size.height * 0.3);
+
+    final path2 = Path()
+      ..moveTo(0, size.height * 0.8)
+      ..quadraticBezierTo(size.width * 0.6, size.height * 0.9, size.width, size.height * 0.6);
+
+    final path3 = Path()
+      ..moveTo(size.width * 0.2, size.height)
+      ..quadraticBezierTo(size.width * 0.6, size.height * 0.6, size.width * 0.9, 0);
+      
+    final path4 = Path()
+      ..moveTo(0, size.height * 0.1)
+      ..quadraticBezierTo(size.width * 0.3, size.height * 0.2, size.width, size.height * 0.05);
+
+    canvas.drawPath(path1, paint);
+    canvas.drawPath(path2, paint);
+    canvas.drawPath(path3, paint);
+    canvas.drawPath(path4, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

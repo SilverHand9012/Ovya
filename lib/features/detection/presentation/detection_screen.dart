@@ -28,17 +28,17 @@ class _DetectionScreenState extends ConsumerState<DetectionScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _baseQuestions = [
-      _QuestionDef('irregularCycle', (loc) => 'Do you have irregular cycles?'),
-      _QuestionDef('hairGrowth', (loc) => 'Do you have excess body or facial hair?'),
-      _QuestionDef('familyHistory', (loc) => 'Do you have a family history of PCOS?'),
-      _QuestionDef('weightGain', (loc) => 'Have you experienced unexplained weight gain?'),
-      _QuestionDef('acne', (loc) => 'Do you struggle with severe acne?'),
-      _QuestionDef('skinDarkening', (loc) => 'Do you have darkening of skin (e.g., around neck)?'),
-      _QuestionDef('hairThinning', (loc) => 'Are you experiencing hair thinning?'),
-      _QuestionDef('fatigue', (loc) => 'Do you often feel unusually fatigued?'),
-      _QuestionDef('sleepProblems', (loc) => 'Do you have trouble sleeping?'),
-      _QuestionDef('bloating', (loc) => 'Do you frequently experience bloating?'),
-      _QuestionDef('moodIssues', (loc) => 'Do you experience frequent mood swings?'),
+      _QuestionDef('irregularCycle', (loc) => loc.q_irregular_cycle),
+      _QuestionDef('hairGrowth', (loc) => loc.q_hair_growth),
+      _QuestionDef('familyHistory', (loc) => loc.q_family_history),
+      _QuestionDef('weightGain', (loc) => loc.q_weight_gain),
+      _QuestionDef('acne', (loc) => loc.q_acne),
+      _QuestionDef('skinDarkening', (loc) => loc.q_skin_darkening),
+      _QuestionDef('hairThinning', (loc) => loc.q_hair_thinning),
+      _QuestionDef('fatigue', (loc) => loc.q_fatigue),
+      _QuestionDef('sleepProblems', (loc) => loc.q_sleep_problems),
+      _QuestionDef('bloating', (loc) => loc.q_bloating),
+      _QuestionDef('moodIssues', (loc) => loc.q_mood_issues),
     ];
   }
 
@@ -92,9 +92,9 @@ class _DetectionScreenState extends ConsumerState<DetectionScreen> {
     if (_currentIndex < _baseQuestions.length) {
       return _baseQuestions[_currentIndex].getLabel(loc);
     } else if (_currentIndex == _baseQuestions.length) {
-      return 'Are you over 18 years old?';
+      return loc.q_over_18;
     } else {
-      return 'Are you having difficulty conceiving?';
+      return loc.q_difficulty_conceiving;
     }
   }
 

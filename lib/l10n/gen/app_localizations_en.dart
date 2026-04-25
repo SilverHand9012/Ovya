@@ -601,4 +601,99 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get report_generated_success => 'Your report is ready!';
+
+  @override
+  String get q_irregular_cycle => 'Do you have irregular cycles?';
+
+  @override
+  String get q_hair_growth => 'Do you have excess body or facial hair?';
+
+  @override
+  String get q_family_history => 'Do you have a family history of PCOS?';
+
+  @override
+  String get q_weight_gain => 'Have you experienced unexplained weight gain?';
+
+  @override
+  String get q_acne => 'Do you struggle with severe acne?';
+
+  @override
+  String get q_skin_darkening =>
+      'Do you have darkening of skin (e.g., around neck)?';
+
+  @override
+  String get q_hair_thinning => 'Are you experiencing hair thinning?';
+
+  @override
+  String get q_fatigue => 'Do you often feel unusually fatigued?';
+
+  @override
+  String get q_sleep_problems => 'Do you have trouble sleeping?';
+
+  @override
+  String get q_bloating => 'Do you frequently experience bloating?';
+
+  @override
+  String get q_mood_issues => 'Do you experience frequent mood swings?';
+
+  @override
+  String get q_over_18 => 'Are you over 18 years old?';
+
+  @override
+  String get q_difficulty_conceiving => 'Are you having difficulty conceiving?';
+
+  @override
+  String get trackCycle => 'Track Cycle';
+
+  @override
+  String get logPeriodDates => 'Log your period dates';
+
+  @override
+  String get auth_welcome_title => 'Welcome to Ovya';
+
+  @override
+  String get auth_welcome_subtitle =>
+      'Your companion for understanding and managing your health';
+
+  @override
+  String get auth_login_signup_btn => 'Log In / Sign Up';
+
+  @override
+  String get auth_guest_btn => 'Continue as Guest';
+
+  @override
+  String get auth_private_secure => 'YOUR DATA STAYS PRIVATE AND SECURE';
+
+  @override
+  String get auth_gently_guided => 'Your health, gently guided';
+
+  @override
+  String get auth_email_hint => 'you@example.com';
+
+  @override
+  String get auth_password_hint => '........';
+
+  @override
+  String get auth_forgot_password => 'Forgot Password?';
+
+  @override
+  String get auth_or => 'OR';
+
+  @override
+  String get auth_continue_google => 'Continue with Google';
+
+  @override
+  String get auth_dont_have_account => 'Don\'t have an account? ';
+
+  @override
+  String get auth_full_name => 'Full Name';
+
+  @override
+  String get auth_name_hint => 'Jane Doe';
+
+  @override
+  String get auth_email_address => 'Email Address';
+
+  @override
+  String get auth_already_have_account => 'Already have an account? ';
 }

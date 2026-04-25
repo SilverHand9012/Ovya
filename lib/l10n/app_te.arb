@@ -76,7 +76,13 @@
   "continueText": "ముందుకు సాగండి",
   "chat_title": "చాట్",
   "chat_context_card": "విషయం: {level}",
-  "@chat_context_card": { "placeholders": { "level": { "type": "String" } } },
+  "@chat_context_card": {
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
   "chat_offline_banner": "మీరు ప్రస్తుతం ఆఫ్‌లైన్‌లో ఉన్నారు",
   "chat_disclaimer": "ఇది కేవలం సమాచారం కోసం, రోగ నిర్ధారణ కోసం కాదు",
   "chat_suggested_title": "అడిగి చూడండి",
@@ -93,20 +99,44 @@
   "report_print_btn": "ప్రింట్ చేయండి",
   "pdfTitle": "ఓవ్యా ఆరోగ్య రిపోర్ట్",
   "pdfDateGenerated": "{dateStr} న తయారు చేయబడింది",
-  "@pdfDateGenerated": { "placeholders": { "dateStr": { "type": "String" } } },
+  "@pdfDateGenerated": {
+    "placeholders": {
+      "dateStr": {
+        "type": "String"
+      }
+    }
+  },
   "pdfDisclaimer": "ఈ రిపోర్ట్ సమాచారం కోసం మాత్రమే, డాక్టర్ సలహాకు ప్రత్యామ్నాయం కాదు.",
   "pdfGeneratedBy": "ఓవ్యా ద్వారా తయారు చేయబడింది",
   "patientDetails": "మీ గురించి",
   "patientNameLabel": "పేరు: {patientName}",
-  "@patientNameLabel": { "placeholders": { "patientName": { "type": "String" } } },
+  "@patientNameLabel": {
+    "placeholders": {
+      "patientName": {
+        "type": "String"
+      }
+    }
+  },
   "reportDateLabel": "తేదీ: {nowStr}",
-  "@reportDateLabel": { "placeholders": { "nowStr": { "type": "String" } } },
+  "@reportDateLabel": {
+    "placeholders": {
+      "nowStr": {
+        "type": "String"
+      }
+    }
+  },
   "riskAssessment": "రిస్క్ అవలోకనం",
   "riskLevelLabel": "రిస్క్ స్థాయి",
   "scoreLabel": "స్కోర్",
   "pcosTypeHintLabel": "PCOS ప్యాట్రన్",
   "pcos_type_hint": "ప్యాట్రన్: {hint}",
-  "@pcos_type_hint": { "placeholders": { "hint": { "type": "String" } } },
+  "@pcos_type_hint": {
+    "placeholders": {
+      "hint": {
+        "type": "String"
+      }
+    }
+  },
   "explanationLabel": "దీని అర్థం",
   "recommendations": "మీరు ఏం చేయగలరు",
   "symptomsLast30Days": "గత 30 రోజుల లక్షణాలు",
@@ -175,46 +205,70 @@
   "history_no_logs": "ఇంకా ఏమీ లేవు. ట్రాక్ చేయడం ప్రారంభించండి.",
   "history_general_profile": "సాధారణ ప్రొఫైల్",
   "history_no_symptoms_tag": "ఎటువంటి లక్షణాలు నమోదు కాలేదు",
-
   "analysis_complete": "మీ ఫలితాలు సిద్ధంగా ఉన్నాయి",
   "insulin_resistant_pcos_indicator": "ఇన్సులిన్ రెసిస్టెంట్ ప్యాట్రన్",
   "androgenic_pcos_indicator": "ఆండ్రోజెనిక్ ప్యాట్రన్",
   "adrenal_pcos_indicator": "అడ్రినల్ ప్యాట్రన్",
   "general_pcos_indicator": "సాధారణ ప్యాట్రన్",
-
   "hormonal_imbalance_detected": "కొన్ని హార్మోన్ల మార్పులను మేము గమనించాము",
   "risk_explanation_high": "మీరు పంచుకున్న సమాచారం ఆధారంగా — అలసట, క్రమరహిత పీరియడ్స్ మరియు ఇతర లక్షణాలు — మీ శరీరంలో కొన్ని హార్మోన్ల మార్పులు జరుగుతున్నట్లు అనిపిస్తోంది. చింతించకండి, ఇది చాలా సాధారణం.",
   "risk_explanation_medium": "మీ కొన్ని లక్షణాలు పర్యవేక్షించాల్సిన ప్యాట్రన్‌లను చూపుతున్నాయి. క్రమం తప్పకుండా ట్రాక్ చేయడం వల్ల మనకు బాగా అర్థమవుతుంది.",
   "risk_explanation_low": "అంతా బాగానే ఉన్నట్లు అనిపిస్తోంది! ఎటువంటి మార్పులైనా త్వరగా పసిగట్టడానికి ట్రాక్ చేస్తూ ఉండండి.",
-
   "insight_explanation_insulin": "మీ శరీరానికి చక్కెరను ప్రాసెస్ చేయడం కొద్దిగా కష్టంగా ఉండవచ్చు, దీనివల్ల పగటిపూట ఎనర్జీ తగ్గడం మరియు మూడ్ మారడం జరగవచ్చు. ఇది చాలా సాధారణం మరియు చిన్న మార్పులతో సులభంగా నిర్వహించవచ్చు.",
   "insight_explanation_androgenic": "లక్షణాలను బట్టి చూస్తే ఆండ్రోజెన్ హార్మోన్ కొంచెం పెరిగినట్లు అనిపిస్తోంది, దీని ప్రభావం చర్మం మరియు జుట్టుపై కనిపించవచ్చు. ఇది PCOSలో అత్యంత సాధారణ రకం మరియు సరైన జాగ్రత్తలతో మెరుగుపడుతుంది.",
   "insight_explanation_adrenal": "ఒత్తిడి వల్ల మీ హార్మోన్ల పై ప్రభావం పడుతున్నట్లు అనిపిస్తోంది. మంచి విషయం ఏమిటంటే, విశ్రాంతి, మంచి నిద్ర మరియు ఒత్తిడిని తగ్గించుకోవడం ద్వారా ఈ రకంలో చాలా మెరుగుదల చూడవచ్చు.",
   "insight_explanation_general": "మీ లక్షణాలు కొన్ని సాధారణ PCOS ప్యాట్రన్‌లను చూపుతున్నాయి. క్రమబద్ధమైన ట్రాకింగ్ మరియు సరైన మార్గదర్శకత్వంతో, వీటిని సులభంగా నిర్వహించవచ్చు.",
-
   "action_balanced_meals_title": "పోషకమైన మరియు సమతుల్య ఆహారం తీసుకోండి",
   "action_balanced_meals_subtitle": "ప్రతి భోజనంలో ప్రోటీన్, ఫైబర్ మరియు ఆరోగ్యకరమైన కొవ్వులను చేర్చండి.",
   "action_light_movement_title": "ప్రతిరోజూ కొంచెం నడవండి",
   "action_light_movement_subtitle": "భోజనం తర్వాత 15 నిమిషాల నడక ఇన్సులిన్‌ను నియంత్రించడంలో సహాయపడుతుంది.",
   "action_sleep_title": "మీ శరీరానికి సరైన విశ్రాంతి ఇవ్వండి",
   "action_sleep_subtitle": "7-8 గంటలు నిద్రపోండి — మీ హార్మోన్లకు ఇది అవసరం.",
-
   "action_skin_care_title": "చర్మం పట్ల శ్రద్ధ వహించండి",
   "action_skin_care_subtitle": "సున్నితమైన క్లెన్సర్లు మరియు సరైన చికిత్సలు చాలా సహాయపడతాయి.",
   "action_anti_inflammatory_title": "మంటను తగ్గించే ఆహారాలను చేర్చండి",
   "action_anti_inflammatory_subtitle": "పసుపు, ఒమేగా-3 మరియు ఆకుకూరలు — ఇవి మీకు స్నేహితులు.",
   "action_consult_title": "నిపుణుడిని సంప్రదించండి",
   "action_consult_subtitle": "ఎండోక్రినాలజిస్ట్ హార్మోన్ స్థాయిలను పరీక్షించగలరు.",
-
   "action_stress_title": "మీ ప్రశాంతతను కనుగొనండి",
   "action_stress_subtitle": "యోగా, ధ్యానం లేదా కొద్దిగా దీర్ఘంగా ఊపిరి పీల్చుకోవడానికి ప్రయత్నించండి.",
   "action_cortisol_title": "కార్టిసాల్ బ్యాలెన్స్ చేయండి",
   "action_cortisol_subtitle": "తక్కువ కెఫిన్, మంచి నిద్ర. చిన్న మార్పులు, పెద్ద ప్రభావం.",
   "action_adaptogens_title": "సహజ అడాప్టోజెన్‌లను ప్రయత్నించండి",
   "action_adaptogens_subtitle": "అశ్వగంధ మరియు తులసి ఒత్తిడిని నిర్వహించడంలో సహాయపడతాయి.",
-
   "wellness_tip_intro": "వేడి హెర్బల్ టీతో మీ ఉదయాన్ని ప్రారంభించండి",
   "wellness_tip_body": "— ఇది కడుపు ఉబ్బరాన్ని తగ్గిస్తుంది మరియు మీ కడుపును ప్రశాంతపరుస్తుంది.",
   "ask_ovya_anything": "ఓవ్యాను ఏదైనా అడగండి",
-  "report_generated_success": "మీ రిపోర్ట్ సిద్ధంగా ఉంది!"
+  "report_generated_success": "మీ రిపోర్ట్ సిద్ధంగా ఉంది!",
+  "q_irregular_cycle": "మీకు క్రమరహిత పీరియడ్స్ ఉన్నాయా?",
+  "q_hair_growth": "మీ ముఖం లేదా శరీరంపై అవాంఛిత రోమాలు ఉన్నాయా?",
+  "q_family_history": "మీ కుటుంబంలో ఎవరికైనా PCOS సమస్య ఉందా?",
+  "q_weight_gain": "కారణం లేకుండా మీ బరువు పెరుగుతోందా?",
+  "q_acne": "మీకు తీవ్రమైన మొటిమల సమస్య ఉందా?",
+  "q_skin_darkening": "మీ చర్మం (ఉదాహరణకు మెడ చుట్టూ) నల్లబడుతోందా?",
+  "q_hair_thinning": "మీ జుట్టు రాలిపోతోందా లేదా పలచబడుతోందా?",
+  "q_fatigue": "మీరు తరచుగా చాలా అలసటగా భావిస్తారా?",
+  "q_sleep_problems": "మీకు నిద్రపోవడంలో ఇబ్బంది ఉందా?",
+  "q_bloating": "మీకు తరచుగా కడుపు ఉబ్బరంగా అనిపిస్తుందా?",
+  "q_mood_issues": "మీకు తరచుగా మూడ్ స్వింగ్స్ (మానసిక స్థితిలో మార్పులు) వస్తున్నాయా?",
+  "q_over_18": "మీకు 18 ఏళ్లు పైబడి ఉన్నాయా?",
+  "q_difficulty_conceiving": "మీరు గర్భం దాల్చడంలో ఇబ్బంది పడుతున్నారా?",
+  "trackCycle": "సైకిల్ ట్రాక్ చేయండి",
+  "logPeriodDates": "మీ పీరియడ్ తేదీలను లాగ్ చేయండి",
+  "auth_welcome_title": "ఓవ్యాకు స్వాగతం",
+  "auth_welcome_subtitle": "మీ ఆరోగ్యాన్ని అర్థం చేసుకోవడానికి మరియు నిర్వహించడానికి మీ తోడు",
+  "auth_login_signup_btn": "లాగిన్ / సైన్ అప్",
+  "auth_guest_btn": "అతిథిగా కొనసాగండి",
+  "auth_private_secure": "మీ డేటా ప్రైవేట్‌గా మరియు సురక్షితంగా ఉంటుంది",
+  "auth_gently_guided": "మీ ఆరోగ్యం, సున్నితంగా మార్గనిర్దేశం",
+  "auth_email_hint": "you@example.com",
+  "auth_password_hint": "........",
+  "auth_forgot_password": "పాస్‌వర్డ్ మర్చిపోయారా?",
+  "auth_or": "లేదా",
+  "auth_continue_google": "Google తో కొనసాగండి",
+  "auth_dont_have_account": "ఖాతా లేదా? ",
+  "auth_full_name": "పూర్తి పేరు",
+  "auth_name_hint": "Jane Doe",
+  "auth_email_address": "ఇమెయిల్ చిరునామా",
+  "auth_already_have_account": "ఇప్పటికే ఖాతా ఉందా? "
 }

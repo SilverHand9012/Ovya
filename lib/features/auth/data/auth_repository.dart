@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/services/queue_service.dart';
@@ -9,6 +10,7 @@ import '../../../core/sync/sync_service.dart';
 abstract class AuthRepository {
   Future<void> signInWithEmail(String email, String password);
   Future<void> signUpWithEmail(String email, String password);
+  Future<void> signInWithGoogle();
   Future<void> signOut();
   Future<bool> isAuthenticated();
 }
@@ -68,6 +70,31 @@ class FirebaseAuthRepository implements AuthRepository {
       throw Exception('An unexpected error occurred: $e');
     }
   }
+
+  @override
+  Future<void> signInWithGoogle() async {
+    try {
+      final GoogleSignIn googleSignIn = GoogleSignIn();
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      
+      if (googleUser == null) {
+        return; // User cancelled
+      }
+
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      await _firebaseAuth.signInWithCredential(credential);
+      await _handlePostLoginSync();
+    } catch (e) {
+      debugPrint('Google Sign-In error: $e');
+      throw Exception('Failed to sign in with Google: $e');
+    }
+  }
+
 
   Future<void> signOut() async {
     // Clear queue FIRST — prevents cross-user data leakage

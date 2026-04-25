@@ -76,7 +76,13 @@
   "continueText": "आगे बढ़ें",
   "chat_title": "बातचीत",
   "chat_context_card": "विषय: {level}",
-  "@chat_context_card": { "placeholders": { "level": { "type": "String" } } },
+  "@chat_context_card": {
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
   "chat_offline_banner": "अभी ऑफलाइन हैं",
   "chat_disclaimer": "जागरूकता के लिए, डायग्नोसिस नहीं",
   "chat_suggested_title": "पूछकर देखें",
@@ -93,20 +99,44 @@
   "report_print_btn": "प्रिंट करें",
   "pdfTitle": "Ovya हेल्थ रिपोर्ट",
   "pdfDateGenerated": "{dateStr} को बनाई गई",
-  "@pdfDateGenerated": { "placeholders": { "dateStr": { "type": "String" } } },
+  "@pdfDateGenerated": {
+    "placeholders": {
+      "dateStr": {
+        "type": "String"
+      }
+    }
+  },
   "pdfDisclaimer": "यह रिपोर्ट सिर्फ जानकारी के लिए है, डॉक्टर की सलाह की जगह नहीं है।",
   "pdfGeneratedBy": "Ovya द्वारा बनाई गई",
   "patientDetails": "आपके बारे में",
   "patientNameLabel": "नाम: {patientName}",
-  "@patientNameLabel": { "placeholders": { "patientName": { "type": "String" } } },
+  "@patientNameLabel": {
+    "placeholders": {
+      "patientName": {
+        "type": "String"
+      }
+    }
+  },
   "reportDateLabel": "तारीख: {nowStr}",
-  "@reportDateLabel": { "placeholders": { "nowStr": { "type": "String" } } },
+  "@reportDateLabel": {
+    "placeholders": {
+      "nowStr": {
+        "type": "String"
+      }
+    }
+  },
   "riskAssessment": "रिस्क ओवरव्यू",
   "riskLevelLabel": "रिस्क लेवल",
   "scoreLabel": "स्कोर",
   "pcosTypeHintLabel": "PCOS पैटर्न",
   "pcos_type_hint": "पैटर्न: {hint}",
-  "@pcos_type_hint": { "placeholders": { "hint": { "type": "String" } } },
+  "@pcos_type_hint": {
+    "placeholders": {
+      "hint": {
+        "type": "String"
+      }
+    }
+  },
   "explanationLabel": "इसका मतलब",
   "recommendations": "क्या कर सकती हैं",
   "symptomsLast30Days": "पिछले 30 दिन के लक्षण",
@@ -175,46 +205,70 @@
   "history_no_logs": "अभी कुछ नहीं है। ट्रैक करना शुरू करें।",
   "history_general_profile": "सामान्य प्रोफाइल",
   "history_no_symptoms_tag": "कोई लक्षण नोट नहीं हुआ",
-
   "analysis_complete": "आपके नतीजे तैयार हैं",
   "insulin_resistant_pcos_indicator": "इंसुलिन रेसिस्टेंट पैटर्न",
   "androgenic_pcos_indicator": "एंड्रोजेनिक पैटर्न",
   "adrenal_pcos_indicator": "एड्रिनल पैटर्न",
   "general_pcos_indicator": "सामान्य पैटर्न",
-
   "hormonal_imbalance_detected": "कुछ हार्मोनल बदलाव दिख रहे हैं",
   "risk_explanation_high": "आपने जो बताया है — थकान, अनियमित पीरियड्स, और कुछ और संकेत — लगता है शरीर में कुछ हार्मोनल बदलाव हो रहे हैं। चिंता की बात नहीं, ये काफी आम है।",
   "risk_explanation_medium": "आपके कुछ लक्षणों में एक पैटर्न दिख रहा है। रोज़ ट्रैक करते रहें ताकि हम बेहतर समझ सकें।",
   "risk_explanation_low": "सब ठीक लग रहा है! ट्रैक करते रहें ताकि कोई बदलाव जल्दी पकड़ में आ जाए।",
-
   "insight_explanation_insulin": "आपके शरीर को शुगर प्रोसेस करने में थोड़ी दिक्कत हो रही है, जिससे दिन में एनर्जी कम लग सकती है और मूड बदलता रहता है। ये बहुत आम है और छोटे बदलावों से ठीक हो सकता है।",
   "insight_explanation_androgenic": "लक्षणों से लगता है कि एंड्रोजन हार्मोन थोड़ा ज्यादा है, जिसका असर स्किन और बालों पर दिख सकता है। ये PCOS का सबसे आम टाइप है और सही देखभाल से ठीक होता है।",
   "insight_explanation_adrenal": "लगता है तनाव से हार्मोन्स पर असर हो रहा है। अच्छी बात ये है कि इस टाइप में आराम, अच्छी नींद और तनाव कम करने से बहुत फायदा होता है।",
   "insight_explanation_general": "आपके लक्षण PCOS के कुछ आम पैटर्न दिखा रहे हैं। रोज़ ट्रैक करें और सही गाइडेंस लें — ये काफी मैनेज हो सकता है।",
-
   "action_balanced_meals_title": "पोषक और संतुलित खाना खाएं",
   "action_balanced_meals_subtitle": "हर खाने में प्रोटीन, फाइबर और अच्छी फैट रखें।",
   "action_light_movement_title": "रोज़ थोड़ा चलें",
   "action_light_movement_subtitle": "खाने के बाद 15 मिनट की सैर इंसुलिन में मदद करती है।",
   "action_sleep_title": "शरीर को अच्छी नींद दें",
   "action_sleep_subtitle": "7-8 घंटे सोएं — हार्मोन्स को इसकी ज़रूरत है।",
-
   "action_skin_care_title": "स्किन का ख्याल रखें",
   "action_skin_care_subtitle": "हल्के क्लींज़र और सही ट्रीटमेंट काफी मदद करते हैं।",
   "action_anti_inflammatory_title": "सूजन कम करने वाले खाद्य पदार्थ खाएं",
   "action_anti_inflammatory_subtitle": "हल्दी, ओमेगा-3 और हरी सब्ज़ियां — ये आपकी दोस्त हैं।",
   "action_consult_title": "किसी एक्सपर्ट से बात करें",
   "action_consult_subtitle": "एंडोक्रिनोलॉजिस्ट हार्मोन लेवल चेक कर सकते हैं।",
-
   "action_stress_title": "अपनी शांति खोजें",
   "action_stress_subtitle": "योग, ध्यान या सिर्फ गहरी सांसें — रोज़ थोड़ा सा।",
   "action_cortisol_title": "कोर्टिसोल बैलेंस रखें",
   "action_cortisol_subtitle": "कम कैफीन, अच्छी नींद। छोटे बदलाव, बड़ा फर्क।",
   "action_adaptogens_title": "नेचुरल एडैप्टोजन आज़माएं",
   "action_adaptogens_subtitle": "अश्वगंधा और तुलसी तनाव से लड़ने में मदद करते हैं।",
-
   "wellness_tip_intro": "सुबह गर्म हर्बल चाय से शुरू करें",
   "wellness_tip_body": "— पेट की तकलीफ कम होती है और मन भी शांत रहता है।",
   "ask_ovya_anything": "ओव्या से कुछ भी पूछें",
-  "report_generated_success": "रिपोर्ट तैयार है!"
+  "report_generated_success": "रिपोर्ट तैयार है!",
+  "q_irregular_cycle": "क्या आपके मासिक धर्म (पीरियड्स) अनियमित हैं?",
+  "q_hair_growth": "क्या आपके चेहरे या शरीर पर अनचाहे बाल हैं?",
+  "q_family_history": "क्या आपके परिवार में किसी को PCOS की समस्या है?",
+  "q_weight_gain": "क्या आपका वजन बिना किसी कारण के बढ़ रहा है?",
+  "q_acne": "क्या आपको गंभीर मुंहासों की समस्या है?",
+  "q_skin_darkening": "क्या आपकी त्वचा (जैसे गर्दन के आसपास) काली पड़ रही है?",
+  "q_hair_thinning": "क्या आपके बाल झड़ रहे हैं या पतले हो रहे हैं?",
+  "q_fatigue": "क्या आपको अक्सर बहुत अधिक थकान महसूस होती है?",
+  "q_sleep_problems": "क्या आपको सोने में परेशानी होती है?",
+  "q_bloating": "क्या आपको अक्सर पेट फूलने की समस्या होती है?",
+  "q_mood_issues": "क्या आपको अक्सर मूड स्विंग्स (मिज़ाज बदलना) की समस्या होती है?",
+  "q_over_18": "क्या आपकी उम्र 18 वर्ष से अधिक है?",
+  "q_difficulty_conceiving": "क्या आपको गर्भधारण करने में परेशानी हो रही है?",
+  "trackCycle": "साइकिल ट्रैक करें",
+  "logPeriodDates": "अपनी पीरियड की तारीखें दर्ज करें",
+  "auth_welcome_title": "ओव्या में आपका स्वागत है",
+  "auth_welcome_subtitle": "आपके स्वास्थ्य को समझने और प्रबंधित करने में आपका साथी",
+  "auth_login_signup_btn": "लॉग इन / साइन अप",
+  "auth_guest_btn": "अतिथि के रूप में जारी रखें",
+  "auth_private_secure": "आपका डेटा निजी और सुरक्षित रहता है",
+  "auth_gently_guided": "आपका स्वास्थ्य, कोमलता से निर्देशित",
+  "auth_email_hint": "you@example.com",
+  "auth_password_hint": "........",
+  "auth_forgot_password": "पासवर्ड भूल गए?",
+  "auth_or": "या",
+  "auth_continue_google": "Google के साथ जारी रखें",
+  "auth_dont_have_account": "खाता नहीं है? ",
+  "auth_full_name": "पूरा नाम",
+  "auth_name_hint": "Jane Doe",
+  "auth_email_address": "ईमेल पता",
+  "auth_already_have_account": "क्या आपके पास पहले से खाता है? "
 }

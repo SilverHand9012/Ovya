@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ovya/l10n/gen/app_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,6 +15,8 @@ import 'core/services/language_service.dart';
 import 'core/connectivity/connectivity_orchestrator.dart';
 import 'shared/providers/connectivity_provider.dart';
 import 'shared/providers/sync_service_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'features/auth/data/auth_providers.dart';
 
 /// Global language service instance — initialised before runApp.
 final languageService = LanguageService();
@@ -36,6 +39,8 @@ Future<void> main() async {
   // 2. Load persisted language preference.
   await languageService.load();
 
+  final prefs = await SharedPreferences.getInstance();
+
   // 3. Initialize connectivity orchestrator safely before anything else
   final connectivityOrchestrator = ConnectivityOrchestrator();
 
@@ -44,6 +49,7 @@ Future<void> main() async {
     ProviderScope(
       overrides: [
         connectivityOrchestratorProvider.overrideWithValue(connectivityOrchestrator),
+        sharedPreferencesProvider.overrideWithValue(prefs),
       ],
       child: const OvyaApp(),
     ),

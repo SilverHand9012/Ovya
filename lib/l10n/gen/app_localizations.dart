@@ -1207,6 +1207,192 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your report is ready!'**
   String get report_generated_success;
+
+  /// No description provided for @q_irregular_cycle.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you have irregular cycles?'**
+  String get q_irregular_cycle;
+
+  /// No description provided for @q_hair_growth.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you have excess body or facial hair?'**
+  String get q_hair_growth;
+
+  /// No description provided for @q_family_history.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you have a family history of PCOS?'**
+  String get q_family_history;
+
+  /// No description provided for @q_weight_gain.
+  ///
+  /// In en, this message translates to:
+  /// **'Have you experienced unexplained weight gain?'**
+  String get q_weight_gain;
+
+  /// No description provided for @q_acne.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you struggle with severe acne?'**
+  String get q_acne;
+
+  /// No description provided for @q_skin_darkening.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you have darkening of skin (e.g., around neck)?'**
+  String get q_skin_darkening;
+
+  /// No description provided for @q_hair_thinning.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you experiencing hair thinning?'**
+  String get q_hair_thinning;
+
+  /// No description provided for @q_fatigue.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you often feel unusually fatigued?'**
+  String get q_fatigue;
+
+  /// No description provided for @q_sleep_problems.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you have trouble sleeping?'**
+  String get q_sleep_problems;
+
+  /// No description provided for @q_bloating.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you frequently experience bloating?'**
+  String get q_bloating;
+
+  /// No description provided for @q_mood_issues.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you experience frequent mood swings?'**
+  String get q_mood_issues;
+
+  /// No description provided for @q_over_18.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you over 18 years old?'**
+  String get q_over_18;
+
+  /// No description provided for @q_difficulty_conceiving.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you having difficulty conceiving?'**
+  String get q_difficulty_conceiving;
+
+  /// No description provided for @trackCycle.
+  ///
+  /// In en, this message translates to:
+  /// **'Track Cycle'**
+  String get trackCycle;
+
+  /// No description provided for @logPeriodDates.
+  ///
+  /// In en, this message translates to:
+  /// **'Log your period dates'**
+  String get logPeriodDates;
+
+  /// No description provided for @auth_welcome_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Ovya'**
+  String get auth_welcome_title;
+
+  /// No description provided for @auth_welcome_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your companion for understanding and managing your health'**
+  String get auth_welcome_subtitle;
+
+  /// No description provided for @auth_login_signup_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Log In / Sign Up'**
+  String get auth_login_signup_btn;
+
+  /// No description provided for @auth_guest_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue as Guest'**
+  String get auth_guest_btn;
+
+  /// No description provided for @auth_private_secure.
+  ///
+  /// In en, this message translates to:
+  /// **'YOUR DATA STAYS PRIVATE AND SECURE'**
+  String get auth_private_secure;
+
+  /// No description provided for @auth_gently_guided.
+  ///
+  /// In en, this message translates to:
+  /// **'Your health, gently guided'**
+  String get auth_gently_guided;
+
+  /// No description provided for @auth_email_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'you@example.com'**
+  String get auth_email_hint;
+
+  /// No description provided for @auth_password_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'........'**
+  String get auth_password_hint;
+
+  /// No description provided for @auth_forgot_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password?'**
+  String get auth_forgot_password;
+
+  /// No description provided for @auth_or.
+  ///
+  /// In en, this message translates to:
+  /// **'OR'**
+  String get auth_or;
+
+  /// No description provided for @auth_continue_google.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Google'**
+  String get auth_continue_google;
+
+  /// No description provided for @auth_dont_have_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account? '**
+  String get auth_dont_have_account;
+
+  /// No description provided for @auth_full_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Full Name'**
+  String get auth_full_name;
+
+  /// No description provided for @auth_name_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Jane Doe'**
+  String get auth_name_hint;
+
+  /// No description provided for @auth_email_address.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Address'**
+  String get auth_email_address;
+
+  /// No description provided for @auth_already_have_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account? '**
+  String get auth_already_have_account;
 }
 
 class _AppLocalizationsDelegate

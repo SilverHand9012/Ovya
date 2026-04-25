@@ -4,6 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
 import '../features/auth/presentation/auth_screen.dart';
+import '../features/auth/presentation/login_screen.dart';
+import '../features/auth/presentation/signup_screen.dart';
 import '../features/onboarding/presentation/onboarding_screen.dart';
 import '../features/results/results_screen.dart';
 import '../features/log/log_screen.dart';
@@ -20,19 +22,27 @@ final GoRouter appRouter = GoRouter(
   redirect: (context, state) async {
     final prefs = await SharedPreferences.getInstance();
     final user = FirebaseAuth.instance.currentUser;
-    final isAuthRoute = state.uri.path == '/auth';
-    final isOnboardingRoute = state.uri.path == '/onboarding';
 
-    // If they haven't finished onboarding, don't trap them inside Auth unexpectedly
-    if (!prefs.containsKey('selected_language') && !isOnboardingRoute) {
+    final isGuest = prefs.getBool('is_guest') ?? false;
+    final hasLanguage = prefs.containsKey('selected_language');
+    final isLoggedIn = user != null || isGuest;
+
+    final path = state.uri.path;
+    final isAuthRelatedRoute = path == '/auth' || path == '/login' || path == '/signup';
+    final isOnboardingRoute = path == '/onboarding';
+
+    // 1. Must select language first
+    if (!hasLanguage && !isOnboardingRoute) {
       return '/onboarding';
     }
 
-    if (user == null && !isAuthRoute && !isOnboardingRoute) {
+    // 2. If has language, but not logged in, must be on an auth-related route
+    if (hasLanguage && !isLoggedIn && !isAuthRelatedRoute && !isOnboardingRoute) {
       return '/auth';
     }
 
-    if (user != null && isAuthRoute) {
+    // 3. If has language and logged in, cannot go to onboarding or auth-related routes
+    if (hasLanguage && isLoggedIn && (isAuthRelatedRoute || isOnboardingRoute)) {
       return '/';
     }
 
@@ -48,6 +58,16 @@ final GoRouter appRouter = GoRouter(
       path: '/auth',
       name: 'auth',
       builder: (context, state) => const AuthScreen(),
+    ),
+    GoRoute(
+      path: '/login',
+      name: 'login',
+      builder: (context, state) => const LoginScreen(),
+    ),
+    GoRoute(
+      path: '/signup',
+      name: 'signup',
+      builder: (context, state) => const SignupScreen(),
     ),
 
     // ── Overlay routes (slide/fade over the main shell) ──────────
