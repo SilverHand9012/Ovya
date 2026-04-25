@@ -44,8 +44,6 @@ flutter:
   uses-material-design: true
   generate: true
   assets:
-    - assets/fonts/NotoSans-Regular.ttf
-    - assets/fonts/NotoSansDevanagari-Regular.ttf
     - assets/fonts/Baloo2-Regular.ttf
     - assets/fonts/BalooTamma2-Regular.ttf
     - assets/fonts/BalooTammudu2-Regular.ttf
@@ -62,9 +60,6 @@ flutter:
     - family: Baloo Tammudu 2
       fonts:
         - asset: assets/fonts/BalooTammudu2-Regular.ttf
-    - family: Noto Sans Devanagari
-      fonts:
-        - asset: assets/fonts/NotoSansDevanagari-Regular.ttf
 
 flutter_launcher_icons:
   android: "launcher_icon"

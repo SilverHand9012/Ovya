@@ -40,7 +40,7 @@ class AppScaffold extends ConsumerWidget {
                   ? Container(
                       key: const ValueKey('offline_banner'),
                       width: double.infinity,
-                      color: Colors.pink.shade300, // Rose color fallback if not in theme
+                      color: Theme.of(context).colorScheme.secondary, // Theme based fallback
                       padding: EdgeInsets.only(
                         top: MediaQuery.of(context).padding.top + 12,
                         bottom: 12,
