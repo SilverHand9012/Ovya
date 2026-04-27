@@ -36,6 +36,11 @@ const InsightCacheSchema = CollectionSchema(
       id: 3,
       name: r'isFromAi',
       type: IsarType.bool,
+    ),
+    r'userId': PropertySchema(
+      id: 4,
+      name: r'userId',
+      type: IsarType.string,
     )
   },
   estimateSize: _insightCacheEstimateSize,
@@ -44,6 +49,19 @@ const InsightCacheSchema = CollectionSchema(
   deserializeProp: _insightCacheDeserializeProp,
   idName: r'id',
   indexes: {
+    r'userId': IndexSchema(
+      id: -2005826577402374815,
+      name: r'userId',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'userId',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    ),
     r'generatedAt': IndexSchema(
       id: 4527473099475400258,
       name: r'generatedAt',
@@ -73,6 +91,7 @@ int _insightCacheEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.insightText.length * 3;
+  bytesCount += 3 + object.userId.length * 3;
   return bytesCount;
 }
 
@@ -86,6 +105,7 @@ void _insightCacheSerialize(
   writer.writeDateTime(offsets[1], object.generatedAt);
   writer.writeString(offsets[2], object.insightText);
   writer.writeBool(offsets[3], object.isFromAi);
+  writer.writeString(offsets[4], object.userId);
 }
 
 InsightCache _insightCacheDeserialize(
@@ -100,6 +120,7 @@ InsightCache _insightCacheDeserialize(
   object.id = id;
   object.insightText = reader.readString(offsets[2]);
   object.isFromAi = reader.readBool(offsets[3]);
+  object.userId = reader.readString(offsets[4]);
   return object;
 }
 
@@ -118,6 +139,8 @@ P _insightCacheDeserializeProp<P>(
       return (reader.readString(offset)) as P;
     case 3:
       return (reader.readBool(offset)) as P;
+    case 4:
+      return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -219,6 +242,51 @@ extension InsightCacheQueryWhere
         upper: upperId,
         includeUpper: includeUpper,
       ));
+    });
+  }
+
+  QueryBuilder<InsightCache, InsightCache, QAfterWhereClause> userIdEqualTo(
+      String userId) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'userId',
+        value: [userId],
+      ));
+    });
+  }
+
+  QueryBuilder<InsightCache, InsightCache, QAfterWhereClause> userIdNotEqualTo(
+      String userId) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'userId',
+              lower: [],
+              upper: [userId],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'userId',
+              lower: [userId],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'userId',
+              lower: [userId],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'userId',
+              lower: [],
+              upper: [userId],
+              includeUpper: false,
+            ));
+      }
     });
   }
 
@@ -646,6 +714,141 @@ extension InsightCacheQueryFilter
       ));
     });
   }
+
+  QueryBuilder<InsightCache, InsightCache, QAfterFilterCondition> userIdEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'userId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InsightCache, InsightCache, QAfterFilterCondition>
+      userIdGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'userId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InsightCache, InsightCache, QAfterFilterCondition>
+      userIdLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'userId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InsightCache, InsightCache, QAfterFilterCondition> userIdBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'userId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InsightCache, InsightCache, QAfterFilterCondition>
+      userIdStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'userId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InsightCache, InsightCache, QAfterFilterCondition>
+      userIdEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'userId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InsightCache, InsightCache, QAfterFilterCondition>
+      userIdContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'userId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InsightCache, InsightCache, QAfterFilterCondition> userIdMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'userId',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<InsightCache, InsightCache, QAfterFilterCondition>
+      userIdIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'userId',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<InsightCache, InsightCache, QAfterFilterCondition>
+      userIdIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'userId',
+        value: '',
+      ));
+    });
+  }
 }
 
 extension InsightCacheQueryObject
@@ -703,6 +906,18 @@ extension InsightCacheQuerySortBy
   QueryBuilder<InsightCache, InsightCache, QAfterSortBy> sortByIsFromAiDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isFromAi', Sort.desc);
+    });
+  }
+
+  QueryBuilder<InsightCache, InsightCache, QAfterSortBy> sortByUserId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'userId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<InsightCache, InsightCache, QAfterSortBy> sortByUserIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'userId', Sort.desc);
     });
   }
 }
@@ -770,6 +985,18 @@ extension InsightCacheQuerySortThenBy
       return query.addSortBy(r'isFromAi', Sort.desc);
     });
   }
+
+  QueryBuilder<InsightCache, InsightCache, QAfterSortBy> thenByUserId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'userId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<InsightCache, InsightCache, QAfterSortBy> thenByUserIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'userId', Sort.desc);
+    });
+  }
 }
 
 extension InsightCacheQueryWhereDistinct
@@ -796,6 +1023,13 @@ extension InsightCacheQueryWhereDistinct
   QueryBuilder<InsightCache, InsightCache, QDistinct> distinctByIsFromAi() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isFromAi');
+    });
+  }
+
+  QueryBuilder<InsightCache, InsightCache, QDistinct> distinctByUserId(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'userId', caseSensitive: caseSensitive);
     });
   }
 }
@@ -829,6 +1063,12 @@ extension InsightCacheQueryProperty
   QueryBuilder<InsightCache, bool, QQueryOperations> isFromAiProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isFromAi');
+    });
+  }
+
+  QueryBuilder<InsightCache, String, QQueryOperations> userIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'userId');
     });
   }
 }

@@ -705,4 +705,57 @@ class AppLocalizationsTe extends AppLocalizations {
 
   @override
   String get auth_already_have_account => 'ఇప్పటికే ఖాతా ఉందా? ';
+
+  @override
+  String get welcome_title => 'Ovya కి స్వాగతం';
+
+  @override
+  String get welcome_subtitle => 'మీ ఆరోగ్యాన్ని మెరుగ్గా అర్థం చేసుకుందాం';
+
+  @override
+  String get welcome_desc =>
+      'వ్యక్తిగతీకరించిన అంతర్దృష్టులను పొందడానికి కొన్ని సాధారణ ప్రశ్నలకు సమాధానం ఇవ్వండి';
+
+  @override
+  String get welcome_name_hint => 'మేము మిమ్మల్ని ఏమని పిలవాలి?';
+
+  @override
+  String get welcome_name_label => 'మీ పేరు';
+
+  @override
+  String get welcome_start_btn => 'అసెస్‌మెంట్ ప్రారంభించండి';
+
+  @override
+  String get assessment_title => 'అసెస్‌మెంట్';
+
+  @override
+  String get assessment_help_text =>
+      'ఇది మీ స్థలాన్ని వ్యక్తిగతీకరించడంలో మాకు సహాయపడుతుంది.';
+
+  @override
+  String get btn_yes => 'అవును';
+
+  @override
+  String get btn_no => 'కాదు';
+
+  @override
+  String get btn_next => 'తరువాత';
+
+  @override
+  String get all_set_title => 'అంతా సిద్ధమైంది';
+
+  @override
+  String get all_set_subtitle => 'మీ ప్రతిస్పందనలను విశ్లేషిస్తున్నాము...';
+
+  @override
+  String get all_set_btn => 'ఫలితాలను చూడండి';
+
+  @override
+  String get all_set_footer =>
+      'మీ డేటా మీ సురక్షిత ప్రదేశంలో (sanctuary) సురక్షితంగా ఉంటుంది.';
+
+  @override
+  String question_progress(String current, String total) {
+    return 'ప్రశ్న $current / $total';
+  }
 }

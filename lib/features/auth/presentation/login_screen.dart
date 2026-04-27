@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ovya/l10n/gen/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/auth_providers.dart';
+import '../../onboarding/providers/onboarding_provider.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -25,6 +26,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         _emailController.text,
         _passwordController.text,
       );
+      await ref.read(onboardingStatusProvider.future);
       if (!mounted) return;
       context.go('/');
     } catch (e) {
@@ -41,6 +43,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     setState(() => _isLoading = true);
     try {
       await ref.read(authRepositoryProvider).signInWithGoogle();
+      await ref.read(onboardingStatusProvider.future);
       if (!mounted) return;
       context.go('/');
     } catch (e) {

@@ -5,6 +5,7 @@ import 'package:isar/isar.dart';
 import '../isar/isar_service.dart';
 import '../isar/schemas/sync_queue.dart';
 import '../constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 // ──────────────────────────────────────────────────────────────
 //  Queue item model (domain-level)
@@ -54,6 +55,11 @@ class QueueService {
     required String action,
     required Map<String, dynamic> payload,
   }) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      throw QueueServiceException('Cannot enqueue action "$action" - user is not authenticated');
+    }
+
     // ── VALIDATION ─────────────────────────────────────────────
     // Symptom-related actions MUST have clientId and updatedAt.
     if (action.contains('symptom')) {
@@ -68,6 +74,7 @@ class QueueService {
     try {
       final isar = await _isarService.db;
       final entry = SyncQueue()
+        ..userId = user.uid
         ..action = action
         ..payload = jsonEncode(payload)
         ..createdAt = DateTime.now()
@@ -96,10 +103,15 @@ class QueueService {
 
   /// Returns all pending (un-synced) items ordered by creation time.
   Future<List<QueueItem>> getPending() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return [];
+
     try {
       final isar = await _isarService.db;
       final entries = await isar.syncQueues
           .filter()
+          .userIdEqualTo(user.uid)
+          .and()
           .isSyncedEqualTo(false)
           .retryCountLessThan(AppConstants.maxQueueRetries)
           .sortByCreatedAt()
@@ -113,10 +125,15 @@ class QueueService {
 
   /// Returns the total count of un-synced items.
   Future<int> get pendingCount async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return 0;
+
     try {
       final isar = await _isarService.db;
       return await isar.syncQueues
           .filter()
+          .userIdEqualTo(user.uid)
+          .and()
           .isSyncedEqualTo(false)
           .count();
     } catch (e) {
@@ -167,11 +184,16 @@ class QueueService {
   /// 
   /// Useful after fixing a persistent configuration error (like Firestore rules).
   Future<void> resetRetries() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+    
     try {
       final isar = await _isarService.db;
       await isar.writeTxn(() async {
         final pending = await isar.syncQueues
             .filter()
+            .userIdEqualTo(user.uid)
+            .and()
             .isSyncedEqualTo(false)
             .findAll();
         
@@ -189,12 +211,17 @@ class QueueService {
 
   /// Removes all items that have been successfully synced.
   Future<void> purgeSynced() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
     try {
       final isar = await _isarService.db;
 
       await isar.writeTxn(() async {
         final synced = await isar.syncQueues
             .filter()
+            .userIdEqualTo(user.uid)
+            .and()
             .isSyncedEqualTo(true)
             .findAll();
         final ids = synced.map((e) => e.id).toList();
@@ -207,10 +234,16 @@ class QueueService {
 
   /// Clears the entire queue. Useful for account logout / testing.
   Future<void> clearAll() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
     try {
       final isar = await _isarService.db;
       await isar.writeTxn(() async {
-        await isar.syncQueues.clear();
+        await isar.syncQueues
+            .filter()
+            .userIdEqualTo(user.uid)
+            .deleteAll();
       });
     } catch (e) {
       throw QueueServiceException('Failed to clear queue: $e');

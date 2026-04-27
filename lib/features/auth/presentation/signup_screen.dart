@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ovya/l10n/gen/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/auth_providers.dart';
+import '../../onboarding/providers/onboarding_provider.dart';
 
 class SignupScreen extends ConsumerStatefulWidget {
   const SignupScreen({super.key});
@@ -16,16 +17,26 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
   bool _isLoading = false;
   bool _obscurePassword = true;
 
   void _handleSignup() async {
+    if (_passwordController.text != _confirmPasswordController.text) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Passwords do not match')),
+      );
+      return;
+    }
+
     setState(() => _isLoading = true);
     try {
       await ref.read(authRepositoryProvider).signUpWithEmail(
         _emailController.text,
         _passwordController.text,
+        name: _nameController.text,
       );
+      await ref.read(onboardingStatusProvider.future);
       if (!mounted) return;
       context.go('/');
     } catch (e) {
@@ -42,6 +53,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     setState(() => _isLoading = true);
     try {
       await ref.read(authRepositoryProvider).signInWithGoogle();
+      await ref.read(onboardingStatusProvider.future);
       if (!mounted) return;
       context.go('/');
     } catch (e) {

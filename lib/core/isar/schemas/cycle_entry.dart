@@ -8,6 +8,9 @@ class CycleEntry {
   Id id = Isar.autoIncrement;
 
   @Index()
+  late String userId;
+
+  @Index()
   late DateTime startDate;
 
   DateTime? endDate;

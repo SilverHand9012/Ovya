@@ -7,6 +7,9 @@ part 'insight_cache.g.dart';
 class InsightCache {
   Id id = Isar.autoIncrement;
 
+  @Index()
+  late String userId;
+
   late String insightText;
 
   @Index()

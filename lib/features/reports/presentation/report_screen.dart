@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ovya/l10n/gen/app_localizations.dart';
 import 'package:printing/printing.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../auth/data/auth_providers.dart';
 
 import '../report_generator.dart';
 import '../../symptom_tracking/providers/symptom_notifier.dart';
@@ -35,8 +36,11 @@ class _ReportScreenState extends ConsumerState<ReportScreen> {
   }
 
   Future<void> _loadSavedName() async {
+    final user = ref.read(firebaseAuthProvider).currentUser;
+    if (user == null) return;
+    
     final prefs = await SharedPreferences.getInstance();
-    final savedName = prefs.getString('patient_name');
+    final savedName = prefs.getString('patient_name_${user.uid}');
     if (savedName != null && savedName.isNotEmpty) {
       if (mounted) {
         _nameController.text = savedName;
@@ -45,8 +49,11 @@ class _ReportScreenState extends ConsumerState<ReportScreen> {
   }
 
   Future<void> _saveName(String name) async {
+    final user = ref.read(firebaseAuthProvider).currentUser;
+    if (user == null) return;
+    
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('patient_name', name);
+    await prefs.setString('patient_name_${user.uid}', name);
   }
 
   Future<void> _handleGenerate() async {

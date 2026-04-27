@@ -270,5 +270,31 @@
   "auth_full_name": "Full Name",
   "auth_name_hint": "Jane Doe",
   "auth_email_address": "Email Address",
-  "auth_already_have_account": "Already have an account? "
+  "auth_already_have_account": "Already have an account? ",
+  "welcome_title": "Welcome to Ovya",
+  "welcome_subtitle": "Let's understand your health better",
+  "welcome_desc": "Answer a few simple questions to get personalized insights",
+  "welcome_name_hint": "What should we call you?",
+  "welcome_name_label": "Your name",
+  "welcome_start_btn": "Start Assessment",
+  "assessment_title": "ASSESSMENT",
+  "assessment_help_text": "This helps us personalize your sanctuary space.",
+  "btn_yes": "YES",
+  "btn_no": "NO",
+  "btn_next": "Next",
+  "all_set_title": "You're all set",
+  "all_set_subtitle": "Analyzing your responses...",
+  "all_set_btn": "View Results",
+  "all_set_footer": "Your data is safe in your sanctuary.",
+  "question_progress": "Question {current} of {total}",
+  "@question_progress": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  }
 }

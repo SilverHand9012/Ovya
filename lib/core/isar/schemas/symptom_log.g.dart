@@ -107,8 +107,13 @@ const SymptomLogSchema = CollectionSchema(
       name: r'updatedAt',
       type: IsarType.dateTime,
     ),
-    r'weightGain': PropertySchema(
+    r'userId': PropertySchema(
       id: 18,
+      name: r'userId',
+      type: IsarType.string,
+    ),
+    r'weightGain': PropertySchema(
+      id: 19,
       name: r'weightGain',
       type: IsarType.bool,
     )
@@ -127,6 +132,19 @@ const SymptomLogSchema = CollectionSchema(
       properties: [
         IndexPropertySchema(
           name: r'clientId',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    ),
+    r'userId': IndexSchema(
+      id: -2005826577402374815,
+      name: r'userId',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'userId',
           type: IndexType.hash,
           caseSensitive: true,
         )
@@ -178,6 +196,7 @@ int _symptomLogEstimateSize(
       bytesCount += 3 + value.length * 3;
     }
   }
+  bytesCount += 3 + object.userId.length * 3;
   return bytesCount;
 }
 
@@ -205,7 +224,8 @@ void _symptomLogSerialize(
   writer.writeBool(offsets[15], object.synced);
   writer.writeDateTime(offsets[16], object.timestamp);
   writer.writeDateTime(offsets[17], object.updatedAt);
-  writer.writeBool(offsets[18], object.weightGain);
+  writer.writeString(offsets[18], object.userId);
+  writer.writeBool(offsets[19], object.weightGain);
 }
 
 SymptomLog _symptomLogDeserialize(
@@ -234,7 +254,8 @@ SymptomLog _symptomLogDeserialize(
   object.synced = reader.readBool(offsets[15]);
   object.timestamp = reader.readDateTime(offsets[16]);
   object.updatedAt = reader.readDateTime(offsets[17]);
-  object.weightGain = reader.readBool(offsets[18]);
+  object.userId = reader.readString(offsets[18]);
+  object.weightGain = reader.readBool(offsets[19]);
   return object;
 }
 
@@ -282,6 +303,8 @@ P _symptomLogDeserializeProp<P>(
     case 17:
       return (reader.readDateTime(offset)) as P;
     case 18:
+      return (reader.readString(offset)) as P;
+    case 19:
       return (reader.readBool(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -498,6 +521,51 @@ extension SymptomLogQueryWhere
               indexName: r'clientId',
               lower: [],
               upper: [clientId],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterWhereClause> userIdEqualTo(
+      String userId) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'userId',
+        value: [userId],
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterWhereClause> userIdNotEqualTo(
+      String userId) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'userId',
+              lower: [],
+              upper: [userId],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'userId',
+              lower: [userId],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'userId',
+              lower: [userId],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'userId',
+              lower: [],
+              upper: [userId],
               includeUpper: false,
             ));
       }
@@ -1337,6 +1405,137 @@ extension SymptomLogQueryFilter
     });
   }
 
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> userIdEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'userId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> userIdGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'userId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> userIdLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'userId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> userIdBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'userId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> userIdStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'userId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> userIdEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'userId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> userIdContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'userId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> userIdMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'userId',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> userIdIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'userId',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition>
+      userIdIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'userId',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<SymptomLog, SymptomLog, QAfterFilterCondition> weightGainEqualTo(
       bool value) {
     return QueryBuilder.apply(this, (query) {
@@ -1572,6 +1771,18 @@ extension SymptomLogQuerySortBy
   QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortByUpdatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'updatedAt', Sort.desc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortByUserId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'userId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> sortByUserIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'userId', Sort.desc);
     });
   }
 
@@ -1821,6 +2032,18 @@ extension SymptomLogQuerySortThenBy
     });
   }
 
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenByUserId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'userId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenByUserIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'userId', Sort.desc);
+    });
+  }
+
   QueryBuilder<SymptomLog, SymptomLog, QAfterSortBy> thenByWeightGain() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'weightGain', Sort.asc);
@@ -1948,6 +2171,13 @@ extension SymptomLogQueryWhereDistinct
     });
   }
 
+  QueryBuilder<SymptomLog, SymptomLog, QDistinct> distinctByUserId(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'userId', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<SymptomLog, SymptomLog, QDistinct> distinctByWeightGain() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'weightGain');
@@ -2069,6 +2299,12 @@ extension SymptomLogQueryProperty
   QueryBuilder<SymptomLog, DateTime, QQueryOperations> updatedAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'updatedAt');
+    });
+  }
+
+  QueryBuilder<SymptomLog, String, QQueryOperations> userIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'userId');
     });
   }
 

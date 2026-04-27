@@ -3,13 +3,14 @@ import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../core/isar/isar_service.dart';
 import '../../../core/services/queue_service.dart';
 import '../../../core/sync/sync_service.dart';
 
 /// Abstract repository for authentication operations.
 abstract class AuthRepository {
   Future<void> signInWithEmail(String email, String password);
-  Future<void> signUpWithEmail(String email, String password);
+  Future<void> signUpWithEmail(String email, String password, {String? name});
   Future<void> signInWithGoogle();
   Future<void> signOut();
   Future<bool> isAuthenticated();
@@ -52,12 +53,17 @@ class FirebaseAuthRepository implements AuthRepository {
   }
 
   @override
-  Future<void> signUpWithEmail(String email, String password) async {
+  Future<void> signUpWithEmail(String email, String password, {String? name}) async {
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
+      final credential = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      
+      if (name != null && credential.user != null) {
+        await credential.user!.updateDisplayName(name);
+      }
+      
       await _handlePostLoginSync();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -75,10 +81,12 @@ class FirebaseAuthRepository implements AuthRepository {
   Future<void> signInWithGoogle() async {
     try {
       final GoogleSignIn googleSignIn = GoogleSignIn();
+      // Force account picker by signing out first
+      await googleSignIn.signOut();
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
       
       if (googleUser == null) {
-        return; // User cancelled
+        throw Exception('Sign in cancelled');
       }
 
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
@@ -97,9 +105,14 @@ class FirebaseAuthRepository implements AuthRepository {
 
 
   Future<void> signOut() async {
+    final isar = await IsarService().db;
+    await isar.writeTxn(() async {
+      await isar.clear();
+    });
+    
     // Clear queue FIRST — prevents cross-user data leakage
     await _queueService.clearAll();
-    debugPrint('[Auth] Queue cleared on logout');
+    debugPrint('[Auth] DB and Queue cleared on logout');
     await _firebaseAuth.signOut();
   }
 

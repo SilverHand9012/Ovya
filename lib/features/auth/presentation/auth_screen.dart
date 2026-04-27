@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ovya/l10n/gen/app_localizations.dart';
+import '../../onboarding/providers/onboarding_provider.dart';
 
 class AuthScreen extends ConsumerStatefulWidget {
   const AuthScreen({super.key});
@@ -31,6 +32,9 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
     
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('is_guest', true);
+    
+    // Explicitly read the onboarding status to fetch from Firestore if it exists
+    await ref.read(onboardingStatusProvider.future);
     
     if (!mounted) return;
     setState(() => _isLoading = false);

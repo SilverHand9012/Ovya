@@ -707,4 +707,58 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get auth_already_have_account => 'ಈಗಾಗಲೇ ಖಾತೆಯನ್ನು ಹೊಂದಿದ್ದೀರಾ? ';
+
+  @override
+  String get welcome_title => 'Ovya ಗೆ ಸುಸ್ವಾಗತ';
+
+  @override
+  String get welcome_subtitle => 'ನಿಮ್ಮ ಆರೋಗ್ಯವನ್ನು ಉತ್ತಮವಾಗಿ ಅರ್ಥಮಾಡಿಕೊಳ್ಳೋಣ';
+
+  @override
+  String get welcome_desc =>
+      'ವೈಯಕ್ತಿಕಗೊಳಿಸಿದ ಒಳನೋಟಗಳನ್ನು ಪಡೆಯಲು ಕೆಲವು ಸರಳ ಪ್ರಶ್ನೆಗಳಿಗೆ ಉತ್ತರಿಸಿ';
+
+  @override
+  String get welcome_name_hint => 'ನಾವು ನಿಮ್ಮನ್ನು ಏನಂದು ಕರೆಯಬೇಕು?';
+
+  @override
+  String get welcome_name_label => 'ನಿಮ್ಮ ಹೆಸರು';
+
+  @override
+  String get welcome_start_btn => 'ಮೌಲ್ಯಮಾಪನ ಪ್ರಾರಂಭಿಸಿ';
+
+  @override
+  String get assessment_title => 'ಮೌಲ್ಯಮಾಪನ';
+
+  @override
+  String get assessment_help_text =>
+      'ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ವೈಯಕ್ತೀಕರಿಸಲು ಇದು ನಮಗೆ ಸಹಾಯ ಮಾಡುತ್ತದೆ.';
+
+  @override
+  String get btn_yes => 'ಹೌದು';
+
+  @override
+  String get btn_no => 'ಇಲ್ಲ';
+
+  @override
+  String get btn_next => 'ಮುಂದೆ';
+
+  @override
+  String get all_set_title => 'ಎಲ್ಲವೂ ಸಿದ್ಧವಾಗಿದೆ';
+
+  @override
+  String get all_set_subtitle =>
+      'ನಿಮ್ಮ ಪ್ರತಿಕ್ರಿಯೆಗಳನ್ನು ವಿಶ್ಲೇಷಿಸಲಾಗುತ್ತಿದೆ...';
+
+  @override
+  String get all_set_btn => 'ಫಲಿತಾಂಶಗಳನ್ನು ನೋಡಿ';
+
+  @override
+  String get all_set_footer =>
+      'ನಿಮ್ಮ ಡೇಟಾ ನಿಮ್ಮ ಅಭಯಾರಣ್ಯದಲ್ಲಿ (sanctuary) ಸುರಕ್ಷಿತವಾಗಿದೆ.';
+
+  @override
+  String question_progress(String current, String total) {
+    return 'ಪ್ರಶ್ನೆ $current / $total';
+  }
 }

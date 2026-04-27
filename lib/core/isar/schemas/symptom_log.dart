@@ -14,6 +14,9 @@ class SymptomLog {
   String? clientId;
 
   @Index()
+  late String userId;
+
+  @Index()
   late DateTime timestamp;
 
   late DateTime updatedAt;

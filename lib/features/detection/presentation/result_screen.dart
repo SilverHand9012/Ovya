@@ -281,7 +281,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
               // Action Buttons
               ElevatedButton(
                 onPressed: () {
-                  context.push('/tracker');
+                  context.go('/');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: colors.primary,

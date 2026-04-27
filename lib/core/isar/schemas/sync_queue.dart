@@ -7,6 +7,9 @@ part 'sync_queue.g.dart';
 class SyncQueue {
   Id id = Isar.autoIncrement;
 
+  @Index()
+  late String userId;
+
   late String action;
   late String payload;
 

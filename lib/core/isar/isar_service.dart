@@ -5,6 +5,7 @@ import 'schemas/symptom_log.dart';
 import 'schemas/cycle_entry.dart';
 import 'schemas/insight_cache.dart';
 import 'schemas/sync_queue.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 /// Manages the Isar database instance and lifecycle.
 ///
@@ -58,9 +59,14 @@ class IsarService {
   // ── Sync Integration ──────────────────────────────────────────
 
   Future<List<SymptomLog>> getUnsyncedLogs() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return [];
+    
     final isar = await db;
     return isar.symptomLogs
         .filter()
+        .userIdEqualTo(user.uid)
+        .and()
         .syncedEqualTo(false)
         .findAll();
   }

@@ -2,8 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ovya/l10n/gen/app_localizations.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
+import '../auth/data/auth_providers.dart';
+import '../cycle_tracking/providers/cycle_provider.dart';
+import '../detection/providers/detection_provider.dart';
+import '../symptom_tracking/providers/symptom_notifier.dart';
+import '../chat/providers/chat_provider.dart';
+import '../onboarding/providers/onboarding_provider.dart';
 import '../../app/theme.dart';
 import 'widgets/sync_badge.dart';
 import 'widgets/risk_alert_card.dart';
@@ -23,9 +29,12 @@ class _SanctuaryScreenState extends ConsumerState<SanctuaryScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     
-    // TODO: Wire up actual providers later
-    final String userName = "Priya"; // ref.watch(userProvider.select((u) => u.name));
-    final bool showRiskAlert = true; // ref.watch(riskProvider) ...
+    final userNameAsync = ref.watch(userNameProvider);
+    final String userName = userNameAsync.value ?? "User";
+    
+    final symptomState = ref.watch(symptomNotifierProvider);
+    final riskResult = symptomState.riskResult;
+    final bool showRiskAlert = riskResult != null && riskResult.level != 'Low';
 
     return Scaffold(
       backgroundColor: kBackground,
@@ -72,7 +81,13 @@ class _SanctuaryScreenState extends ConsumerState<SanctuaryScreen> {
                     if (value == 'logout') {
                       final prefs = await SharedPreferences.getInstance();
                       await prefs.remove('is_guest');
-                      await FirebaseAuth.instance.signOut();
+                      await ref.read(authRepositoryProvider).signOut();
+                      ref.invalidate(authRepositoryProvider);
+                      ref.invalidate(cycleProvider);
+                      ref.invalidate(detectionProvider);
+                      ref.invalidate(symptomNotifierProvider);
+                      ref.invalidate(chatProvider);
+                      ref.invalidate(onboardingStatusProvider);
                       if (context.mounted) {
                         context.go('/auth');
                       }
@@ -135,8 +150,8 @@ class _SanctuaryScreenState extends ConsumerState<SanctuaryScreen> {
           
           // ── 4. Risk Alert Card (conditional) ───────────────────
           if (showRiskAlert)
-            const SliverToBoxAdapter(
-              child: RiskAlertCard(isHighRisk: true),
+            SliverToBoxAdapter(
+              child: RiskAlertCard(isHighRisk: riskResult.level == 'High'),
             ),
             
           // ── 5. "Today's Focus" Section Header ──────────────────

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ovya/l10n/gen/app_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'firebase_options.dart';
 
@@ -40,6 +41,8 @@ Future<void> main() async {
   await languageService.load();
 
   final prefs = await SharedPreferences.getInstance();
+  
+
 
   // 3. Initialize connectivity orchestrator safely before anything else
   final connectivityOrchestrator = ConnectivityOrchestrator();

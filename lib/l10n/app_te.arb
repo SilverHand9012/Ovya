@@ -270,5 +270,31 @@
   "auth_full_name": "పూర్తి పేరు",
   "auth_name_hint": "Jane Doe",
   "auth_email_address": "ఇమెయిల్ చిరునామా",
-  "auth_already_have_account": "ఇప్పటికే ఖాతా ఉందా? "
+  "auth_already_have_account": "ఇప్పటికే ఖాతా ఉందా? ",
+  "welcome_title": "Ovya కి స్వాగతం",
+  "welcome_subtitle": "మీ ఆరోగ్యాన్ని మెరుగ్గా అర్థం చేసుకుందాం",
+  "welcome_desc": "వ్యక్తిగతీకరించిన అంతర్దృష్టులను పొందడానికి కొన్ని సాధారణ ప్రశ్నలకు సమాధానం ఇవ్వండి",
+  "welcome_name_hint": "మేము మిమ్మల్ని ఏమని పిలవాలి?",
+  "welcome_name_label": "మీ పేరు",
+  "welcome_start_btn": "అసెస్‌మెంట్ ప్రారంభించండి",
+  "assessment_title": "అసెస్‌మెంట్",
+  "assessment_help_text": "ఇది మీ స్థలాన్ని వ్యక్తిగతీకరించడంలో మాకు సహాయపడుతుంది.",
+  "btn_yes": "అవును",
+  "btn_no": "కాదు",
+  "btn_next": "తరువాత",
+  "all_set_title": "అంతా సిద్ధమైంది",
+  "all_set_subtitle": "మీ ప్రతిస్పందనలను విశ్లేషిస్తున్నాము...",
+  "all_set_btn": "ఫలితాలను చూడండి",
+  "all_set_footer": "మీ డేటా మీ సురక్షిత ప్రదేశంలో (sanctuary) సురక్షితంగా ఉంటుంది.",
+  "question_progress": "ప్రశ్న {current} / {total}",
+  "@question_progress": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  }
 }

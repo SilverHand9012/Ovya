@@ -225,6 +225,13 @@ class SyncService {
     payload['deviceId'] = deviceId;
     payload['syncedAt'] = FieldValue.serverTimestamp();
 
+    // ── PROFILE UPDATE ────────────────────────────────────────
+    if (item.action == 'update_profile') {
+      debugPrint('[Sync] Updating user profile document');
+      await firestore.collection('users').doc(user.uid).set(payload, SetOptions(merge: true));
+      return;
+    }
+
     final collectionRef = firestore
         .collection('users')
         .doc(user.uid)

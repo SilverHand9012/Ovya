@@ -696,4 +696,56 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get auth_already_have_account => 'Already have an account? ';
+
+  @override
+  String get welcome_title => 'Welcome to Ovya';
+
+  @override
+  String get welcome_subtitle => 'Let\'s understand your health better';
+
+  @override
+  String get welcome_desc =>
+      'Answer a few simple questions to get personalized insights';
+
+  @override
+  String get welcome_name_hint => 'What should we call you?';
+
+  @override
+  String get welcome_name_label => 'Your name';
+
+  @override
+  String get welcome_start_btn => 'Start Assessment';
+
+  @override
+  String get assessment_title => 'ASSESSMENT';
+
+  @override
+  String get assessment_help_text =>
+      'This helps us personalize your sanctuary space.';
+
+  @override
+  String get btn_yes => 'YES';
+
+  @override
+  String get btn_no => 'NO';
+
+  @override
+  String get btn_next => 'Next';
+
+  @override
+  String get all_set_title => 'You\'re all set';
+
+  @override
+  String get all_set_subtitle => 'Analyzing your responses...';
+
+  @override
+  String get all_set_btn => 'View Results';
+
+  @override
+  String get all_set_footer => 'Your data is safe in your sanctuary.';
+
+  @override
+  String question_progress(String current, String total) {
+    return 'Question $current of $total';
+  }
 }

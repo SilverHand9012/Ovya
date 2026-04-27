@@ -4,6 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:ovya/l10n/gen/app_localizations.dart';
 
 import '../providers/detection_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../../onboarding/providers/onboarding_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class _QuestionDef {
   final String key;
@@ -21,6 +24,7 @@ class DetectionScreen extends ConsumerStatefulWidget {
 class _DetectionScreenState extends ConsumerState<DetectionScreen> {
   int _currentIndex = 0;
   bool? _isOver18;
+  bool? _selectedAnswer;
 
   late final List<_QuestionDef> _baseQuestions;
 
@@ -48,7 +52,11 @@ class _DetectionScreenState extends ConsumerState<DetectionScreen> {
     return _baseQuestions.length + 1; // base + age, ends here
   }
 
-  void _handleAnswer(bool value) async {
+  void _handleNext() async {
+    if (_selectedAnswer == null) return;
+
+    final value = _selectedAnswer!;
+
     if (_currentIndex < _baseQuestions.length) {
       final key = _baseQuestions[_currentIndex].key;
       ref.read(detectionProvider.notifier).answerQuestion(key, value);
@@ -58,16 +66,19 @@ class _DetectionScreenState extends ConsumerState<DetectionScreen> {
       ref.read(detectionProvider.notifier).answerQuestion('difficultyConceiving', value);
     }
 
-    // Wait slightly for a smooth UI transition feeling
-    await Future.delayed(const Duration(milliseconds: 250));
     if (!mounted) return;
 
     if (_currentIndex < _totalSteps - 1) {
       setState(() {
         _currentIndex++;
+        _selectedAnswer = null; // reset for next question
       });
     } else {
-      context.pushReplacement('/detection_result');
+      final uid = FirebaseAuth.instance.currentUser?.uid ?? 'guest';
+      await OnboardingController.markAssessmentComplete(uid, ref);
+      
+      if (!mounted) return;
+      context.pushReplacement('/analyzing');
     }
   }
 
@@ -75,15 +86,14 @@ class _DetectionScreenState extends ConsumerState<DetectionScreen> {
     if (_currentIndex > 0) {
       setState(() {
         _currentIndex--;
+        _selectedAnswer = null;
         if (_currentIndex == _baseQuestions.length) {
           _isOver18 = null; // Revert age answer if backing into it
         }
       });
     } else {
-      if (context.canPop()) {
-        context.pop();
-      } else {
-        context.pushReplacement('/home'); // Fallback
+      if (mounted) {
+        context.go('/welcome');
       }
     }
   }
@@ -103,79 +113,182 @@ class _DetectionScreenState extends ConsumerState<DetectionScreen> {
     final colors = Theme.of(context).colorScheme;
     final loc = AppLocalizations.of(context)!;
     final displayIndex = _currentIndex + 1;
+    const darkTextColor = Color(0xFF2C1A2E);
 
     return Scaffold(
-      backgroundColor: colors.surface,
+      backgroundColor: const Color(0xFFFAFAFC),
       appBar: AppBar(
-        backgroundColor: colors.surface,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: colors.onSurface),
+          icon: const Icon(Icons.arrow_back, color: Color(0xFF4B32A4)),
           onPressed: _handleBack,
         ),
-        title: Text(
-          "Question $displayIndex of $_totalSteps",
+        title: const Text(
+          "Ovya",
           style: TextStyle(
-            color: colors.primary,
-            fontWeight: FontWeight.w600,
-            fontSize: 16,
+            color: Color(0xFF4B32A4),
+            fontWeight: FontWeight.w900,
+            fontSize: 24,
+            letterSpacing: -0.5,
           ),
         ),
         centerTitle: true,
+        actions: const [],
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Progress indicator
-              LinearProgressIndicator(
-                value: displayIndex / _totalSteps,
-                backgroundColor: colors.primary.withValues(alpha: 0.1),
-                valueColor: AlwaysStoppedAnimation<Color>(colors.primary),
-                borderRadius: BorderRadius.circular(4),
-                minHeight: 8,
-              ),
-              const SizedBox(height: 48),
-
-              // Question text
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Text(
-                    _getQuestionText(loc),
-                    textAlign: TextAlign.center,
+              // Progress header
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    loc.assessment_title,
                     style: TextStyle(
-                      fontSize: 28,
+                      fontSize: 12,
                       fontWeight: FontWeight.bold,
-                      color: colors.onSurface,
-                      height: 1.3,
+                      color: darkTextColor.withValues(alpha: 0.6),
+                      letterSpacing: 1.0,
                     ),
                   ),
+                  Text(
+                    loc.question_progress(displayIndex.toString(), _totalSteps.toString()),
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: darkTextColor,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              
+              // Progress bar
+              ClipRRect(
+                borderRadius: BorderRadius.circular(4),
+                child: LinearProgressIndicator(
+                  value: displayIndex / _totalSteps,
+                  backgroundColor: Colors.grey.shade300,
+                  valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF6B5B95)),
+                  minHeight: 8,
                 ),
               ),
+              const SizedBox(height: 32),
+
+              // Question Card
+              Container(
+                padding: const EdgeInsets.all(32),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(32),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.03),
+                      blurRadius: 20,
+                      offset: const Offset(0, 10),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _getQuestionText(loc),
+                      style: const TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.w900,
+                        color: darkTextColor,
+                        height: 1.2,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      loc.assessment_help_text,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontStyle: FontStyle.italic,
+                        color: darkTextColor.withValues(alpha: 0.6),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              
+              const SizedBox(height: 48),
 
               // Answer Buttons
               Row(
                 children: [
                   Expanded(
                     child: _AnswerCard(
-                      label: "Yes",
-                      icon: Icons.check_circle_outline,
-                      onTap: () => _handleAnswer(true),
+                      label: loc.btn_yes,
+                      icon: Icons.check,
+                      isSelected: _selectedAnswer == true,
+                      onTap: () => setState(() => _selectedAnswer = true),
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  const SizedBox(width: 24),
                   Expanded(
                     child: _AnswerCard(
-                      label: "No",
-                      icon: Icons.cancel_outlined,
-                      onTap: () => _handleAnswer(false),
+                      label: loc.btn_no,
+                      icon: Icons.close,
+                      isSelected: _selectedAnswer == false,
+                      onTap: () => setState(() => _selectedAnswer = false),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 32),
+              
+              const Spacer(),
+
+              // Next Button
+              Container(
+                width: double.infinity,
+                height: 64,
+                decoration: BoxDecoration(
+                  color: _selectedAnswer == null ? Colors.grey.shade400 : const Color(0xFF6B5B95),
+                  borderRadius: BorderRadius.circular(32),
+                  boxShadow: _selectedAnswer == null ? [] : [
+                    BoxShadow(
+                      color: const Color(0xFF6B5B95).withValues(alpha: 0.3),
+                      blurRadius: 15,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: _selectedAnswer == null ? null : _handleNext,
+                    borderRadius: BorderRadius.circular(32),
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            loc.btn_next,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          const Icon(
+                            Icons.arrow_forward,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -187,44 +300,59 @@ class _DetectionScreenState extends ConsumerState<DetectionScreen> {
 class _AnswerCard extends StatelessWidget {
   final String label;
   final IconData icon;
+  final bool isSelected;
   final VoidCallback onTap;
 
   const _AnswerCard({
     required this.label,
     required this.icon,
+    required this.isSelected,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
-
-    return InkWell(
+    return GestureDetector(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 24),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(vertical: 32),
         decoration: BoxDecoration(
-          color: colors.surfaceContainerHighest.withValues(alpha: 0.4),
-          borderRadius: BorderRadius.circular(16),
+          color: isSelected ? const Color(0xFFEBE6FC) : Colors.white,
+          borderRadius: BorderRadius.circular(32),
           border: Border.all(
-            color: colors.outlineVariant,
+            color: isSelected ? Colors.transparent : Colors.transparent,
           ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.03),
+              blurRadius: 15,
+              offset: const Offset(0, 8),
+            ),
+          ],
         ),
         child: Column(
           children: [
-            Icon(
-              icon,
-              size: 48,
-              color: colors.primary,
+            Container(
+              width: 56,
+              height: 56,
+              decoration: BoxDecoration(
+                color: isSelected ? const Color(0xFF6B5B95) : Colors.grey.shade200,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                icon,
+                size: 28,
+                color: isSelected ? Colors.white : Colors.grey.shade600,
+              ),
             ),
             const SizedBox(height: 16),
             Text(
               label,
               style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.w600,
-                color: colors.onSurface,
+                fontSize: 20,
+                fontWeight: FontWeight.w900,
+                color: isSelected ? const Color(0xFF4B32A4) : const Color(0xFF2C1A2E),
               ),
             ),
           ],
@@ -233,3 +361,4 @@ class _AnswerCard extends StatelessWidget {
     );
   }
 }
+

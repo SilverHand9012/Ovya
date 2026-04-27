@@ -7,14 +7,19 @@ import '../features/auth/presentation/auth_screen.dart';
 import '../features/auth/presentation/login_screen.dart';
 import '../features/auth/presentation/signup_screen.dart';
 import '../features/onboarding/presentation/onboarding_screen.dart';
+import '../features/onboarding/presentation/welcome_screen.dart';
 import '../features/results/results_screen.dart';
 import '../features/log/log_screen.dart';
 import '../features/chat/presentation/chat_screen.dart';
 import '../features/reports/presentation/report_screen.dart';
 import '../features/history/history_screen.dart';
+import '../features/detection/presentation/detection_screen.dart';
+import '../features/detection/presentation/analyzing_screen.dart';
+import '../features/detection/presentation/result_screen.dart';
 import '../features/cycle_tracking/presentation/cycle_screen.dart';
 import '../features/sanctuary/sanctuary_screen.dart';
 import 'app_scaffold.dart';
+import 'root_screen.dart';
 
 /// Application router configuration using GoRouter.
 final GoRouter appRouter = GoRouter(
@@ -41,9 +46,22 @@ final GoRouter appRouter = GoRouter(
       return '/auth';
     }
 
-    // 3. If has language and logged in, cannot go to onboarding or auth-related routes
-    if (hasLanguage && isLoggedIn && (isAuthRelatedRoute || isOnboardingRoute)) {
-      return '/';
+    // 3. If logged in, enforce assessment completion
+    if (hasLanguage && isLoggedIn) {
+      final uid = user?.uid ?? 'guest';
+      final hasCompletedAssessment = prefs.getBool('has_completed_assessment_$uid') ?? false;
+      final isAssessmentRoute = path == '/welcome' || path == '/detection' || path == '/analyzing' || path == '/detection_result';
+      final isStrictOnboarding = path == '/welcome' || path == '/detection';
+
+      if (!hasCompletedAssessment) {
+        if (!isAssessmentRoute) {
+          return '/welcome';
+        }
+      } else {
+        if (isAuthRelatedRoute || isOnboardingRoute || isStrictOnboarding) {
+          return '/';
+        }
+      }
     }
 
     return null;
@@ -53,6 +71,11 @@ final GoRouter appRouter = GoRouter(
       path: '/onboarding',
       name: 'onboarding',
       builder: (context, state) => const OnboardingScreen(),
+    ),
+    GoRoute(
+      path: '/welcome',
+      name: 'welcome',
+      builder: (context, state) => const WelcomeScreen(),
     ),
     GoRoute(
       path: '/auth',
@@ -68,6 +91,21 @@ final GoRouter appRouter = GoRouter(
       path: '/signup',
       name: 'signup',
       builder: (context, state) => const SignupScreen(),
+    ),
+    GoRoute(
+      path: '/detection',
+      name: 'detection',
+      builder: (context, state) => const DetectionScreen(),
+    ),
+    GoRoute(
+      path: '/analyzing',
+      name: 'analyzing',
+      builder: (context, state) => const AnalyzingScreen(),
+    ),
+    GoRoute(
+      path: '/detection_result',
+      name: 'detection_result',
+      builder: (context, state) => const ResultScreen(),
     ),
 
     // ── Overlay routes (slide/fade over the main shell) ──────────
@@ -184,7 +222,7 @@ final GoRouter appRouter = GoRouter(
         GoRoute(
           path: '/',
           name: 'home',
-          builder: (context, state) => const SanctuaryScreen(),
+          builder: (context, state) => const RootScreen(),
         ),
       ],
     ),

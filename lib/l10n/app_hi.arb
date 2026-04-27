@@ -270,5 +270,31 @@
   "auth_full_name": "पूरा नाम",
   "auth_name_hint": "Jane Doe",
   "auth_email_address": "ईमेल पता",
-  "auth_already_have_account": "क्या आपके पास पहले से खाता है? "
+  "auth_already_have_account": "क्या आपके पास पहले से खाता है? ",
+  "welcome_title": "Ovya में आपका स्वागत है",
+  "welcome_subtitle": "आइए आपके स्वास्थ्य को बेहतर समझें",
+  "welcome_desc": "व्यक्तिगत जानकारी प्राप्त करने के लिए कुछ आसान सवालों के जवाब दें",
+  "welcome_name_hint": "हम आपको क्या कहकर बुलाएं?",
+  "welcome_name_label": "आपका नाम",
+  "welcome_start_btn": "मूल्यांकन शुरू करें",
+  "assessment_title": "मूल्यांकन",
+  "assessment_help_text": "यह हमें आपके स्थान को व्यक्तिगत बनाने में मदद करता है।",
+  "btn_yes": "हाँ",
+  "btn_no": "नहीं",
+  "btn_next": "अगला",
+  "all_set_title": "सब तैयार है",
+  "all_set_subtitle": "आपकी प्रतिक्रियाओं का विश्लेषण हो रहा है...",
+  "all_set_btn": "परिणाम देखें",
+  "all_set_footer": "आपका डेटा आपकी शरण (sanctuary) में सुरक्षित है।",
+  "question_progress": "प्रश्न {current} / {total}",
+  "@question_progress": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  }
 }

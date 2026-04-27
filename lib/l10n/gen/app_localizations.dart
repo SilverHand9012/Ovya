@@ -1393,6 +1393,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Already have an account? '**
   String get auth_already_have_account;
+
+  /// No description provided for @welcome_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Ovya'**
+  String get welcome_title;
+
+  /// No description provided for @welcome_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s understand your health better'**
+  String get welcome_subtitle;
+
+  /// No description provided for @welcome_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Answer a few simple questions to get personalized insights'**
+  String get welcome_desc;
+
+  /// No description provided for @welcome_name_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'What should we call you?'**
+  String get welcome_name_hint;
+
+  /// No description provided for @welcome_name_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Your name'**
+  String get welcome_name_label;
+
+  /// No description provided for @welcome_start_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Assessment'**
+  String get welcome_start_btn;
+
+  /// No description provided for @assessment_title.
+  ///
+  /// In en, this message translates to:
+  /// **'ASSESSMENT'**
+  String get assessment_title;
+
+  /// No description provided for @assessment_help_text.
+  ///
+  /// In en, this message translates to:
+  /// **'This helps us personalize your sanctuary space.'**
+  String get assessment_help_text;
+
+  /// No description provided for @btn_yes.
+  ///
+  /// In en, this message translates to:
+  /// **'YES'**
+  String get btn_yes;
+
+  /// No description provided for @btn_no.
+  ///
+  /// In en, this message translates to:
+  /// **'NO'**
+  String get btn_no;
+
+  /// No description provided for @btn_next.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get btn_next;
+
+  /// No description provided for @all_set_title.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re all set'**
+  String get all_set_title;
+
+  /// No description provided for @all_set_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyzing your responses...'**
+  String get all_set_subtitle;
+
+  /// No description provided for @all_set_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'View Results'**
+  String get all_set_btn;
+
+  /// No description provided for @all_set_footer.
+  ///
+  /// In en, this message translates to:
+  /// **'Your data is safe in your sanctuary.'**
+  String get all_set_footer;
+
+  /// No description provided for @question_progress.
+  ///
+  /// In en, this message translates to:
+  /// **'Question {current} of {total}'**
+  String question_progress(String current, String total);
 }
 
 class _AppLocalizationsDelegate
