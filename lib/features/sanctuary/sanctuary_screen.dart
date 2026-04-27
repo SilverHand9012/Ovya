@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ovya/l10n/gen/app_localizations.dart';
 
-import 'package:shared_preferences/shared_preferences.dart';
+
 import '../auth/data/auth_providers.dart';
 import '../cycle_tracking/providers/cycle_provider.dart';
 import '../detection/providers/detection_provider.dart';
@@ -59,11 +59,7 @@ class _SanctuaryScreenState extends ConsumerState<SanctuaryScreen> {
             ),
             actions: [
               PopupMenuButton<String>(
-                icon: Image.asset(
-                  'assets/images/language_icon.png',
-                  width: 24,
-                  height: 24,
-                ),
+                icon: const Icon(Icons.language, color: kTextPrimary),
                 tooltip: 'Change Language',
                 onSelected: (String code) async {
                   await languageService.changeLanguage(code);
@@ -82,15 +78,21 @@ class _SanctuaryScreenState extends ConsumerState<SanctuaryScreen> {
                   tooltip: 'Profile Options',
                   onSelected: (value) async {
                     if (value == 'logout') {
-                      final prefs = await SharedPreferences.getInstance();
-                      await prefs.remove('is_guest');
+                      // signOut() handles: DB wipe → Queue clear → Prefs cleanup → Firebase signOut
                       await ref.read(authRepositoryProvider).signOut();
+                      
+                      // Reset all Riverpod state to prevent stale data
                       ref.invalidate(authRepositoryProvider);
                       ref.invalidate(isarProvider);
                       ref.invalidate(detectionProvider);
                       ref.invalidate(symptomNotifierProvider);
                       ref.invalidate(chatProvider);
                       ref.invalidate(onboardingStatusProvider);
+                      ref.invalidate(userNameProvider);
+                      ref.invalidate(cycleListProvider);
+                      ref.invalidate(cycleMigrationProvider);
+                      ref.invalidate(cycleActionsProvider);
+                      
                       if (context.mounted) {
                         context.go('/auth');
                       }

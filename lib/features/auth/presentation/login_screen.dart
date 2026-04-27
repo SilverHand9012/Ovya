@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ovya/l10n/gen/app_localizations.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../data/auth_providers.dart';
 import '../../onboarding/providers/onboarding_provider.dart';
+import '../../../shared/widgets/google_sign_in_button.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -269,52 +269,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               
               const SizedBox(height: 32),
               
-              // Google Button
-              Container(
-                width: double.infinity,
-                height: 56,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.05),
-                      blurRadius: 10,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: _isLoading ? null : _handleGoogleSignIn,
-                    borderRadius: BorderRadius.circular(16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // Google G Icon placeholder
-                        Container(
-                          width: 24,
-                          height: 24,
-                          decoration: BoxDecoration(
-                            color: Colors.blue.shade100,
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Center(child: Text('G', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 14))),
-                        ),
-                        const SizedBox(width: 12),
-                        Text(
-                          loc.auth_continue_google,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black87,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+              // Google Button — proper branding
+              GoogleSignInButton(
+                text: loc.auth_continue_google,
+                onTap: _handleGoogleSignIn,
+                isLoading: _isLoading,
               ),
               
               const SizedBox(height: 48),

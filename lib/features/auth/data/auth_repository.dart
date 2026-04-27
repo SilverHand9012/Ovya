@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/isar/isar_service.dart';
 import '../../../core/services/queue_service.dart';
+import '../../../core/services/session_service.dart';
 import '../../../core/sync/sync_service.dart';
 
 /// Abstract repository for authentication operations.
@@ -105,14 +106,22 @@ class FirebaseAuthRepository implements AuthRepository {
 
 
   Future<void> signOut() async {
+    // 1. Wipe Isar database (symptom logs, cycles, insights, sync queue)
     final isar = await IsarService().db;
     await isar.writeTxn(() async {
       await isar.clear();
     });
     
-    // Clear queue FIRST — prevents cross-user data leakage
+    // 2. Clear sync queue — prevents cross-user data leakage
     await _queueService.clearAll();
-    debugPrint('[Auth] DB and Queue cleared on logout');
+    
+    // 3. Clear user-specific SharedPreferences (name, assessment, guest ID, etc.)
+    //    Global settings (language, device ID) are preserved.
+    await SessionService.clearUserSession();
+    
+    debugPrint('[Auth] Full session cleanup complete (DB + Queue + Prefs)');
+    
+    // 4. Firebase sign out LAST — ensures all local cleanup completes first
     await _firebaseAuth.signOut();
   }
 

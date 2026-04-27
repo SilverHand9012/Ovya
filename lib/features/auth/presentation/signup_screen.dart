@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ovya/l10n/gen/app_localizations.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../data/auth_providers.dart';
 import '../../onboarding/providers/onboarding_provider.dart';
+import '../../../shared/widgets/google_sign_in_button.dart';
 
 class SignupScreen extends ConsumerStatefulWidget {
   const SignupScreen({super.key});
@@ -20,30 +20,51 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   final _confirmPasswordController = TextEditingController();
   bool _isLoading = false;
   bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
 
   void _handleSignup() async {
-    if (_passwordController.text != _confirmPasswordController.text) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Passwords do not match')),
-      );
+    final name = _nameController.text.trim();
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+    final confirmPassword = _confirmPasswordController.text.trim();
+
+    // Validate empty fields
+    if (name.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
+      _showError('Please fill in all fields');
+      return;
+    }
+
+    // Validate email format
+    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email)) {
+      _showError('Please enter a valid email address');
+      return;
+    }
+
+    // Validate password length
+    if (password.length < 6) {
+      _showError('Password must be at least 6 characters');
+      return;
+    }
+
+    // Validate password match
+    if (password != confirmPassword) {
+      _showError('Passwords do not match');
       return;
     }
 
     setState(() => _isLoading = true);
     try {
       await ref.read(authRepositoryProvider).signUpWithEmail(
-        _emailController.text,
-        _passwordController.text,
-        name: _nameController.text,
+        email,
+        password,
+        name: name,
       );
       await ref.read(onboardingStatusProvider.future);
       if (!mounted) return;
       context.go('/');
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString())),
-      );
+      _showError(e.toString().replaceFirst('Exception: ', ''));
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -58,12 +79,22 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
       context.go('/');
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString())),
-      );
+      _showError(e.toString().replaceFirst('Exception: ', ''));
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
+  }
+
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: const Color(0xFFE53935),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      ),
+    );
   }
 
   @override
@@ -71,20 +102,20 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
-    final size = MediaQuery.of(context).size;
     
     const darkTextColor = Color(0xFF2C1A2E);
     const primaryColor = Color(0xFF6B5B95);
     const fieldBgColor = Color(0xFFF7F5F0);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFFFFAFA), // Off-white/very light peach
+      backgroundColor: const Color(0xFFFFFAFA),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -152,110 +183,66 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
               const SizedBox(height: 40),
 
               // Full Name Field
-              Text(
-                loc.auth_full_name.toUpperCase(),
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: darkTextColor.withValues(alpha: 0.7)),
-              ),
+              _buildFieldLabel(loc.auth_full_name, darkTextColor),
               const SizedBox(height: 8),
-              Container(
-                decoration: BoxDecoration(
-                  color: fieldBgColor,
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.05),
-                      blurRadius: 10,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: TextField(
-                  controller: _nameController,
-                  keyboardType: TextInputType.name,
-                  decoration: InputDecoration(
-                    hintText: loc.auth_name_hint,
-                    hintStyle: TextStyle(color: Colors.grey.shade400),
-                    prefixIcon: const Icon(Icons.person_outline, color: Colors.grey),
-                    border: InputBorder.none,
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                  ),
-                ),
+              _buildTextField(
+                controller: _nameController,
+                hintText: loc.auth_name_hint,
+                prefixIcon: Icons.person_outline,
+                keyboardType: TextInputType.name,
+                fieldBgColor: fieldBgColor,
               ),
               
               const SizedBox(height: 20),
 
               // Email Field
-              Text(
-                loc.auth_email_address.toUpperCase(),
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: darkTextColor.withValues(alpha: 0.7)),
-              ),
+              _buildFieldLabel(loc.auth_email_address, darkTextColor),
               const SizedBox(height: 8),
-              Container(
-                decoration: BoxDecoration(
-                  color: fieldBgColor,
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.05),
-                      blurRadius: 10,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: TextField(
-                  controller: _emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    hintText: loc.auth_email_hint,
-                    hintStyle: TextStyle(color: Colors.grey.shade400),
-                    prefixIcon: const Icon(Icons.email_outlined, color: Colors.grey),
-                    border: InputBorder.none,
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                  ),
-                ),
+              _buildTextField(
+                controller: _emailController,
+                hintText: loc.auth_email_hint,
+                prefixIcon: Icons.email_outlined,
+                keyboardType: TextInputType.emailAddress,
+                fieldBgColor: fieldBgColor,
               ),
               
               const SizedBox(height: 20),
 
               // Password Field
-              Text(
-                loc.auth_password.toUpperCase(),
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: darkTextColor.withValues(alpha: 0.7)),
-              ),
+              _buildFieldLabel(loc.auth_password, darkTextColor),
               const SizedBox(height: 8),
-              Container(
-                decoration: BoxDecoration(
-                  color: fieldBgColor,
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.05),
-                      blurRadius: 10,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: TextField(
-                  controller: _passwordController,
-                  obscureText: _obscurePassword,
-                  decoration: InputDecoration(
-                    hintText: loc.auth_password_hint,
-                    hintStyle: TextStyle(color: Colors.grey.shade400),
-                    prefixIcon: const Icon(Icons.lock_outline, color: Colors.grey),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _obscurePassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
-                        color: Colors.grey,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _obscurePassword = !_obscurePassword;
-                        });
-                      },
-                    ),
-                    border: InputBorder.none,
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              _buildTextField(
+                controller: _passwordController,
+                hintText: loc.auth_password_hint,
+                prefixIcon: Icons.lock_outline,
+                obscureText: _obscurePassword,
+                fieldBgColor: fieldBgColor,
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _obscurePassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                    color: Colors.grey,
                   ),
+                  onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
+              // Confirm Password Field
+              _buildFieldLabel(loc.auth_confirm_password, darkTextColor),
+              const SizedBox(height: 8),
+              _buildTextField(
+                controller: _confirmPasswordController,
+                hintText: loc.auth_password_hint,
+                prefixIcon: Icons.lock_outline,
+                obscureText: _obscureConfirmPassword,
+                fieldBgColor: fieldBgColor,
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _obscureConfirmPassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                    color: Colors.grey,
+                  ),
+                  onPressed: () => setState(() => _obscureConfirmPassword = !_obscureConfirmPassword),
                 ),
               ),
 
@@ -306,52 +293,11 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
               
               const SizedBox(height: 32),
               
-              // Google Button
-              Container(
-                width: double.infinity,
-                height: 56,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.05),
-                      blurRadius: 10,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: _isLoading ? null : _handleGoogleSignIn,
-                    borderRadius: BorderRadius.circular(16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // Google G Icon placeholder
-                        Container(
-                          width: 24,
-                          height: 24,
-                          decoration: BoxDecoration(
-                            color: Colors.blue.shade100,
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Center(child: Text('G', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 14))),
-                        ),
-                        const SizedBox(width: 12),
-                        Text(
-                          loc.auth_continue_google,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black87,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+              // Google Button — proper branding
+              GoogleSignInButton(
+                text: loc.auth_continue_google,
+                onTap: _handleGoogleSignIn,
+                isLoading: _isLoading,
               ),
               
               const SizedBox(height: 48),
@@ -374,6 +320,50 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
               const SizedBox(height: 24),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFieldLabel(String text, Color color) {
+    return Text(
+      text.toUpperCase(),
+      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: color.withValues(alpha: 0.7)),
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String hintText,
+    required IconData prefixIcon,
+    required Color fieldBgColor,
+    TextInputType keyboardType = TextInputType.text,
+    bool obscureText = false,
+    Widget? suffixIcon,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        color: fieldBgColor,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: TextField(
+        controller: controller,
+        keyboardType: keyboardType,
+        obscureText: obscureText,
+        decoration: InputDecoration(
+          hintText: hintText,
+          hintStyle: TextStyle(color: Colors.grey.shade400),
+          prefixIcon: Icon(prefixIcon, color: Colors.grey),
+          suffixIcon: suffixIcon,
+          border: InputBorder.none,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         ),
       ),
     );
