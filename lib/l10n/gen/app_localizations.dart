@@ -1537,6 +1537,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cycle date saved successfully!'**
   String get cycle_date_saved;
+
+  /// No description provided for @report_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Ovya Health Report'**
+  String get report_title;
+
+  /// No description provided for @cycle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cycle'**
+  String get cycle;
+
+  /// No description provided for @insights.
+  ///
+  /// In en, this message translates to:
+  /// **'Insights'**
+  String get insights;
+
+  /// No description provided for @report_summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Based on your reported symptoms ({symptoms}), your estimated PCOS risk level is {riskLevel}.'**
+  String report_summary(String symptoms, String riskLevel);
+
+  /// No description provided for @cycle_history.
+  ///
+  /// In en, this message translates to:
+  /// **'Cycle History'**
+  String get cycle_history;
 }
 
 class _AppLocalizationsDelegate

@@ -18,27 +18,51 @@ class ReportGenerator {
   Future<Uint8List> generateReport({
     required String patientName,
     required RiskResult riskResult,
-    required List<SymptomEntity> recentLogs, // Mapped from SymphonyEntity logic
+    required List<SymptomEntity> recentLogs,
+    required AppLocalizations loc,
     required String language,
   }) async {
-    // 1. Load Universal Font Base
+    // Load Universal Font Base for Latin characters
     final fontData = await rootBundle.load("assets/fonts/NotoSans-Regular.ttf");
     final ttf = pw.Font.ttf(fontData);
-    
-    // 2. Load Devanagari extensions for Hindi & Marathi
+
+    // Load Kannada font
+    final kannadaData = await rootBundle.load("assets/fonts/NotoSansKannada-Regular.ttf");
+    final kannadaFont = pw.Font.ttf(kannadaData);
+
+    // Load Telugu font
+    final teluguData = await rootBundle.load("assets/fonts/NotoSansTelugu-Regular.ttf");
+    final teluguFont = pw.Font.ttf(teluguData);
+
+    // Load Devanagari extensions for Hindi & Marathi
     final devData = await rootBundle.load("assets/fonts/NotoSansDevanagari-Regular.ttf");
     final devanagariFont = pw.Font.ttf(devData);
 
+    pw.Font getFont(String langCode) {
+      switch (langCode) {
+        case 'kn':
+          return kannadaFont;
+        case 'te':
+          return teluguFont;
+        case 'hi':
+        case 'mr':
+          return devanagariFont;
+        default:
+          return ttf;
+      }
+    }
+
+    final selectedFont = getFont(language);
+
     // 3. Enforce Unicode Standard across Engine Document
+    // Use ttf (NotoSans) as base for Latin/Numbers and selectedFont as fallback for regional scripts
     final pdf = pw.Document(
       theme: pw.ThemeData.withFont(
         base: ttf,
-        fontFallback: [devanagariFont, ttf],
+        fontFallback: [selectedFont],
       ),
     );
 
-    // Load localizer based on language directly
-    final loc = lookupAppLocalizations(Locale(language));
     final nowStr = DateFormat.yMMMMd(language).format(DateTime.now());
 
     // Resolve recommendations keys to strings using our mapping helper
@@ -58,7 +82,7 @@ class ReportGenerator {
                   pw.Column(
                     crossAxisAlignment: pw.CrossAxisAlignment.start,
                     children: [
-                      pw.Text(loc.pdfTitle, 
+                      pw.Text(loc.report_title, 
                         style: pw.TextStyle(fontSize: 22, fontWeight: pw.FontWeight.bold, color: primaryColor)),
                       pw.Text(loc.pdfDateGenerated(nowStr), style: const pw.TextStyle(fontSize: 14)),
                     ],
@@ -128,7 +152,7 @@ class ReportGenerator {
               child: pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
                 children: [
-                  pw.Text(loc.riskAssessment, style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold, color: primaryColor)),
+                  pw.Text(loc.insights, style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold, color: primaryColor)),
                   pw.Divider(color: primaryColor),
                   pw.SizedBox(height: 8),
                   
@@ -170,7 +194,11 @@ class ReportGenerator {
                             ],
                             pw.Text(loc.explanationLabel, style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
                             pw.SizedBox(height: 4),
-                            pw.Text(riskResult.explanation),
+                            pw.Text(
+                              riskResult.activeSymptoms.isEmpty 
+                                ? riskResult.explanation 
+                                : loc.report_summary(_localizeSymptoms(loc, riskResult.activeSymptoms), _getRiskLevel(loc, riskResult.level))
+                            ),
                           ],
                         )
                       )
@@ -197,7 +225,7 @@ class ReportGenerator {
             pw.SizedBox(height: 24),
 
             // Logs Table
-            pw.Text(loc.symptomsLast30Days, style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold)),
+            pw.Text(loc.cycle_history, style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold)),
             pw.SizedBox(height: 8),
             _buildLogsTable(recentLogs.take(10).toList(), language, loc),
           ];
@@ -268,6 +296,31 @@ class ReportGenerator {
       case 'rec_symptom_diary': return loc.rec_symptom_diary;
       default: return key;
     }
+  }
+
+  String _localizeSymptoms(AppLocalizations loc, List<String> activeSymptoms) {
+    if (activeSymptoms.isEmpty) return '';
+    final localized = activeSymptoms.map((s) {
+      switch(s) {
+        case 'Irregular cycle': return loc.irregularCycle;
+        case 'Excess hair growth': return loc.excessHairGrowth;
+        case 'Family history of PCOS': return loc.q_family_history;
+        case 'Hair thinning/loss': return loc.hairThinning;
+        case 'Weight gain': return loc.weightGain;
+        case 'Acne': return loc.acne;
+        case 'Skin darkening': return loc.skinDarkening;
+        case 'Difficulty conceiving': return loc.q_difficulty_conceiving;
+        case 'Fatigue': return loc.fatigue;
+        case 'Mood issues': return loc.moodIssues;
+        case 'Sleep problems': return loc.sleepProblems;
+        case 'Bloating': return loc.bloating;
+        default: return s;
+      }
+    }).toList();
+    if (localized.length == 1) return localized.first;
+    if (localized.length == 2) return '${localized[0]}, ${localized[1]}';
+    final allButLast = localized.sublist(0, localized.length - 1).join(', ');
+    return '$allButLast, ${localized.last}';
   }
 
   String _getPcosTypeName(AppLocalizations loc, String type) {

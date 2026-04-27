@@ -44,9 +44,10 @@ flutter:
   uses-material-design: true
   generate: true
   assets:
-    - assets/fonts/Baloo2-Regular.ttf
-    - assets/fonts/BalooTamma2-Regular.ttf
-    - assets/fonts/BalooTammudu2-Regular.ttf
+    - assets/fonts/NotoSans-Regular.ttf
+    - assets/fonts/NotoSansKannada-Regular.ttf
+    - assets/fonts/NotoSansTelugu-Regular.ttf
+    - assets/fonts/NotoSansDevanagari-Regular.ttf
     - assets/images/
     - assets/images/illustrations/
 

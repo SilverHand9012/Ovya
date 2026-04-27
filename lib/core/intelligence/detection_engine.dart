@@ -12,6 +12,7 @@ class RiskResult {
   final String level;
   final String explanation;
   final List<String> recommendations;
+  final List<String> activeSymptoms;
 
   /// Optional PCOS sub-type hint inferred from symptom patterns.
   ///
@@ -24,13 +25,14 @@ class RiskResult {
     required this.level,
     required this.explanation,
     required this.recommendations,
+    required this.activeSymptoms,
     this.pcosTypeHint,
   });
 
   @override
   String toString() =>
       'RiskResult(score: $score, level: $level, '
-      'pcosTypeHint: $pcosTypeHint, explanation: $explanation)';
+      'pcosTypeHint: $pcosTypeHint, explanation: $explanation, activeSymptoms: $activeSymptoms)';
 }
 
 // ──────────────────────────────────────────────────────────────
@@ -159,6 +161,7 @@ class DetectionEngine {
       level: risk.label,
       explanation: explanation,
       recommendations: recommendations,
+      activeSymptoms: activeSymptoms,
       pcosTypeHint: typeHint,
     );
   }

@@ -107,7 +107,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                   height: 100,
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
+                    shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withValues(alpha: 0.1),
@@ -116,8 +116,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                       ),
                     ],
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
+                  child: ClipOval(
                     child: Image.asset(
                       'assets/images/logo.png',
                       width: 100,

@@ -782,4 +782,21 @@ class AppLocalizationsTe extends AppLocalizations {
 
   @override
   String get cycle_date_saved => 'సైకిల్ తేదీ విజయవంతంగా సేవ్ చేయబడింది!';
+
+  @override
+  String get report_title => 'ఓవ్యా ఆరోగ్య నివేదిక';
+
+  @override
+  String get cycle => 'ఋతుచక్రం';
+
+  @override
+  String get insights => 'అంతర్దృష్టులు';
+
+  @override
+  String report_summary(String symptoms, String riskLevel) {
+    return 'మీ లక్షణాల ($symptoms) ఆధారంగా, మీ అంచనా PCOS ప్రమాద స్థాయి $riskLevel.';
+  }
+
+  @override
+  String get cycle_history => 'ఋతుచక్ర చరిత్ర';
 }

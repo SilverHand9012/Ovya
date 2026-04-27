@@ -90,10 +90,12 @@ class _ReportScreenState extends ConsumerState<ReportScreen> {
       }
 
       final generator = ReportGenerator();
+      final loc = AppLocalizations.of(context)!;
       final pdfBytes = await generator.generateReport(
         patientName: name,
         riskResult: riskResult,
         recentLogs: logs.take(30).toList(), // Limit to ~30 recent logs contextually 
+        loc: loc,
         language: Localizations.localeOf(context).languageCode,
       );
 

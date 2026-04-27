@@ -304,5 +304,20 @@
   "recent_cycles": "Recent Cycles",
   "no_cycle_entries": "No cycle entries yet.",
   "period_started": "Period started",
-  "cycle_date_saved": "Cycle date saved successfully!"
+  "cycle_date_saved": "Cycle date saved successfully!",
+  "report_title": "Ovya Health Report",
+  "cycle": "Cycle",
+  "insights": "Insights",
+  "report_summary": "Based on your reported symptoms ({symptoms}), your estimated PCOS risk level is {riskLevel}.",
+  "@report_summary": {
+    "placeholders": {
+      "symptoms": {
+        "type": "String"
+      },
+      "riskLevel": {
+        "type": "String"
+      }
+    }
+  },
+  "cycle_history": "Cycle History"
 }

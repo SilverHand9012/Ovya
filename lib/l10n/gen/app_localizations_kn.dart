@@ -785,4 +785,21 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get cycle_date_saved => 'ಸೈಕಲ್ ದಿನಾಂಕವನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಉಳಿಸಲಾಗಿದೆ!';
+
+  @override
+  String get report_title => 'ಓವ್ಯಾ ಆರೋಗ್ಯ ವರದಿ';
+
+  @override
+  String get cycle => 'ಋತುಚಕ್ರ';
+
+  @override
+  String get insights => 'ಒಳನೋಟಗಳು';
+
+  @override
+  String report_summary(String symptoms, String riskLevel) {
+    return 'ನಿಮ್ಮ ಲಕ್ಷಣಗಳ ($symptoms) ಆಧಾರದ ಮೇಲೆ, ನಿಮ್ಮ ಅಂದಾಜು PCOS ಅಪಾಯದ ಮಟ್ಟವು $riskLevel ಆಗಿದೆ.';
+  }
+
+  @override
+  String get cycle_history => 'ಋತುಚಕ್ರದ ಇತಿಹಾಸ';
 }

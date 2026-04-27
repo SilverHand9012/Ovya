@@ -774,4 +774,21 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get cycle_date_saved => 'साइकिल की तारीख सफलतापूर्वक सेव हो गई!';
+
+  @override
+  String get report_title => 'ओव्या स्वास्थ्य रिपोर्ट';
+
+  @override
+  String get cycle => 'मासिक धर्म';
+
+  @override
+  String get insights => 'अंतर्दृष्टि';
+
+  @override
+  String report_summary(String symptoms, String riskLevel) {
+    return 'आपके बताए गए लक्षणों ($symptoms) के आधार पर, आपका अनुमानित पीसीओएस जोखिम स्तर $riskLevel है।';
+  }
+
+  @override
+  String get cycle_history => 'मासिक धर्म का इतिहास';
 }

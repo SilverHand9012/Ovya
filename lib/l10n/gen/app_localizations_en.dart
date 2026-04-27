@@ -772,4 +772,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cycle_date_saved => 'Cycle date saved successfully!';
+
+  @override
+  String get report_title => 'Ovya Health Report';
+
+  @override
+  String get cycle => 'Cycle';
+
+  @override
+  String get insights => 'Insights';
+
+  @override
+  String report_summary(String symptoms, String riskLevel) {
+    return 'Based on your reported symptoms ($symptoms), your estimated PCOS risk level is $riskLevel.';
+  }
+
+  @override
+  String get cycle_history => 'Cycle History';
 }
