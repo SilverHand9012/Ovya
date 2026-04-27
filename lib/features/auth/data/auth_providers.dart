@@ -22,3 +22,23 @@ final authRepositoryProvider = Provider<AuthRepository>((ref) {
     prefs: prefs,
   );
 });
+
+final currentUserIdProvider = Provider<String>((ref) {
+  final firebaseAuth = ref.watch(firebaseAuthProvider);
+  final prefs = ref.watch(sharedPreferencesProvider);
+  
+  final currentUser = firebaseAuth.currentUser;
+  if (currentUser != null) {
+    return currentUser.uid;
+  }
+  
+  // Handle guest user
+  const guestIdKey = 'guest_user_id';
+  String? guestId = prefs.getString(guestIdKey);
+  if (guestId == null) {
+    // Generate a new guest ID starting with 'guest_'
+    guestId = 'guest_${DateTime.now().millisecondsSinceEpoch}';
+    prefs.setString(guestIdKey, guestId);
+  }
+  return guestId;
+});

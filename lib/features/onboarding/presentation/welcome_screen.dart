@@ -46,28 +46,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 16),
-                // Icon at the top
-                Center(
-                  child: Container(
-                    width: 48,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.05),
-                          blurRadius: 10,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: Center(
-                      child: Icon(Icons.spa_outlined, color: Color(0xFF4B32A4), size: 24),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 32),
+
                 
                 // Main Image
                 Center(

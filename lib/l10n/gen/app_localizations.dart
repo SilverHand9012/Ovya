@@ -1489,6 +1489,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Question {current} of {total}'**
   String question_progress(String current, String total);
+
+  /// No description provided for @cycle_tracking_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Cycle Tracking'**
+  String get cycle_tracking_title;
+
+  /// No description provided for @log_new_cycle.
+  ///
+  /// In en, this message translates to:
+  /// **'Log a New Cycle'**
+  String get log_new_cycle;
+
+  /// No description provided for @select_start_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Select start date'**
+  String get select_start_date;
+
+  /// No description provided for @save_entry.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Entry'**
+  String get save_entry;
+
+  /// No description provided for @recent_cycles.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Cycles'**
+  String get recent_cycles;
+
+  /// No description provided for @no_cycle_entries.
+  ///
+  /// In en, this message translates to:
+  /// **'No cycle entries yet.'**
+  String get no_cycle_entries;
+
+  /// No description provided for @period_started.
+  ///
+  /// In en, this message translates to:
+  /// **'Period started'**
+  String get period_started;
+
+  /// No description provided for @cycle_date_saved.
+  ///
+  /// In en, this message translates to:
+  /// **'Cycle date saved successfully!'**
+  String get cycle_date_saved;
 }
 
 class _AppLocalizationsDelegate

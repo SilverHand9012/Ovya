@@ -748,4 +748,28 @@ class AppLocalizationsMr extends AppLocalizations {
   String question_progress(String current, String total) {
     return 'प्रश्न $current / $total';
   }
+
+  @override
+  String get cycle_tracking_title => 'मासिक पाळी ट्रॅकिंग';
+
+  @override
+  String get log_new_cycle => 'नवीन सायकलची नोंद करा';
+
+  @override
+  String get select_start_date => 'सुरवातीची तारीख निवडा';
+
+  @override
+  String get save_entry => 'नोंद जतन करा';
+
+  @override
+  String get recent_cycles => 'अलीकडील सायकल्स';
+
+  @override
+  String get no_cycle_entries => 'अद्याप कोणतीही सायकल नोंद नाही.';
+
+  @override
+  String get period_started => 'पाळी सुरू झाली';
+
+  @override
+  String get cycle_date_saved => 'सायकलची तारीख यशस्वीरित्या जतन केली!';
 }

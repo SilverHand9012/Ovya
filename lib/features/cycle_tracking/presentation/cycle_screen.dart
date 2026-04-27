@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:ovya/l10n/gen/app_localizations.dart';
 
 import '../../../app/theme.dart';
 import '../providers/cycle_provider.dart';
@@ -43,160 +44,175 @@ class _CycleScreenState extends ConsumerState<CycleScreen> {
     }
   }
 
-  void _saveEntry() {
+  void _saveEntry(AppLocalizations loc) async {
     if (_selectedDate != null) {
-      ref.read(cycleProvider.notifier).addCycleDate(_selectedDate!);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Cycle date saved successfully!')),
-      );
-      setState(() {
-        _selectedDate = null;
-      });
+      await ref.read(cycleActionsProvider).addCycleDate(_selectedDate!);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(loc.cycle_date_saved)),
+        );
+        setState(() {
+          _selectedDate = null;
+        });
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final cycles = ref.watch(cycleProvider);
+    final cyclesAsync = ref.watch(cycleListProvider);
     final locale = Localizations.localeOf(context).toString();
+    final loc = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: kBackground,
       appBar: AppBar(
-        title: const Text('Cycle Tracking'),
+        title: Text(loc.cycle_tracking_title),
         backgroundColor: kBackground,
         elevation: 0,
         centerTitle: true,
       ),
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    'Log a New Cycle',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
+      body: cyclesAsync.when(
+        data: (cycles) => CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      loc.log_new_cycle,
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    const SizedBox(height: 16),
+                    InkWell(
+                      onTap: _pickDate,
+                      borderRadius: BorderRadius.circular(16),
+                      child: Container(
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(color: kAccent.withValues(alpha: 0.1)),
                         ),
-                  ),
-                  const SizedBox(height: 16),
-                  InkWell(
-                    onTap: _pickDate,
-                    borderRadius: BorderRadius.circular(16),
-                    child: Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: kAccent.withValues(alpha: 0.1)),
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(Icons.calendar_month, color: kAccent),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: Text(
-                              _selectedDate == null
-                                  ? 'Select start date'
-                                  : DateFormat.yMMMMd(locale).format(_selectedDate!),
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: _selectedDate == null ? kTextSecondary : kTextPrimary,
-                                fontWeight: _selectedDate != null ? FontWeight.bold : FontWeight.normal,
+                        child: Row(
+                          children: [
+                            Icon(Icons.calendar_month, color: kAccent),
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: Text(
+                                _selectedDate == null
+                                    ? loc.select_start_date
+                                    : DateFormat.yMMMMd(locale).format(_selectedDate!),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: _selectedDate == null ? kTextSecondary : kTextPrimary,
+                                  fontWeight: _selectedDate != null ? FontWeight.bold : FontWeight.normal,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 24),
-                  ElevatedButton(
-                    onPressed: _selectedDate == null ? null : _saveEntry,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: kAccent,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                    const SizedBox(height: 24),
+                    ElevatedButton(
+                      onPressed: _selectedDate == null ? null : () => _saveEntry(loc),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: kAccent,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        elevation: 0,
                       ),
-                      elevation: 0,
-                    ),
-                    child: const Text(
-                      'Save Entry',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(24, 16, 24, 12),
-              child: Text(
-                'Recent Cycles',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-            ),
-          ),
-          
-          cycles.isEmpty
-              ? SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.all(24.0),
-                    child: Center(
                       child: Text(
-                        'No cycle entries yet.',
-                        style: TextStyle(color: kTextSecondary),
+                        loc.save_entry,
+                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(24, 16, 24, 12),
+                child: Text(
+                  loc.recent_cycles,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+              ),
+            ),
+            
+            cycles.isEmpty
+                ? SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Center(
+                        child: Text(
+                          loc.no_cycle_entries,
+                          style: TextStyle(color: kTextSecondary),
+                        ),
+                      ),
+                    ),
+                  )
+                : SliverPadding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          final entry = cycles[index];
+                          return Card(
+                            elevation: 0,
+                            margin: const EdgeInsets.only(bottom: 12),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                              side: BorderSide(color: kAccent.withValues(alpha: 0.1)),
+                            ),
+                            child: ListTile(
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                              leading: Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: kPurpleCard.withValues(alpha: 0.3),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(Icons.water_drop, color: kAccent, size: 20),
+                              ),
+                              title: Text(
+                                entry.endDate == null 
+                                    ? DateFormat.yMMMMd(locale).format(entry.startDate)
+                                    : '${DateFormat.MMMd(locale).format(entry.startDate)} – ${DateFormat.MMMd(locale).format(entry.endDate!)} (${entry.duration ?? 1} days)',
+                                style: const TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              subtitle: Text(
+                                entry.endDate == null ? 'Ongoing' : loc.period_started,
+                                style: TextStyle(
+                                  color: entry.endDate == null ? kAccent : kTextSecondary,
+                                  fontWeight: entry.endDate == null ? FontWeight.bold : FontWeight.normal,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        childCount: cycles.length,
                       ),
                     ),
                   ),
-                )
-              : SliverPadding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  sliver: SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        final entry = cycles[index];
-                        return Card(
-                          elevation: 0,
-                          margin: const EdgeInsets.only(bottom: 12),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            side: BorderSide(color: kAccent.withValues(alpha: 0.1)),
-                          ),
-                          child: ListTile(
-                            contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                            leading: Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: kPurpleCard.withValues(alpha: 0.3),
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Icon(Icons.water_drop, color: kAccent, size: 20),
-                            ),
-                            title: Text(
-                              DateFormat.yMMMMd(locale).format(entry.startDate),
-                              style: const TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            subtitle: const Text('Period started'),
-                          ),
-                        );
-                      },
-                      childCount: cycles.length,
-                    ),
-                  ),
-                ),
-                
-          const SliverPadding(padding: EdgeInsets.only(bottom: 40)),
-        ],
+                  
+            const SliverPadding(padding: EdgeInsets.only(bottom: 40)),
+          ],
+        ),
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (err, stack) => Center(child: Text('Error: $err')),
       ),
     );
   }

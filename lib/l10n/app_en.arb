@@ -296,5 +296,13 @@
         "type": "String"
       }
     }
-  }
+  },
+  "cycle_tracking_title": "Cycle Tracking",
+  "log_new_cycle": "Log a New Cycle",
+  "select_start_date": "Select start date",
+  "save_entry": "Save Entry",
+  "recent_cycles": "Recent Cycles",
+  "no_cycle_entries": "No cycle entries yet.",
+  "period_started": "Period started",
+  "cycle_date_saved": "Cycle date saved successfully!"
 }

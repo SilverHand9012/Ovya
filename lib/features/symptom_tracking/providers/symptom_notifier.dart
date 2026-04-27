@@ -9,6 +9,7 @@ import '../../../core/intelligence/detection_engine.dart';
 import '../../../core/services/queue_service.dart';
 import '../../../shared/providers/sync_service_provider.dart';
 import '../../../shared/providers/device_service_provider.dart';
+import '../../auth/data/auth_providers.dart';
 import 'symptom_state.dart';
 
 // ──────────────────────────────────────────────────────────────
@@ -240,3 +241,12 @@ final symptomNotifierProvider =
     StateNotifierProvider<SymptomNotifier, SymptomState>(
   (ref) => SymptomNotifier(ref: ref),
 );
+
+/// A reactive stream of all symptom logs, automatically updating when Isar changes.
+final journeyProvider = StreamProvider<List<SymptomEntity>>((ref) {
+  // Watch user ID to re-create the stream if user logs in/out.
+  ref.watch(currentUserIdProvider);
+  
+  final repository = SymptomRepositoryImpl();
+  return repository.watchAllLogs();
+});

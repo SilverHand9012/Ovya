@@ -17,9 +17,9 @@ const CycleEntrySchema = CollectionSchema(
   name: r'CycleEntry',
   id: -4735511318501866968,
   properties: {
-    r'cycleLength': PropertySchema(
+    r'duration': PropertySchema(
       id: 0,
-      name: r'cycleLength',
+      name: r'duration',
       type: IsarType.long,
     ),
     r'endDate': PropertySchema(
@@ -106,7 +106,7 @@ void _cycleEntrySerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeLong(offsets[0], object.cycleLength);
+  writer.writeLong(offsets[0], object.duration);
   writer.writeDateTime(offsets[1], object.endDate);
   writer.writeString(offsets[2], object.notes);
   writer.writeDateTime(offsets[3], object.startDate);
@@ -120,7 +120,7 @@ CycleEntry _cycleEntryDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = CycleEntry();
-  object.cycleLength = reader.readLongOrNull(offsets[0]);
+  object.duration = reader.readLongOrNull(offsets[0]);
   object.endDate = reader.readDateTimeOrNull(offsets[1]);
   object.id = id;
   object.notes = reader.readStringOrNull(offsets[2]);
@@ -385,64 +385,61 @@ extension CycleEntryQueryWhere
 
 extension CycleEntryQueryFilter
     on QueryBuilder<CycleEntry, CycleEntry, QFilterCondition> {
-  QueryBuilder<CycleEntry, CycleEntry, QAfterFilterCondition>
-      cycleLengthIsNull() {
+  QueryBuilder<CycleEntry, CycleEntry, QAfterFilterCondition> durationIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'cycleLength',
+        property: r'duration',
       ));
     });
   }
 
   QueryBuilder<CycleEntry, CycleEntry, QAfterFilterCondition>
-      cycleLengthIsNotNull() {
+      durationIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'cycleLength',
+        property: r'duration',
       ));
     });
   }
 
-  QueryBuilder<CycleEntry, CycleEntry, QAfterFilterCondition>
-      cycleLengthEqualTo(int? value) {
+  QueryBuilder<CycleEntry, CycleEntry, QAfterFilterCondition> durationEqualTo(
+      int? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'cycleLength',
+        property: r'duration',
         value: value,
       ));
     });
   }
 
   QueryBuilder<CycleEntry, CycleEntry, QAfterFilterCondition>
-      cycleLengthGreaterThan(
+      durationGreaterThan(
     int? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'cycleLength',
+        property: r'duration',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<CycleEntry, CycleEntry, QAfterFilterCondition>
-      cycleLengthLessThan(
+  QueryBuilder<CycleEntry, CycleEntry, QAfterFilterCondition> durationLessThan(
     int? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'cycleLength',
+        property: r'duration',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<CycleEntry, CycleEntry, QAfterFilterCondition>
-      cycleLengthBetween(
+  QueryBuilder<CycleEntry, CycleEntry, QAfterFilterCondition> durationBetween(
     int? lower,
     int? upper, {
     bool includeLower = true,
@@ -450,7 +447,7 @@ extension CycleEntryQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'cycleLength',
+        property: r'duration',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -924,15 +921,15 @@ extension CycleEntryQueryLinks
 
 extension CycleEntryQuerySortBy
     on QueryBuilder<CycleEntry, CycleEntry, QSortBy> {
-  QueryBuilder<CycleEntry, CycleEntry, QAfterSortBy> sortByCycleLength() {
+  QueryBuilder<CycleEntry, CycleEntry, QAfterSortBy> sortByDuration() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'cycleLength', Sort.asc);
+      return query.addSortBy(r'duration', Sort.asc);
     });
   }
 
-  QueryBuilder<CycleEntry, CycleEntry, QAfterSortBy> sortByCycleLengthDesc() {
+  QueryBuilder<CycleEntry, CycleEntry, QAfterSortBy> sortByDurationDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'cycleLength', Sort.desc);
+      return query.addSortBy(r'duration', Sort.desc);
     });
   }
 
@@ -987,15 +984,15 @@ extension CycleEntryQuerySortBy
 
 extension CycleEntryQuerySortThenBy
     on QueryBuilder<CycleEntry, CycleEntry, QSortThenBy> {
-  QueryBuilder<CycleEntry, CycleEntry, QAfterSortBy> thenByCycleLength() {
+  QueryBuilder<CycleEntry, CycleEntry, QAfterSortBy> thenByDuration() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'cycleLength', Sort.asc);
+      return query.addSortBy(r'duration', Sort.asc);
     });
   }
 
-  QueryBuilder<CycleEntry, CycleEntry, QAfterSortBy> thenByCycleLengthDesc() {
+  QueryBuilder<CycleEntry, CycleEntry, QAfterSortBy> thenByDurationDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'cycleLength', Sort.desc);
+      return query.addSortBy(r'duration', Sort.desc);
     });
   }
 
@@ -1062,9 +1059,9 @@ extension CycleEntryQuerySortThenBy
 
 extension CycleEntryQueryWhereDistinct
     on QueryBuilder<CycleEntry, CycleEntry, QDistinct> {
-  QueryBuilder<CycleEntry, CycleEntry, QDistinct> distinctByCycleLength() {
+  QueryBuilder<CycleEntry, CycleEntry, QDistinct> distinctByDuration() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'cycleLength');
+      return query.addDistinctBy(r'duration');
     });
   }
 
@@ -1103,9 +1100,9 @@ extension CycleEntryQueryProperty
     });
   }
 
-  QueryBuilder<CycleEntry, int?, QQueryOperations> cycleLengthProperty() {
+  QueryBuilder<CycleEntry, int?, QQueryOperations> durationProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'cycleLength');
+      return query.addPropertyName(r'duration');
     });
   }
 

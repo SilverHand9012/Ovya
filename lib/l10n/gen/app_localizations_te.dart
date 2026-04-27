@@ -758,4 +758,28 @@ class AppLocalizationsTe extends AppLocalizations {
   String question_progress(String current, String total) {
     return 'ప్రశ్న $current / $total';
   }
+
+  @override
+  String get cycle_tracking_title => 'సైకిల్ ట్రాకింగ్';
+
+  @override
+  String get log_new_cycle => 'కొత్త సైకిల్‌ను నమోదు చేయండి';
+
+  @override
+  String get select_start_date => 'ప్రారంభ తేదీని ఎంచుకోండి';
+
+  @override
+  String get save_entry => 'ఎంట్రీని సేవ్ చేయండి';
+
+  @override
+  String get recent_cycles => 'ఇటీవలి సైకిల్స్';
+
+  @override
+  String get no_cycle_entries => 'ఇంకా ఎటువంటి సైకిల్ ఎంట్రీలు లేవు.';
+
+  @override
+  String get period_started => 'పీరియడ్ ప్రారంభమైంది';
+
+  @override
+  String get cycle_date_saved => 'సైకిల్ తేదీ విజయవంతంగా సేవ్ చేయబడింది!';
 }

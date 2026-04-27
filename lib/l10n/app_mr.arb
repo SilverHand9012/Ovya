@@ -296,5 +296,13 @@
         "type": "String"
       }
     }
-  }
+  },
+  "cycle_tracking_title": "मासिक पाळी ट्रॅकिंग",
+  "log_new_cycle": "नवीन सायकलची नोंद करा",
+  "select_start_date": "सुरवातीची तारीख निवडा",
+  "save_entry": "नोंद जतन करा",
+  "recent_cycles": "अलीकडील सायकल्स",
+  "no_cycle_entries": "अद्याप कोणतीही सायकल नोंद नाही.",
+  "period_started": "पाळी सुरू झाली",
+  "cycle_date_saved": "सायकलची तारीख यशस्वीरित्या जतन केली!"
 }

@@ -57,30 +57,8 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
-    final symptomState = ref.watch(symptomNotifierProvider);
-    final symptoms = symptomState.symptoms;
     final locale = Localizations.localeOf(context).toString();
-
-    // Dates that have logs (for dot indicators)
-    final loggedDates = <DateTime>{};
-    for (final s in symptoms) {
-      loggedDates.add(DateTime(s.timestamp.year, s.timestamp.month, s.timestamp.day));
-    }
-
-    // Recent assessments — group by unique risk evaluations
-    final engine = DetectionEngine();
-    final assessments = <_AssessmentData>[];
-    for (final s in symptoms.take(5)) {
-      final result = engine.evaluate(s);
-      assessments.add(_AssessmentData(
-        symptom: s,
-        risk: result,
-      ));
-    }
-
-    // Daily logs sorted by date descending
-    final sortedLogs = List<SymptomEntity>.from(symptoms)
-      ..sort((a, b) => b.timestamp.compareTo(a.timestamp));
+    final journeyAsync = ref.watch(journeyProvider);
 
     return Scaffold(
       backgroundColor: kBackground,
@@ -99,7 +77,32 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
               ),
         ),
       ),
-      body: CustomScrollView(
+      body: journeyAsync.when(
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (err, stack) => Center(child: Text('Error: $err')),
+        data: (symptoms) {
+          // Dates that have logs (for dot indicators)
+          final loggedDates = <DateTime>{};
+          for (final s in symptoms) {
+            loggedDates.add(DateTime(s.timestamp.year, s.timestamp.month, s.timestamp.day));
+          }
+
+          // Recent assessments — group by unique risk evaluations
+          final engine = DetectionEngine();
+          final assessments = <_AssessmentData>[];
+          for (final s in symptoms.take(5)) {
+            final result = engine.evaluate(s);
+            assessments.add(_AssessmentData(
+              symptom: s,
+              risk: result,
+            ));
+          }
+
+          // Daily logs sorted by date descending
+          final sortedLogs = List<SymptomEntity>.from(symptoms)
+            ..sort((a, b) => b.timestamp.compareTo(a.timestamp));
+
+          return CustomScrollView(
         slivers: [
           // ── 1. Calendar Section ──────────────────────────────────
           SliverToBoxAdapter(
@@ -220,6 +223,8 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
           // Bottom padding
           const SliverPadding(padding: EdgeInsets.only(bottom: 40)),
         ],
+      );
+      },
       ),
     );
   }

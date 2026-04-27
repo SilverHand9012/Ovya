@@ -761,4 +761,28 @@ class AppLocalizationsKn extends AppLocalizations {
   String question_progress(String current, String total) {
     return 'ಪ್ರಶ್ನೆ $current / $total';
   }
+
+  @override
+  String get cycle_tracking_title => 'ಋತುಚಕ್ರದ ಟ್ರ್ಯಾಕಿಂಗ್';
+
+  @override
+  String get log_new_cycle => 'ಹೊಸ ಸೈಕಲ್ ದಾಖಲಿಸಿ';
+
+  @override
+  String get select_start_date => 'ಪ್ರಾರಂಭದ ದಿನಾಂಕವನ್ನು ಆರಿಸಿ';
+
+  @override
+  String get save_entry => 'ದಾಖಲೆಯನ್ನು ಉಳಿಸಿ';
+
+  @override
+  String get recent_cycles => 'ಇತ್ತೀಚಿನ ಸೈಕಲ್‌ಗಳು';
+
+  @override
+  String get no_cycle_entries => 'ಇನ್ನೂ ಯಾವುದೇ ಸೈಕಲ್ ದಾಖಲೆಗಳಿಲ್ಲ.';
+
+  @override
+  String get period_started => 'ಋತುಸ್ರಾವ ಪ್ರಾರಂಭವಾಯಿತು';
+
+  @override
+  String get cycle_date_saved => 'ಸೈಕಲ್ ದಿನಾಂಕವನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಉಳಿಸಲಾಗಿದೆ!';
 }

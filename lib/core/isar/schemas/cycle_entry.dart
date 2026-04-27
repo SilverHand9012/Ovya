@@ -14,6 +14,6 @@ class CycleEntry {
   late DateTime startDate;
 
   DateTime? endDate;
-  int? cycleLength;
+  int? duration;
   String? notes;
 }

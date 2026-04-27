@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:ovya/l10n/gen/app_localizations.dart';
 import '../../app/theme.dart';
 import '../../shared/widgets/ovya_button.dart';
 import 'widgets/mood_selector.dart';
 import 'widgets/symptom_chip_grid.dart';
+import '../symptom_tracking/domain/symptom_entity.dart';
+import '../symptom_tracking/providers/symptom_notifier.dart';
 
-class LogScreen extends StatefulWidget {
+class LogScreen extends ConsumerStatefulWidget {
   const LogScreen({super.key});
 
   @override
-  State<LogScreen> createState() => _LogScreenState();
+  ConsumerState<LogScreen> createState() => _LogScreenState();
 }
 
-class _LogScreenState extends State<LogScreen> {
+class _LogScreenState extends ConsumerState<LogScreen> {
   int? _selectedMood;
   final Set<String> _selectedSymptoms = {};
   final TextEditingController _notesController = TextEditingController();
@@ -41,27 +44,51 @@ class _LogScreenState extends State<LogScreen> {
 
     setState(() => _isSaving = true);
 
-    // 1. Simulate saving delay (would write to Isar via SymptomRepository)
-    await Future.delayed(const Duration(milliseconds: 800));
-
-    if (mounted) {
-      setState(() {
-        _isSaving = false;
-        _isSaved = true;
-      });
-    }
-
-    // 2. Final confirmation delay
-    await Future.delayed(const Duration(milliseconds: 400));
-
-    if (mounted) {
-      Navigator.pop(context);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(AppLocalizations.of(context)!.log_saved),
-          behavior: SnackBarBehavior.floating,
-        ),
+    try {
+      final symptom = SymptomEntity(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        timestamp: DateTime.now(),
+        updatedAt: DateTime.now(),
+        irregularCycle: _selectedSymptoms.contains('irregular_cycle'),
+        acne: _selectedSymptoms.contains('acne'),
+        weightGain: _selectedSymptoms.contains('weight_gain'),
+        hairGrowth: _selectedSymptoms.contains('hair_growth'),
+        moodIssues: _selectedSymptoms.contains('mood_issues'),
+        hairThinning: _selectedSymptoms.contains('hair_thinning'),
+        skinDarkening: _selectedSymptoms.contains('skin_darkening'),
+        fatigue: _selectedSymptoms.contains('fatigue'),
+        sleepProblems: _selectedSymptoms.contains('sleep_problems'),
+        bloating: _selectedSymptoms.contains('bloating'),
+        notes: _notesController.text,
       );
+
+      await ref.read(symptomNotifierProvider.notifier).addSymptom(symptom);
+
+      if (mounted) {
+        setState(() {
+          _isSaving = false;
+          _isSaved = true;
+        });
+      }
+
+      await Future.delayed(const Duration(milliseconds: 400));
+
+      if (mounted) {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.log_saved),
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() => _isSaving = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error saving log: $e')),
+        );
+      }
     }
   }
 

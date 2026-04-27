@@ -750,4 +750,28 @@ class AppLocalizationsHi extends AppLocalizations {
   String question_progress(String current, String total) {
     return 'प्रश्न $current / $total';
   }
+
+  @override
+  String get cycle_tracking_title => 'मासिक धर्म ट्रैकिंग';
+
+  @override
+  String get log_new_cycle => 'नई साइकिल दर्ज करें';
+
+  @override
+  String get select_start_date => 'शुरुआत की तारीख चुनें';
+
+  @override
+  String get save_entry => 'एंट्री सेव करें';
+
+  @override
+  String get recent_cycles => 'हालिया साइकिल';
+
+  @override
+  String get no_cycle_entries => 'अभी तक कोई साइकिल एंट्री नहीं है।';
+
+  @override
+  String get period_started => 'पीरियड शुरू हुआ';
+
+  @override
+  String get cycle_date_saved => 'साइकिल की तारीख सफलतापूर्वक सेव हो गई!';
 }

@@ -748,4 +748,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String question_progress(String current, String total) {
     return 'Question $current of $total';
   }
+
+  @override
+  String get cycle_tracking_title => 'Cycle Tracking';
+
+  @override
+  String get log_new_cycle => 'Log a New Cycle';
+
+  @override
+  String get select_start_date => 'Select start date';
+
+  @override
+  String get save_entry => 'Save Entry';
+
+  @override
+  String get recent_cycles => 'Recent Cycles';
+
+  @override
+  String get no_cycle_entries => 'No cycle entries yet.';
+
+  @override
+  String get period_started => 'Period started';
+
+  @override
+  String get cycle_date_saved => 'Cycle date saved successfully!';
 }

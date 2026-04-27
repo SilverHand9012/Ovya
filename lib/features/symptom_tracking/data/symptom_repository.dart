@@ -3,6 +3,7 @@ import 'package:isar/isar.dart';
 import '../../../core/isar/isar_service.dart';
 import '../../../core/isar/schemas/symptom_log.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../domain/symptom_entity.dart';
 
 // ──────────────────────────────────────────────────────────────
@@ -57,6 +58,20 @@ class SymptomRepositoryImpl implements SymptomRepository {
   SymptomRepositoryImpl({IsarService? isarService})
       : _isarService = isarService ?? IsarService();
 
+  Future<String> _getCurrentUserId() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) return user.uid;
+    
+    final prefs = await SharedPreferences.getInstance();
+    const guestIdKey = 'guest_user_id';
+    String? guestId = prefs.getString(guestIdKey);
+    if (guestId == null) {
+      guestId = 'guest_${DateTime.now().millisecondsSinceEpoch}';
+      await prefs.setString(guestIdKey, guestId);
+    }
+    return guestId;
+  }
+
   // ── Write ────────────────────────────────────────────────────
 
   @override
@@ -64,9 +79,7 @@ class SymptomRepositoryImpl implements SymptomRepository {
     try {
       final isar = await _isarService.db;
       final log = _toSchema(symptom);
-      final user = FirebaseAuth.instance.currentUser;
-      if (user == null) throw SymptomRepositoryException('User not authenticated');
-      log.userId = user.uid;
+      log.userId = await _getCurrentUserId();
 
       late int id;
       await isar.writeTxn(() async {
@@ -85,13 +98,11 @@ class SymptomRepositoryImpl implements SymptomRepository {
   Future<List<SymptomEntity>> getAllLogs() async {
     try {
       final isar = await _isarService.db;
-
-          final user = FirebaseAuth.instance.currentUser;
-          if (user == null) return [];
+      final currentUserId = await _getCurrentUserId();
           
       final logs = await isar.symptomLogs
           .filter()
-          .userIdEqualTo(user.uid)
+          .userIdEqualTo(currentUserId)
           .sortByTimestampDesc()
           .findAll();
 
@@ -105,13 +116,11 @@ class SymptomRepositoryImpl implements SymptomRepository {
   Future<SymptomEntity?> getLatestLog() async {
     try {
       final isar = await _isarService.db;
-
-          final user = FirebaseAuth.instance.currentUser;
-          if (user == null) return null;
+      final currentUserId = await _getCurrentUserId();
           
       final log = await isar.symptomLogs
           .filter()
-          .userIdEqualTo(user.uid)
+          .userIdEqualTo(currentUserId)
           .sortByTimestampDesc()
           .findFirst();
 
@@ -125,15 +134,11 @@ class SymptomRepositoryImpl implements SymptomRepository {
   Stream<List<SymptomEntity>> watchAllLogs() async* {
     try {
       final isar = await _isarService.db;
-
-      // Isar emits the full query result set every time the collection
-      // is mutated, so downstream consumers always get a complete list.
-          final user = FirebaseAuth.instance.currentUser;
-          if (user == null) return;
+      final currentUserId = await _getCurrentUserId();
           
       yield* isar.symptomLogs
           .filter()
-          .userIdEqualTo(user.uid)
+          .userIdEqualTo(currentUserId)
           .sortByTimestampDesc()
           .watch(fireImmediately: true)
           .map((logs) => logs.map(_toEntity).toList());
@@ -182,19 +187,15 @@ class SymptomRepositoryImpl implements SymptomRepository {
     try {
       final isar = await _isarService.db;
       final log = _toSchema(symptom);
-      final user = FirebaseAuth.instance.currentUser;
-      if (user == null) throw SymptomRepositoryException('User not authenticated');
-      log.userId = user.uid;
+      final currentUserId = await _getCurrentUserId();
+      log.userId = currentUserId;
 
       // Try to find existing by clientId first
       SymptomLog? existingByClient;
       if (symptom.clientId != null) {
-            final user = FirebaseAuth.instance.currentUser;
-            if (user == null) throw SymptomRepositoryException('User not authenticated');
-            
         existingByClient = await isar.symptomLogs
             .filter()
-            .userIdEqualTo(user.uid)
+            .userIdEqualTo(currentUserId)
             .and()
             .clientIdEqualTo(symptom.clientId)
             .findFirst();
@@ -218,12 +219,11 @@ class SymptomRepositoryImpl implements SymptomRepository {
       final isar = await _isarService.db;
 
       await isar.writeTxn(() async {
-            final user = FirebaseAuth.instance.currentUser;
-            if (user == null) throw SymptomRepositoryException('User not authenticated');
+        final currentUserId = await _getCurrentUserId();
             
         await isar.symptomLogs
             .filter()
-            .userIdEqualTo(user.uid)
+            .userIdEqualTo(currentUserId)
             .deleteAll();
       });
     } catch (e) {

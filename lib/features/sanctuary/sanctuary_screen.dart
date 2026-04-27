@@ -83,7 +83,7 @@ class _SanctuaryScreenState extends ConsumerState<SanctuaryScreen> {
                       await prefs.remove('is_guest');
                       await ref.read(authRepositoryProvider).signOut();
                       ref.invalidate(authRepositoryProvider);
-                      ref.invalidate(cycleProvider);
+                      ref.invalidate(isarProvider);
                       ref.invalidate(detectionProvider);
                       ref.invalidate(symptomNotifierProvider);
                       ref.invalidate(chatProvider);

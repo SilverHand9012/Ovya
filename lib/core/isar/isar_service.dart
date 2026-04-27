@@ -6,6 +6,7 @@ import 'schemas/cycle_entry.dart';
 import 'schemas/insight_cache.dart';
 import 'schemas/sync_queue.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Manages the Isar database instance and lifecycle.
 ///
@@ -58,14 +59,27 @@ class IsarService {
 
   // ── Sync Integration ──────────────────────────────────────────
 
-  Future<List<SymptomLog>> getUnsyncedLogs() async {
+  Future<String> _getCurrentUserId() async {
     final user = FirebaseAuth.instance.currentUser;
-    if (user == null) return [];
+    if (user != null) return user.uid;
+    
+    final prefs = await SharedPreferences.getInstance();
+    const guestIdKey = 'guest_user_id';
+    String? guestId = prefs.getString(guestIdKey);
+    if (guestId == null) {
+      guestId = 'guest_${DateTime.now().millisecondsSinceEpoch}';
+      await prefs.setString(guestIdKey, guestId);
+    }
+    return guestId;
+  }
+
+  Future<List<SymptomLog>> getUnsyncedLogs() async {
+    final currentUserId = await _getCurrentUserId();
     
     final isar = await db;
     return isar.symptomLogs
         .filter()
-        .userIdEqualTo(user.uid)
+        .userIdEqualTo(currentUserId)
         .and()
         .syncedEqualTo(false)
         .findAll();

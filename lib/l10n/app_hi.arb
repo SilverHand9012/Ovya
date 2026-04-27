@@ -296,5 +296,13 @@
         "type": "String"
       }
     }
-  }
+  },
+  "cycle_tracking_title": "मासिक धर्म ट्रैकिंग",
+  "log_new_cycle": "नई साइकिल दर्ज करें",
+  "select_start_date": "शुरुआत की तारीख चुनें",
+  "save_entry": "एंट्री सेव करें",
+  "recent_cycles": "हालिया साइकिल",
+  "no_cycle_entries": "अभी तक कोई साइकिल एंट्री नहीं है।",
+  "period_started": "पीरियड शुरू हुआ",
+  "cycle_date_saved": "साइकिल की तारीख सफलतापूर्वक सेव हो गई!"
 }
