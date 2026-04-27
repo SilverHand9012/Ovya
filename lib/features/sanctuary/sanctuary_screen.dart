@@ -59,7 +59,12 @@ class _SanctuaryScreenState extends ConsumerState<SanctuaryScreen> {
             ),
             actions: [
               PopupMenuButton<String>(
-                icon: const Icon(Icons.language, color: kTextPrimary),
+                icon: Image.asset(
+                  'assets/images/language_icon.png',
+                  width: 24,
+                  height: 24,
+                  color: kTextPrimary,
+                ),
                 tooltip: 'Change Language',
                 onSelected: (String code) async {
                   await languageService.changeLanguage(code);
