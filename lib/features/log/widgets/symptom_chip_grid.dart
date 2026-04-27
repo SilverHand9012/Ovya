@@ -59,7 +59,6 @@ class _SymptomChipGridState extends State<SymptomChipGrid> {
                 checkmarkColor: Colors.white,
                 labelStyle: TextStyle(
                   color: isSelected ? Colors.white : kTextPrimary,
-                  fontFamily: 'Baloo 2',
                   fontSize: 14,
                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
                 ),

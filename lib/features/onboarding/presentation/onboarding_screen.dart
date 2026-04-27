@@ -17,11 +17,11 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   String? _selectedLanguageCode;
 
   final List<Map<String, String>> _languages = [
-    {'code': 'en', 'name': 'English', 'englishName': 'English', 'font': 'Baloo 2'},
-    {'code': 'hi', 'name': 'हिन्दी', 'englishName': 'Hindi', 'font': 'Baloo 2'},
-    {'code': 'mr', 'name': 'मराठी', 'englishName': 'Marathi', 'font': 'Baloo 2'},
-    {'code': 'kn', 'name': 'ಕನ್ನಡ', 'englishName': 'Kannada', 'font': 'Baloo Tamma 2'},
-    {'code': 'te', 'name': 'తెలుగు', 'englishName': 'Telugu', 'font': 'Baloo Tammudu 2'},
+    {'code': 'en', 'name': 'English', 'englishName': 'English', 'font': 'NotoSans'},
+    {'code': 'hi', 'name': 'हिन्दी', 'englishName': 'Hindi', 'font': 'NotoSansDevanagari'},
+    {'code': 'mr', 'name': 'ಮರಾठी', 'englishName': 'Marathi', 'font': 'NotoSansDevanagari'},
+    {'code': 'kn', 'name': 'ಕನ್ನಡ', 'englishName': 'Kannada', 'font': 'NotoSansKannada'},
+    {'code': 'te', 'name': 'తెలుగు', 'englishName': 'Telugu', 'font': 'NotoSansTelugu'},
   ];
 
   String _getSubtitle(String? code) {
@@ -29,7 +29,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       case 'hi': return 'अपनी भाषा चुनें';
       case 'mr': return 'तुमची भाषा निवडा';
       case 'kn': return 'ನಿಮ್ಮ ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ';
-      case 'te': return 'మీ భాషను ఎంచుకోండి';
+      case 'te': return 'మీ భాషను ಎంచుకోండి';
       default: return 'Choose your language';
     }
   }
@@ -117,7 +117,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                   'Ovya',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontFamily: 'Baloo 2',
                     fontSize: 32,
                     fontWeight: FontWeight.w900,
                     color: darkTextColor,

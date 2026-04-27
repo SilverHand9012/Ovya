@@ -52,7 +52,6 @@ class _SanctuaryScreenState extends ConsumerState<SanctuaryScreen> {
             title: const Text(
               "Ovya",
               style: TextStyle(
-                fontFamily: 'Baloo 2',
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
                 color: kTextPrimary,

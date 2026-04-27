@@ -44,14 +44,26 @@ flutter:
   uses-material-design: true
   generate: true
   assets:
-    - assets/fonts/NotoSans-Regular.ttf
-    - assets/fonts/NotoSansKannada-Regular.ttf
-    - assets/fonts/NotoSansTelugu-Regular.ttf
-    - assets/fonts/NotoSansDevanagari-Regular.ttf
     - assets/images/
     - assets/images/illustrations/
 
   fonts:
+    - family: NotoSans
+      fonts:
+        - asset: assets/fonts/NotoSans-Regular.ttf
+
+    - family: NotoSansKannada
+      fonts:
+        - asset: assets/fonts/NotoSansKannada-Regular.ttf
+
+    - family: NotoSansTelugu
+      fonts:
+        - asset: assets/fonts/NotoSansTelugu-Regular.ttf
+
+    - family: NotoSansDevanagari
+      fonts:
+        - asset: assets/fonts/NotoSansDevanagari-Regular.ttf
+
     - family: Baloo 2
       fonts:
         - asset: assets/fonts/Baloo2-Regular.ttf

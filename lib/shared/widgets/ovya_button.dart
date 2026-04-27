@@ -68,7 +68,6 @@ class OvyaButton extends StatelessWidget {
                         Text(
                           text,
                           style: const TextStyle(
-                            fontFamily: 'Baloo 2',
                             fontWeight: FontWeight.w600,
                             fontSize: 16,
                           ),

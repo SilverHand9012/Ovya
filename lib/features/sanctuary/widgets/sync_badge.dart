@@ -63,7 +63,6 @@ class _SyncBadgeState extends State<SyncBadge> with SingleTickerProviderStateMix
             Text(
               _isSyncing ? l10n.syncing : l10n.synced_just_now,
               style: const TextStyle(
-                fontFamily: 'Baloo 2',
                 fontSize: 11,
                 fontWeight: FontWeight.w500,
                 color: kAccentDeep,

@@ -74,7 +74,6 @@ class RiskAlertCard extends StatelessWidget {
                   child: Text(
                     '${l10n.review_assessment} →',
                     style: const TextStyle(
-                      fontFamily: 'Baloo 2',
                       fontWeight: FontWeight.w600,
                       fontSize: 15,
                     ),

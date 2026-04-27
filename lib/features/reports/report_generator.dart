@@ -22,44 +22,40 @@ class ReportGenerator {
     required AppLocalizations loc,
     required String language,
   }) async {
-    // Load Universal Font Base for Latin characters
-    final fontData = await rootBundle.load("assets/fonts/NotoSans-Regular.ttf");
-    final ttf = pw.Font.ttf(fontData);
+    // Load NotoSans (Base/Latin)
+    final notoData = await rootBundle.load("assets/fonts/NotoSans-Regular.ttf");
+    final notoFont = pw.Font.ttf(notoData);
 
-    // Load Kannada font
-    final kannadaData = await rootBundle.load("assets/fonts/NotoSansKannada-Regular.ttf");
-    final kannadaFont = pw.Font.ttf(kannadaData);
+    // Load NotoSansKannada
+    final knData = await rootBundle.load("assets/fonts/NotoSansKannada-Regular.ttf");
+    final knFont = pw.Font.ttf(knData);
 
-    // Load Telugu font
-    final teluguData = await rootBundle.load("assets/fonts/NotoSansTelugu-Regular.ttf");
-    final teluguFont = pw.Font.ttf(teluguData);
+    // Load NotoSansTelugu
+    final teData = await rootBundle.load("assets/fonts/NotoSansTelugu-Regular.ttf");
+    final teFont = pw.Font.ttf(teData);
 
-    // Load Devanagari extensions for Hindi & Marathi
+    // Load NotoSansDevanagari (Hindi/Marathi)
     final devData = await rootBundle.load("assets/fonts/NotoSansDevanagari-Regular.ttf");
-    final devanagariFont = pw.Font.ttf(devData);
+    final devFont = pw.Font.ttf(devData);
 
-    pw.Font getFont(String langCode) {
+    pw.Font getRegionalFont(String langCode) {
       switch (langCode) {
-        case 'kn':
-          return kannadaFont;
-        case 'te':
-          return teluguFont;
+        case 'kn': return knFont;
+        case 'te': return teFont;
         case 'hi':
-        case 'mr':
-          return devanagariFont;
-        default:
-          return ttf;
+        case 'mr': return devFont;
+        default: return notoFont;
       }
     }
 
-    final selectedFont = getFont(language);
+    final selectedRegionalFont = getRegionalFont(language);
 
     // 3. Enforce Unicode Standard across Engine Document
-    // Use ttf (NotoSans) as base for Latin/Numbers and selectedFont as fallback for regional scripts
+    // Use notoFont as base and selectedRegionalFont as fallback
     final pdf = pw.Document(
       theme: pw.ThemeData.withFont(
-        base: ttf,
-        fontFallback: [selectedFont],
+        base: notoFont,
+        fontFallback: [selectedRegionalFont],
       ),
     );
 

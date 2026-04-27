@@ -99,7 +99,6 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                       fontWeight: FontWeight.w900,
                       color: Color(0xFF33001B), // Very dark burgundy/purple
                       letterSpacing: -0.5,
-                      fontFamily: 'Baloo 2', // Assuming this font is available
                     ),
                     textAlign: TextAlign.center,
                   ),
