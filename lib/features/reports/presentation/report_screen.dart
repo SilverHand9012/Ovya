@@ -5,6 +5,7 @@ import 'package:ovya/l10n/gen/app_localizations.dart';
 import 'package:printing/printing.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../auth/data/auth_providers.dart';
+import '../../detection/providers/detection_provider.dart';
 
 import '../report_generator.dart';
 import '../../symptom_tracking/providers/symptom_notifier.dart';
@@ -80,10 +81,16 @@ class _ReportScreenState extends ConsumerState<ReportScreen> {
         riskResult = ref.read(symptomNotifierProvider).riskResult;
       }
 
+      // Check assessment fallback if no cycle logs exist
+      final assessmentAnswers = ref.read(detectionProvider);
+      if (riskResult == null && assessmentAnswers.isNotEmpty) {
+        riskResult = ref.read(detectionProvider.notifier).computeResult();
+      }
+
       if (riskResult == null) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('No risk data available. Please log symptoms first.')),
+            const SnackBar(content: Text('⚠️ Complete the assessment or log symptoms to generate your report')),
           );
         }
         return;
@@ -138,6 +145,11 @@ class _ReportScreenState extends ConsumerState<ReportScreen> {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final loc = AppLocalizations.of(context)!;
+    
+    // Check for usable data
+    final logs = ref.watch(symptomNotifierProvider).symptoms;
+    final assessmentAnswers = ref.watch(detectionProvider);
+    final hasUsableData = logs.isNotEmpty || assessmentAnswers.isNotEmpty;
 
     return Scaffold(
       backgroundColor: colors.surface,
@@ -242,8 +254,28 @@ class _ReportScreenState extends ConsumerState<ReportScreen> {
                 ),
                 const SizedBox(height: 40),
 
-                // Generate Button
-                if (_generatedPdf == null)
+                // Generate Button or Guidance
+                if (!hasUsableData)
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: colors.errorContainer,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(Icons.warning_amber_rounded, color: colors.onErrorContainer),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            '⚠️ Complete the assessment or log symptoms to generate your report',
+                            style: TextStyle(color: colors.onErrorContainer, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                else if (_generatedPdf == null)
                   ElevatedButton(
                     onPressed: _isGenerating ? null : _handleGenerate,
                     style: ElevatedButton.styleFrom(
